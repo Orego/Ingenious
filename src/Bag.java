@@ -37,7 +37,8 @@ public void shuffle(){
 	int currentSize = size();
 	ArrayList<Tile> temp=new ArrayList(currentSize);
 	for(int x=0; x < currentSize; x++) {
-		temp.add(remove((int)((Math.random())*currentSize)));
+		int tempSize = size();
+		temp.add(remove((int)(Math.random()*tempSize)));
 	}
 	addAll(temp);
 }
