@@ -23,6 +23,7 @@ public class Bag extends ArrayList<Tile> {
 			}
 
 		}
+		shuffle();
 	}
 
 	public Tile draw() {
