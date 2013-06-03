@@ -31,6 +31,11 @@ public class Bag extends ArrayList<Tile>{
 		}
 	}
 	
+	public Tile draw(){
+		return remove(size()-1);
+	}
+	
+	
 	
 
 public void shuffle(){
