@@ -37,4 +37,8 @@ public class Tile {
 		return b;
 	}
 
+	@Override
+	public String toString() {
+		return "<" + a + ", " + b + ">";
+	}
 }
