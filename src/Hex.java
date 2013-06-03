@@ -33,6 +33,11 @@ public class Hex {
 		return color;
 	}
 	
+	/** Set this hexagon's color. */
+	public void setColor(int color) {
+		this.color = color;
+	}
+	
 	/** Return this hexagon's row coordinate. */
 	public int getRow() {
 		return row;
