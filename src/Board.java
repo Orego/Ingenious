@@ -24,4 +24,16 @@ public class Board {
 		grid[10][10] = 5;		
 	}
 
+	public static void main(String[] args) {
+		Board b = new Board();
+		System.out.println("Non-vacant hexes on initial board:");
+		for (int r = 0; r < b.grid.length; r++) {
+			for (int c = 0; c < b.grid[r].length; c++) {
+				if (b.grid[r][c] != VACANT) {
+					System.out.println(r + ", " + c + ": " + b.grid[r][c]);
+				}
+			}
+		}
+	}
+
 }
