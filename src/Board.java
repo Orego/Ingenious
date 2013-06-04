@@ -43,7 +43,7 @@ public class Board {
 		return board[r][c];
 	}
 	
-	/** Checking whether the given coordinates are at the right border or beyound. */
+	/** Check whether the given coordinates are at the right border or beyound. */
 	protected boolean isAtRightBorderOrBeyond(int row, int column) {
 		if (isAboveMiddleRow(row, column)) {
 			return column >= row + SIDE_LENGTH - 1;
@@ -52,6 +52,7 @@ public class Board {
 		}
 	}
 	
+	/** Check whether the given coordinates are beyond the right border. */
 	protected boolean isBeyondRightBorder(int row, int column) {
 		if (isAboveMiddleRow(row, column)) {
 			return column > row + SIDE_LENGTH - 1;
@@ -69,6 +70,7 @@ public class Board {
 		}
 	}
 	
+	/** Check whether the given coordinates are beyond the left border. */
 	protected boolean isBeyondLeftBorder(int row, int column) {
 		if (isAboveMiddleRow(row, column)) {
 			return column < 0;
@@ -76,7 +78,6 @@ public class Board {
 			return column < row - SIDE_LENGTH + 1;
 		}
 	}
-
 
 	/** Check whether the given coordinates are above the middle row. */
 	protected boolean isAboveMiddleRow(int row, int column) {
@@ -89,7 +90,7 @@ public class Board {
 	}
 	
 	/** Wiring the neighbors of each hex. */
-	public void wireNeighbors() {
+	protected void wireNeighbors() {
 		// wires every valid hex to its neighbors, handling the edge cases properly
 		for (int row = 0; row < DIAMETER; row++) {
 			for (int column = 0; column < DIAMETER; column++) {
@@ -114,15 +115,35 @@ public class Board {
 		}	
 	}
 
-	public static void main(String[] args) {
-		Board b = new Board();
-		System.out.println("Non-vacant hexes on initial board:");
-		for (int r = 0; r < b.board.length; r++) {
-			for (int c = 0; c < b.board[r].length; c++) {
-				if (b.board[r][c].getColor() != VACANT) {
-					System.out.println(r + ", " + c + ": " + b.board[r][c].getColor());
+	@Override
+	public String toString() {
+		String result = "";
+		int prefixLength = SIDE_LENGTH - 1;
+		boolean reachedMiddleLine = false;
+		for (int r = 0; r < DIAMETER; r++) {
+			for (int i = 0; i < prefixLength; i++) {
+				result += " ";
+			}
+			if (!reachedMiddleLine) {
+				prefixLength--;
+				if (prefixLength == 0) {
+					reachedMiddleLine = true;
+				}
+			} else {
+				prefixLength++;
+			}
+			for (int c = 0; c < DIAMETER; c++) {
+				if (getHex(r, c) != null) {
+					result += getHex(r, c) + " ";
 				}
 			}
+			result += "\n";
 		}
+		return result;
+	}
+	
+	public static void main(String[] args) {
+		Board b = new Board();
+		System.out.println(b);
 	}
 }

@@ -78,5 +78,17 @@ public class Hex {
 		return neighbors.get(direction);
 	}
 	
-	
+	@Override
+	public String toString() {
+		switch (color) {
+		case -1: return ".";
+		case 0: return "R";
+		case 1: return "O";
+		case 2: return "Y";
+		case 3: return "G";
+		case 4: return "B";
+		case 5: return "P";
+		default: return "?";
+		}
+	}	
 }
