@@ -4,7 +4,8 @@ import java.lang.Math;
 /** The main class to run the game. */
 public class Game {
 	
-
+	private int successfulMoves;
+	
 	public static void main(String[] args) {
 		Game g = new Game();
 		Scanner in = new Scanner(System.in);
@@ -22,16 +23,16 @@ public class Game {
 			System.out.println("Give column to place tile:");
 			column = in.nextInt();
 			if(g.placeTile(tile, row, column, rotation)) {				
-				g.switchPlayers();
 				tile = new Tile((int)(Math.random()*6), (int)(Math.random()*6));
 			} else {
-				System.out.println("Invalid: Move is off the board");
+				System.out.println("Invalid move: try again");
 			}
 		}
 	}
 	
 	public Game() {
 		board = new Board();
+		successfulMoves = 0;
 	}
 
 	/** Zero-based index of the current player. */
@@ -53,16 +54,29 @@ public class Game {
 	/** Advance to the next player. */
 	public void switchPlayers() {
 		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
+		successfulMoves++;
 	}
 	
 	/** Tells board where to place the tile based on the player's given coordinates. */
 	public boolean placeTile(Tile tile, int row, int column, int rotation) {
 		int row2 = board.getAdjacentRow(rotation, row);
 		int column2 = board.getAdjacentColumn(rotation, column);
-		if(!board.isValidHex(row, column) || !board.isValidHex(row2, column2)) {			
+		if (!board.isValidHex(row, column) || !board.isValidHex(row2, column2)) {			
 			return false;
 		}
+		if (successfulMoves < 2) {
+			// initial placement: verify that this move is adjacent to a corner hex with no neighbors
+			// does row, column have any corner hex in its neighbors
+			Hex adjacentCornerHex1 = board.getHex(row, column).adjacentCornerHex();
+			Hex adjacentCornerHex2 = board.getHex(row2, column2).adjacentCornerHex();
+			if ((adjacentCornerHex1 == null || adjacentCornerHex1.hasAnyNeighbors()) &&
+				(adjacentCornerHex2 == null || adjacentCornerHex2.hasAnyNeighbors())) {
+				return false;
+			}
+		}
+		
 		board.placeTile(tile, row, column, row2, column2);
+		switchPlayers();
 		return true;
 	}
 	

@@ -28,14 +28,21 @@ public class Hex {
 	/** This hexagon's column in the 2D array. */
 	private int column;
 	
-	/** Make a hexagon with the given color, and row and column coordinates. */
-	public Hex(int color, int row, int column) {
+	private boolean isCornerHex;
+	
+	public Hex(int color, int row, int column, boolean isCornerHex) {
 		this.color = color;
 		this.row = row;
 		this.column = column;
 		neighbors = new ArrayList<Hex>();
 		for (int i = 0; i < 6; i++)
 			neighbors.add(null);
+		this.isCornerHex = isCornerHex;
+	}
+	
+	/** Make a hexagon with the given color, and row and column coordinates. */
+	public Hex(int color, int row, int column) {
+		this(color, row, column, false);
 	}
 	
 	/** Set the given neighbor to the Hex h. */
@@ -46,6 +53,37 @@ public class Hex {
 	/** Return this hexagon's color. */
 	public int getColor() {
 		return color;
+	}
+	
+	/** Make this hexagon a corner hex with the given color. */
+	public void makeCornerHex(int color) {
+		isCornerHex = true;
+		setColor(color);
+	}
+	
+	/** Returns true if this hexagon is a corner hex. */
+	public boolean isCornerHex() {
+		return isCornerHex;
+	}
+	
+	/** */
+	public Hex adjacentCornerHex() {
+		for (int i = 0; i < 6; i++) {
+			if (neighbors.get(i) != null && neighbors.get(i).isCornerHex()) {
+				return neighbors.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public boolean hasAnyNeighbors() {
+		for (int i = 0; i < 6; i++) {
+			Hex neighbor = neighbors.get(i);
+			if (neighbor != null && neighbor.getColor() > Board.VACANT) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/** Set this hexagon's color. */

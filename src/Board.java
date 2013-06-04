@@ -25,12 +25,12 @@ public class Board {
 		}	
 		wireNeighbors();
 		// set the corners
-		board[0][0].setColor(0);
-		board[0][5].setColor(1);
-		board[5][0].setColor(2);
-		board[5][10].setColor(3);
-		board[10][5].setColor(4);
-		board[10][10].setColor(5);	
+		board[0][0].makeCornerHex(0);
+		board[0][5].makeCornerHex(1);
+		board[5][0].makeCornerHex(2);
+		board[5][10].makeCornerHex(3);
+		board[10][5].makeCornerHex(4);
+		board[10][10].makeCornerHex(5);
 	}
 
 	/** Returns the row of the adjacent hex according to your given rotation. */
