@@ -68,17 +68,19 @@ class NotHelloWorldComponent extends JComponent{
 		double height=150;
 		
 		Rectangle2D rect= new Rectangle2D.Double(leftX, topY, width, height);
+		
 		g2.draw(rect);
-		
-		
+		g2.fill(rect);
+		g2.setPaint(Color.RED);
 		g.drawString("Not a Hello, World program", MESSAGE_X, MESSAGE_Y);
 		
 		//Drawing an ellipse bounded by the rectangle
-		
+		g2.setPaint(Color.BLUE);
 		Ellipse2D ellipse = new Ellipse2D.Double();
 		ellipse.setFrame(rect);
 		g2.draw(ellipse);
-		
+		g2.fill(ellipse);
+		g2.setPaint(Color.MAGENTA);
 		// Drawing a circle
 		double centerX= rect.getCenterX();
 		double centerY= rect.getCenterY();
@@ -86,7 +88,7 @@ class NotHelloWorldComponent extends JComponent{
 		Ellipse2D circle = new Ellipse2D.Double();
 		circle.setFrameFromCenter(centerX, centerY, centerX+radius, centerY + radius);
 		g2.draw(circle);
-		
+		g2.fill(circle);
 	}
 	
 	
