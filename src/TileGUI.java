@@ -65,9 +65,13 @@ class SizedFrame extends JFrame{
 }
 
 class NotHelloWorldComponent extends JComponent{
+	private Polygon hex1;
+	private Polygon hex2;
 	public void paintComponent(Graphics g){
 		
 		Graphics2D g2= (Graphics2D) g;
+		
+		
 		
 		// drawing a rectangle
 		
@@ -76,10 +80,22 @@ class NotHelloWorldComponent extends JComponent{
 		double width=150;
 		double height=150;
 		
-		Rectangle2D rect= new Rectangle2D.Double(leftX, topY, width, height);
 		
+		//x coordinates for the first hex : 1, .5, -.5, -1, -.5, .5
+		//y coordinates for the first hex : 0, -.866025, -0.866025, 0, .866025, .866025
+		int yPoly[] = {300, 225, 75, 0, 75, 225};
+        int xPoly[] = {150, 20, 20, 150, 280, 280};
+        
+        
+        
+        // coordinates for hex 2
+        int yPoly2[] = {300, 225, 75, 0, 75, 225};
+        int xPoly2[] = {410, 280, 280, 410, 540, 540};
+        
+
+        hex1 = new Polygon(xPoly, yPoly, 6);
+        hex2= new Polygon(xPoly2, yPoly2, 6);
 		
-		Rectangle2D rect2= new Rectangle2D.Double(leftX+150, topY, width, height);
 		
 		Scanner in = new Scanner(System.in);
 		System.out.println("Please enter the color for the first hex (in integer form)");
@@ -101,9 +117,9 @@ class NotHelloWorldComponent extends JComponent{
 			g2.setPaint(Color.MAGENTA);
 		}
 		
-		
-		g2.draw(rect);
-		g2.fill(rect);
+        g.drawPolygon(hex1);
+        g2.fill(hex1);
+
 		
 			if(b==0){
 			g2.setPaint(Color.RED);	
@@ -118,8 +134,8 @@ class NotHelloWorldComponent extends JComponent{
 			}else if(b==5){
 				g2.setPaint(Color.MAGENTA);
 			}
-		g2.draw(rect2);
-		g2.fill(rect2);
+	        g.drawPolygon(hex2);
+	        g2.fill(hex2);
 
 		
 		
