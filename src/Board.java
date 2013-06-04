@@ -33,6 +33,40 @@ public class Board {
 		board[10][10].setColor(5);	
 	}
 
+	/** Returns the row of the adjacent hex according to your given rotation. */
+	public int getAdjacentRow(int rotation, int row) {
+		switch(rotation) {
+		case Hex.RIGHT:
+		case Hex.LEFT:
+			return row;
+		case Hex.UP_LEFT:
+		case Hex.UP_RIGHT:
+			return row - 1;
+		case Hex.DOWN_RIGHT:
+		case Hex.DOWN_LEFT:
+			return row + 1;
+		default:
+			return -1;
+		}
+	}
+	
+	/** Returns the column of the adjacent hex according to your given rotation. */
+	public int getAdjacentColumn(int rotation, int column) {
+		switch(rotation) {
+			case Hex.UP_RIGHT:
+			case Hex.DOWN_LEFT:
+				return column;
+			case Hex.UP_LEFT:
+			case Hex.LEFT:
+				return column - 1;
+			case Hex.DOWN_RIGHT:
+			case Hex.RIGHT:
+				return column + 1;
+			default:
+				return -1;
+		}
+	}
+	
 	/** Returns the color at row r, column c. */
 	public int getColor(int r, int c) {
 		return board[r][c].getColor();

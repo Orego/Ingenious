@@ -27,7 +27,7 @@ public class GameTest {
 		Tile tile = new Tile(0, 1);
 		assertEquals(Board.VACANT, game.getBoard().getHex(2, 4).getColor());
 		assertEquals(Board.VACANT, game.getBoard().getHex(2, 5).getColor());
-		game.placeTile(tile, 2, 4);
+		game.placeTile(tile, 2, 4, 0);
 		assertEquals(0, game.getBoard().getHex(2, 4).getColor());
 		assertEquals(1, game.getBoard().getHex(2, 5).getColor());
 	}
@@ -35,8 +35,19 @@ public class GameTest {
 	@Test
 	public void testLegalMove() {
 		Tile tile = new Tile(0,0);
-		assertTrue(game.placeTile(tile, 4, 4));
-		assertFalse(game.placeTile(tile, 0, 5));
-		assertFalse(game.placeTile(tile, 0, 6));
+		assertTrue(game.placeTile(tile, 4, 4, 0));
+		assertFalse(game.placeTile(tile, 0, 5, 0));
+		assertFalse(game.placeTile(tile, 0, 6, 0));
+	}
+	
+	@Test
+	public void testRotation() {
+		Tile tile = new Tile(0,1);
+		game.placeTile(tile, 0, 1, 0);
+		assertEquals(0, game.getBoard().getHex(0, 1).getColor());
+		assertEquals(1, game.getBoard().getHex(0, 2).getColor());
+		game.placeTile(tile, 1, 2, 4);
+		assertEquals(0, game.getBoard().getHex(1, 2).getColor());
+		assertEquals(1, game.getBoard().getHex(2, 2).getColor());
 	}
 }
