@@ -30,6 +30,8 @@ public class Tile {
 		return a;
 	}
 	
+	
+	
 	/** Returns the other color on this tile. */
 	public int getB() {
 		return b;
