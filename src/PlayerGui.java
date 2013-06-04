@@ -1,5 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
+import java.awt.geom.*;
 
 public class PlayerGui {
 
@@ -22,8 +23,17 @@ class SimpleFrame extends JFrame
 	public SimpleFrame()
 	{
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		add(new PlayerComponent());
 	}
 	
 	public static final int DEFAULT_WIDTH = 300;
 	public static final int DEFAULT_HEIGHT = 200;
+}
+
+class PlayerComponent extends JComponent {
+	
+	public void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		g2.fill(new Rectangle2D.Double(100, 100, 100, 75));
+	}
 }
