@@ -2,9 +2,11 @@ import java.util.Arrays;
 
 public class Player {
 	private int[] score;
+	private boolean hasPlayed;
 
 	public Player() {
 		score = new int[6];
+		hasPlayed = false;
 	}
 
 	public static void main(String[] args) {
@@ -27,5 +29,14 @@ public class Player {
 	public void addScore(int color, int amount) {
 		score[color] += amount;
 	}
-
+	
+	/** Returns true if this player has played their first turn. */
+	public boolean hasPlayed() {
+		return hasPlayed;
+	}
+	
+	/** This should be called to indicate that this player has played their first turn already. */
+	public void played() {
+		hasPlayed = true;
+	}
 }

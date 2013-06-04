@@ -38,4 +38,14 @@ public class BoardTest {
 		// verify that some invalid hexes don't exist
 		assertEquals(null, board.getHex(0, Board.SIDE_LENGTH + 1));
 	}
+	
+	@Test
+	public void testPlaceTile() {
+		Tile tile = new Tile(0, 1);
+		assertEquals(board.getHex(2, 3).getColor(), Board.VACANT);
+		assertEquals(board.getHex(3, 4).getColor(), Board.VACANT);
+		board.placeTile(tile, 2, 3, 3, 4);
+		assertEquals(board.getHex(2, 3).getColor(), 0);
+		assertEquals(board.getHex(3, 4).getColor(), 1);
+	}
 }
