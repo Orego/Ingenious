@@ -18,7 +18,7 @@ public class Board {
 		// create all the valid hexes		
 		for (int r = 0; r < DIAMETER; r++) {
 			for (int c = 0; c < DIAMETER; c++) {
-				if (getHex(r, c) == null && !isBeyondLeftBorder(r, c) && !isBeyondRightBorder(r, c)) {
+				if (isValidHex(r, c)) {
 					board[r][c] = new Hex(Board.VACANT, r, c);
 				}
 			}
@@ -41,6 +41,24 @@ public class Board {
 	/** Get a het at coordinate (r, c) from the board. */
 	public Hex getHex(int r, int c) {
 		return board[r][c];
+	}
+	
+	/** Checks if given position has a non-null hex. */
+	public boolean isValidHex(int row, int column) {
+		if((row < 0) || (row >= DIAMETER)) {			
+			return false;
+		}
+		if(isBeyondRightBorder(row, column) || isBeyondLeftBorder(row, column)) {
+			return false;
+		}
+		return true;
+	}
+	
+	/** Places given tile at the given coordinates. 
+	 * (r1 and c1 are the coordinates for tile color a, r2 and c2 are for color b) */
+	public void placeTile(Tile tile, int r1, int c1, int r2, int c2) {
+		getHex(r1, c1).setColor(tile.getA());
+		getHex(r2, c2).setColor(tile.getB());
 	}
 	
 	/** Check whether the given coordinates are at the right border or beyound. */
