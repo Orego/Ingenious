@@ -61,7 +61,8 @@ public class Game {
 	public boolean placeTile(Tile tile, int row, int column, int rotation) {
 		int row2 = board.getAdjacentRow(rotation, row);
 		int column2 = board.getAdjacentColumn(rotation, column);
-		if (!board.isValidHex(row, column) || !board.isValidHex(row2, column2)) {			
+		if (!board.isValidHex(row, column) || board.getHex(row, column).getColor() != Board.VACANT ||
+			!board.isValidHex(row2, column2) || board.getHex(row2, column2).getColor() != Board.VACANT) {			
 			return false;
 		}
 		if (successfulMoves < 2) {

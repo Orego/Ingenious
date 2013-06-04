@@ -22,6 +22,12 @@ public class GameTest {
 		assertEquals(0, game.getCurrentPlayerIndex());
 	}
 	
+	public void playTwoValidInitialMoves() {
+		Tile tile = new Tile(0, 1);
+		game.placeTile(tile, 5, 9, Hex.UP_RIGHT);
+		game.placeTile(tile, 10, 9, Hex.LEFT);
+	}
+	
 	@Test
 	public void testPlaceTile() {
 		Tile tile = new Tile(0, 1);
@@ -35,8 +41,9 @@ public class GameTest {
 		assertTrue(game.placeTile(tile, 5, 9, Hex.UP_RIGHT));
 		// try to play next to the same corner (as the other player)
 		assertFalse(game.placeTile(tile, 6, 9, Hex.RIGHT));
-		// play away from corners
+		// play next to the bottom right corner
 		assertTrue(game.placeTile(tile, 10, 9, Hex.LEFT));
+		// play away from corners
 		assertTrue(game.placeTile(tile, 5, 3, Hex.UP_LEFT));
 		
 		// subsequent placements
@@ -58,5 +65,17 @@ public class GameTest {
 		game.placeTile(tile, 1, 2, 4);
 		assertEquals(0, game.getBoard().getHex(1, 2).getColor());
 		assertEquals(1, game.getBoard().getHex(2, 2).getColor());
+	}
+	
+	@Test
+	public void testNoOverlap() {
+		playTwoValidInitialMoves();
+		Tile tile = new Tile(0, 1);
+		// move once
+		assertTrue(game.placeTile(tile, 5, 5, 0));
+		// try to play an overlapping tile
+		assertFalse(game.placeTile(tile, 6, 6, 2));
+		// try to play a tile over a corner hex
+		assertFalse(game.placeTile(tile, 5, 0, 0));
 	}
 }
