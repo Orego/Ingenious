@@ -22,4 +22,20 @@ public class BoardTest {
 		assertEquals(Board.VACANT, board.getColor(2, 3));
 	}
 
+	@Test
+	public void testNeighbors() {
+		// verify that neighbors have the right coordinates
+		Hex h = board.getHex(0, 0);
+		Hex rightNeighbor = h.getNeighbor(Hex.RIGHT);
+		assertEquals(rightNeighbor.getRow(), 0);
+		assertEquals(rightNeighbor.getColumn(), 1);
+		
+		// verify that invalid neighbors are null
+		assertNull(h.getNeighbor(Hex.LEFT));
+		assertNull(h.getNeighbor(Hex.UP_LEFT));
+		assertNull(board.getHex(1, Board.SIDE_LENGTH).getNeighbor(Hex.RIGHT));
+		
+		// verify that some invalid hexes don't exist
+		assertEquals(null, board.getHex(0, Board.SIDE_LENGTH + 1));
+	}
 }
