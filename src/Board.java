@@ -72,7 +72,7 @@ public class Board {
 		return board[r][c].getColor();
 	}
 	
-	/** Get a het at coordinate (r, c) from the board. */
+	/** Get a hex at coordinate (r, c) from the board. */
 	public Hex getHex(int r, int c) {
 		return board[r][c];
 	}
