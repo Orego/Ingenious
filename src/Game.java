@@ -119,6 +119,20 @@ public class Game {
 			if (neighbor != null) {
 				if (neighbor.getColor() == color) {
 					players[playerIndex].addScore(color, 1);
+					
+				}
+			}
+		}
+	
+		h= h.getNeighbor(rotation);
+		
+	   color = h.getColor();
+		for (int direction = 0; direction < 6; direction++) {
+			Hex neighbor = h.getNeighbor(direction);
+			if (neighbor != null) {
+				if (neighbor.getColor() == color) {
+					players[playerIndex].addScore(color, 1);
+					
 				}
 			}
 		}
