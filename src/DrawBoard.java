@@ -67,59 +67,89 @@ class BoardComponent extends JComponent {
 		this.game = game;
 	}
 	public void paintComponent(Graphics g) {
-		Polygon[][] hex = new Polygon[11][11];
+		
 		double angle;
 		double centerx;
 		double centery;
 		Board board = game.getBoard();
 		for(int i = 0; i < 11; i++) {
 			for(int j = 0; j < 11; j++) {
-				hex[i][j] = new Polygon();
-				if(board.isValidHex(i, j)) {
-					centerx = 40 + 0.5 * HEX_WIDTH * (5 - i) + HEX_WIDTH * j;
-					centery = 40 + 0.75*HEX_HEIGHT*i;
-					for(int k = 0; k < 6; k++) {			
-						angle = 2 * Math.PI/6 * (k);
-						hex[i][j].addPoint((int)(centerx + (HEX_HEIGHT)/2 * Math.sin(angle)), 
-								(int)(centery + (HEX_HEIGHT)/2 * Math.cos(angle)));
-					}
-					switch (board.getHex(i, j).getColor()) {
-					case 0:
-						g.setColor(Color.RED);
-						break;
-					case 1:
-						g.setColor(Color.ORANGE);
-						break;
-					case 2:
-						g.setColor(Color.YELLOW);
-						break;
-					case 3:
-						g.setColor(Color.GREEN);
-						break;
-					case 4:
-						g.setColor(Color.BLUE);
-						break;
-					case 5:
-						g.setColor(Color.MAGENTA);
-						break;
-					default: // vacant
-						switch ((i + j) % 3) {
-						case 0:
-							g.setColor(Color.LIGHT_GRAY);
-							break;
-						case 1:
-							g.setColor(Color.GRAY);
-							break;
-						case 2:
-							g.setColor(Color.WHITE);
-							break;
-						}
-					}
-					
-					g.fillPolygon(hex[i][j]);
-					g.setColor(Color.BLACK);
-					g.drawPolygon(hex[i][j]);
+				drawHex(g, board, i, j);
+			}
+		}
+	}
+	protected void drawHex(Graphics g, Board board, int i, int j) {
+		double angle;
+		double centerx;
+		double centery;
+		Polygon hex = new Polygon();
+		if(board.isValidHex(i, j)) {
+			centerx = 40 + 0.5 * HEX_WIDTH * (5 - i) + HEX_WIDTH * j;
+			centery = 40 + 0.75*HEX_HEIGHT*i;
+			for(int k = 0; k < 6; k++) {			
+				angle = 2 * Math.PI/6 * (k);
+				hex.addPoint((int)(centerx + (HEX_HEIGHT)/2 * Math.sin(angle)), 
+						(int)(centery + (HEX_HEIGHT)/2 * Math.cos(angle)));
+			}
+			switch (board.getHex(i, j).getColor()) {
+			case 0:
+				g.drawOval( (int)(centerx-HEX_HEIGHT/3), (int)(centery-HEX_HEIGHT/3), 2*HEX_HEIGHT/3, 2*HEX_HEIGHT/3);
+				g.setColor(Color.RED);
+				break;
+			case 1:
+				g.setColor(Color.ORANGE);
+				break;
+			case 2:
+				g.setColor(Color.YELLOW);
+				break;
+			case 3:
+				g.setColor(Color.GREEN);
+				break;
+			case 4:
+				g.setColor(Color.BLUE);
+				break;
+			case 5:
+				g.setColor(Color.MAGENTA);
+				break;
+			default: // vacant
+				switch ((i + j) % 3) {
+				case 0:
+					g.setColor(Color.LIGHT_GRAY);
+					break;
+				case 1:
+					g.setColor(Color.GRAY);
+					break;
+				case 2:
+					g.setColor(Color.WHITE);
+					break;
 				}
+			}
+			
+			g.fillPolygon(hex);
+			g.setColor(Color.BLACK);
+			g.drawPolygon(hex);
+			switch (board.getHex(i, j).getColor()) {
+			case 0:
+				g.fillOval( (int)(centerx-HEX_HEIGHT/4), (int)(centery-HEX_HEIGHT/4), 2*HEX_HEIGHT/4, 2*HEX_HEIGHT/4);
+				
+				break;
+			case 1:
+				
+				break;
+			case 2:
+				
+				break;
+			case 3:
+				
+				break;
+			case 4:
+				
+				break;
+			case 5:
+				
+				break;
+			default: // vacant
+				
 			}
 		}
 	}
