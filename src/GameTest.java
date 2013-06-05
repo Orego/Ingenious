@@ -100,4 +100,13 @@ public class GameTest {
 		assertEquals(3, game.getPlayer(1).getScore(0));
 	}
 
+	@Test
+	public void testScore4() {
+		// Don't find score through other hex in tile
+		game.play(1, new Tile(0, 1), 0, 1, 0);
+		game.play(0, new Tile(3, 3), 5, 1, 1);
+		game.play(1, new Tile(0, 0), 1, 0, 0);
+		assertEquals(4, game.getPlayer(1).getScore(0));
+	}
+
 }

@@ -112,27 +112,31 @@ public class Game {
 	public void play(int playerIndex, Tile tile, int row, int column,
 			int rotation) {
 		placeTile(tile, row, column, rotation);
-		Hex h = board.getHex(row, column);
-		int color = h.getColor();
+		Hex front = board.getHex(row, column);
+		Hex back = front.getNeighbor(rotation);
+		int color = front.getColor();
 		for (int direction = 0; direction < 6; direction++) {
-			Hex neighbor = h.getNeighbor(direction);
+			Hex neighbor = front.getNeighbor(direction);
 			if (neighbor != null) {
-				if (neighbor.getColor() == color) {
-					players[playerIndex].addScore(color, 1);
-					
+				if (neighbor != back) {
+					if (neighbor.getColor() == color) {
+						players[playerIndex].addScore(color, 1);
+					}
+
 				}
 			}
 		}
-	
-		h= h.getNeighbor(rotation);
-		
-	   color = h.getColor();
+
+		color = back.getColor();
 		for (int direction = 0; direction < 6; direction++) {
-			Hex neighbor = h.getNeighbor(direction);
+			Hex neighbor = front.getNeighbor(direction);
 			if (neighbor != null) {
-				if (neighbor.getColor() == color) {
-					players[playerIndex].addScore(color, 1);
-					
+				if (neighbor != front) {
+
+					if (neighbor.getColor() == color) {
+						players[playerIndex].addScore(color, 1);
+					}
+
 				}
 			}
 		}
