@@ -31,16 +31,6 @@ public class TileGUI {
 
 }
 
-class SimpleFrame extends JFrame {
-	public SimpleFrame() {
-		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-		setTitle("hello");
-	}
-
-	public static final int DEFAULT_WIDTH = 600;
-	public static final int DEFAULT_HEIGHT = 500;
-
-}
 
 class SizedFrame extends JFrame implements MouseListener, MouseMotionListener{
 	private int colorOne;
