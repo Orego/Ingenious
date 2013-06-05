@@ -122,6 +122,9 @@ class BoardComponent extends JComponent {
 			case 2:
 				
 				g.setColor(Color.YELLOW);
+				g.fillRect( (int)(centerx-HEX_HEIGHT/4), (int)(centery-HEX_HEIGHT/8), 2*HEX_HEIGHT/4, 2*HEX_HEIGHT/8);
+				g.fillRect( (int)(centerx-HEX_HEIGHT/8), (int)(centery-HEX_HEIGHT/4), 2*HEX_HEIGHT/8, 2*HEX_HEIGHT/4);
+				
 				break;
 			case 3:
 				
