@@ -160,14 +160,15 @@ class NotHelloWorldComponent extends JComponent {
 
 		hex1 = new Polygon(xPoly, yPoly, 6);
 		hex2 = new Polygon(xPoly2, yPoly2, 6);
+		
+		g2.setPaint(g2.getBackground());
+		g2.drawPolygon(hex2);
+		g2.fill(hex2);
 
-		Scanner in = new Scanner(System.in);
-		System.out
-				.println("Please enter the color for the first hex (in integer form)");
-		int a = in.nextInt();
-		System.out
-				.println("Please enter the color for the second hex (in integer form)");
-		int b = in.nextInt();
+		int a=0;
+		int b=4;
+		int r=5;
+		g2.rotate(r * Math.PI / 3, 150, 150);
 
 		if (a == 0) {
 			g2.setPaint(Color.RED);
@@ -227,14 +228,7 @@ class NotHelloWorldComponent extends JComponent {
 		
 		
 		
-		System.out
-		.println("Please enter the amount to rotate the second hex (1 will rotate it down and to the left)");
-		int r = in.nextInt();
-		g2.setPaint(g2.getBackground());
-		g2.drawPolygon(hex2);
-		g2.fill(hex2);
 		
-		paintComponent(g2, r, a, b);
 	}
 
 
