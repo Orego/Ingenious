@@ -126,4 +126,21 @@ public class GameTest {
 		assertFalse(legal);
 		
 	}
+	
+	@Test
+	public void testBonus() {
+		game.play(0, new Tile(0, 0), 0, 1, 0);
+		game.play(1, new Tile(3, 3), 5, 1, 1);
+		game.play(0, new Tile(0, 0), 1, 0, 0);
+		game.play(1, new Tile(4, 4), 5, 3, 1);
+		game.play(0, new Tile(0, 0), 2, 0, 0);
+		game.play(1, new Tile(5, 5), 5, 4, 1);
+		game.play(0, new Tile(0, 0), 3, 0, 0);
+		game.play(1, new Tile(3, 3), 6, 2, 1);
+		game.play(0, new Tile(0, 0), 4, 2, 1);
+		
+		// Player 0 gets over 18 points from this last move and should play again
+		assertTrue(game.getCurrentPlayerIndex()==0);
+		
+	}
 }

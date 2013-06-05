@@ -112,7 +112,7 @@ public class Game {
 
 		board.placeTile(tile, row, column, row2, column2);
 		if(!bonusMove){
-		switchPlayers();	
+		switchPlayers();
 		}
 		
 		return true;
