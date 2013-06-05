@@ -6,6 +6,7 @@ public class Game {
 
 	private int successfulMoves;
 	private Player[] players;
+	boolean bonusMove = false;
 
 	public static void main(String[] args) {
 		Game g = new Game();
@@ -110,7 +111,10 @@ public class Game {
 		}
 
 		board.placeTile(tile, row, column, row2, column2);
-		switchPlayers();
+		if(!bonusMove){
+		switchPlayers();	
+		}
+		
 		return true;
 	}
 
