@@ -41,9 +41,10 @@ public class Game {
 	}
 
 	public Game() {
+		bag = new Bag();
 		players = new Player[2];
-		players[0] = new Player();
-		players[1] = new Player();
+		players[0] = new Player(this);
+		players[1] = new Player(this);
 
 		board = new Board();
 		successfulMoves = 0;
@@ -58,6 +59,14 @@ public class Game {
 	/** Returns the current board. */
 	public Board getBoard() {
 		return board;
+	}
+	
+	/** The game's bag of tiles. */
+	private Bag bag;
+	
+	/** Returns the bag. */
+	public Bag getBag() {
+		return bag;
 	}
 
 	/** Returns the zero-based index of the current player. */
