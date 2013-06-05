@@ -134,7 +134,11 @@ class BoardComponent extends JComponent {
 				g.fillPolygon(triangle);
 				break;
 			case 4:
-				g.setColor(Color.BLUE);
+				g.setColor(Color.CYAN);
+			    h= HEX_HEIGHT/4;
+				g.fillRect( (int)(centerx-h), (int)(centery-h), (int)(2*h), (int)(2*h/3));
+				g.fillRect( (int)(centerx-h), (int)(centery+h/3), (int)(2*h), (int)(2*h/3));
+				
 				
 				break;
 			case 5:
