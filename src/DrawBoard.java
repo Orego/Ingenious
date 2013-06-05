@@ -127,8 +127,11 @@ class BoardComponent extends JComponent {
 				
 				break;
 			case 3:
-				
 				g.setColor(Color.GREEN);
+				double d = HEX_HEIGHT / 4;
+				double h = (int)(d * Math.sqrt(3) / 2);
+				Polygon triangle = new Polygon(new int[] {(int)(centerx - d), (int)(centerx), (int)(centerx + d)}, new int[] {(int)(centery + h), (int)(centery - h), (int)(centery + h)}, 3);
+				g.fillPolygon(triangle);
 				break;
 			case 4:
 				g.setColor(Color.BLUE);
