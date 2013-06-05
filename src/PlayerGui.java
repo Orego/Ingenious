@@ -1,6 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.geom.*;
+import java.util.*;
 
 public class PlayerGui {
 
@@ -55,6 +56,10 @@ class PlayerComponent extends JComponent {
 			}
 
 			g2.fill(new Rectangle2D.Double(160, 30 + i * 80, 50, 50));
+			g2.setPaint(Color.BLACK);
+			int score = new Random().nextInt(19);
+			String s = score + "";
+			g2.drawString(s, 180, 60 + i * 80);
 		}
 	}
 }
