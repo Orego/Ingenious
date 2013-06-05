@@ -114,41 +114,26 @@ public class Game {
 		placeTile(tile, row, column, rotation);
 		Hex front = board.getHex(row, column);
 		Hex back = front.getNeighbor(rotation);
+		scoreFrom(playerIndex, front, back);
+		scoreFrom(playerIndex, back, front);
+	}
+
+	/**
+	 * Adds points scored by player playerIndex, starting from the front hex of
+	 * the tile and looking out in every direction except through the back hex.
+	 */
+	protected void scoreFrom(int playerIndex, Hex front, Hex back) {
 		int color = front.getColor();
 		for (int direction = 0; direction < 6; direction++) {
 			Hex neighbor = front.getNeighbor(direction);
 			if (neighbor != null) {
 				if (neighbor != back) {
-
 					if (neighbor.getColor() == color) {
-						Hex tempNeighbor=neighbor;
-						while(tempNeighbor!=null &&tempNeighbor.getColor()==color ){
+						Hex tempNeighbor = neighbor;
+						while (tempNeighbor != null
+								&& tempNeighbor.getColor() == color) {
 							players[playerIndex].addScore(color, 1);
-							tempNeighbor=tempNeighbor.getNeighbor(direction);
-							
-							
-							
-						}
-					}
-
-				}
-			}
-		}
-
-		color = back.getColor();
-		for (int direction = 0; direction < 6; direction++) {
-			Hex neighbor = back.getNeighbor(direction);
-			if (neighbor != null) {
-				if (neighbor != front) {
-
-					if (neighbor.getColor() == color) {
-						Hex tempNeighbor=neighbor;
-						while(tempNeighbor!=null &&tempNeighbor.getColor()==color ){
-							players[playerIndex].addScore(color, 1);
-							tempNeighbor=tempNeighbor.getNeighbor(direction);
-							
-							
-							
+							tempNeighbor = tempNeighbor.getNeighbor(direction);
 						}
 					}
 
