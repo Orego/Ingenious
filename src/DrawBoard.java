@@ -91,27 +91,7 @@ class BoardComponent extends JComponent {
 				hex.addPoint((int)(centerx + (HEX_HEIGHT)/2 * Math.sin(angle)), 
 						(int)(centery + (HEX_HEIGHT)/2 * Math.cos(angle)));
 			}
-			switch (board.getHex(i, j).getColor()) {
-			case 0:
-				g.drawOval( (int)(centerx-HEX_HEIGHT/3), (int)(centery-HEX_HEIGHT/3), 2*HEX_HEIGHT/3, 2*HEX_HEIGHT/3);
-				g.setColor(Color.RED);
-				break;
-			case 1:
-				g.setColor(Color.ORANGE);
-				break;
-			case 2:
-				g.setColor(Color.YELLOW);
-				break;
-			case 3:
-				g.setColor(Color.GREEN);
-				break;
-			case 4:
-				g.setColor(Color.BLUE);
-				break;
-			case 5:
-				g.setColor(Color.MAGENTA);
-				break;
-			default: // vacant
+			if (board.getHex(i, j).getColor() < 0) {
 				switch ((i + j) % 3) {
 				case 0:
 					g.setColor(Color.LIGHT_GRAY);
@@ -123,30 +103,37 @@ class BoardComponent extends JComponent {
 					g.setColor(Color.WHITE);
 					break;
 				}
+			} else {
+				g.setColor(Color.BLACK);				
 			}
 			
 			g.fillPolygon(hex);
-			g.setColor(Color.BLACK);
 			g.drawPolygon(hex);
 			switch (board.getHex(i, j).getColor()) {
 			case 0:
+				g.setColor(Color.RED);
 				g.fillOval( (int)(centerx-HEX_HEIGHT/4), (int)(centery-HEX_HEIGHT/4), 2*HEX_HEIGHT/4, 2*HEX_HEIGHT/4);
 				
 				break;
 			case 1:
-				
+				g.setColor(Color.ORANGE);
+				g.fillRect( (int)(centerx-HEX_HEIGHT/4), (int)(centery-HEX_HEIGHT/4), 2*HEX_HEIGHT/4, 2*HEX_HEIGHT/4);
 				break;
 			case 2:
 				
+				g.setColor(Color.YELLOW);
 				break;
 			case 3:
 				
+				g.setColor(Color.GREEN);
 				break;
 			case 4:
+				g.setColor(Color.BLUE);
 				
 				break;
 			case 5:
 				
+				g.setColor(Color.MAGENTA);
 				break;
 			default: // vacant
 				
