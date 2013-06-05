@@ -13,9 +13,7 @@ public class Player {
 		gameBeingPlayed = game;
 	}
 	
-	public Player() {
-		this(null);
-	}
+	
 
 	public static void main(String[] args) {
 		Game g = new Game();
@@ -66,10 +64,22 @@ public class Player {
 		hasPlayed = true;
 	}
 	
+
+	public String toString() {
+		String result = "[";
+		result = result + score[0];
+		for (int i = 1; i < score.length; i++) {			
+			result = result + ", " + score[i];
+		}
+		return result + "]";
+	}
+
+
 	/** Fills the hand to six tiles. */
 	public void refreshHand() {
 		while(hand.size() < 6) {
 			hand.add(gameBeingPlayed.getBag().draw());
 		}
 	}
+
 }

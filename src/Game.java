@@ -32,6 +32,8 @@ public class Game {
 			if (g.placeTile(tile, row, column, rotation)) {
 				tile = new Tile((int) (Math.random() * 6),
 						(int) (Math.random() * 6));
+				System.out.println("Player who scored");
+				System.out.println(g.players);
 			} else {
 				System.out.println("Invalid move: try again");
 			}
@@ -129,32 +131,35 @@ public class Game {
 		return players[i];
 	}
 
-	public void play(int playerIndex, Tile tile, int row, int column,
+	public boolean play(int playerIndex, Tile tile, int row, int column,
 			int rotation) {
-		placeTile(tile, row, column, rotation);
+		if (!placeTile(tile, row, column, rotation)) {
+			return false;
+		}
 		Hex front = board.getHex(row, column);
 		Hex back = front.getNeighbor(rotation);
+		scoreFrom(playerIndex, front, back);
+		scoreFrom(playerIndex, back, front);
+		return true;
+	}
+
+	/**
+	 * Adds points scored by player playerIndex, starting from the front hex of
+	 * the tile and looking out in every direction except through the back hex.
+	 */
+	protected void scoreFrom(int playerIndex, Hex front, Hex back) {
 		int color = front.getColor();
 		for (int direction = 0; direction < 6; direction++) {
 			Hex neighbor = front.getNeighbor(direction);
 			if (neighbor != null) {
 				if (neighbor != back) {
 					if (neighbor.getColor() == color) {
-						players[playerIndex].addScore(color, 1);
-					}
-
-				}
-			}
-		}
-
-		color = back.getColor();
-		for (int direction = 0; direction < 6; direction++) {
-			Hex neighbor = front.getNeighbor(direction);
-			if (neighbor != null) {
-				if (neighbor != front) {
-
-					if (neighbor.getColor() == color) {
-						players[playerIndex].addScore(color, 1);
+						Hex tempNeighbor = neighbor;
+						while (tempNeighbor != null
+								&& tempNeighbor.getColor() == color) {
+							players[playerIndex].addScore(color, 1);
+							tempNeighbor = tempNeighbor.getNeighbor(direction);
+						}
 					}
 
 				}

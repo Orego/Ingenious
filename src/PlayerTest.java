@@ -24,6 +24,15 @@ public class PlayerTest {
 	}
 
 	@Test
+
+	public void testToString() {
+		Player p = new Player(new Game());
+		assertEquals("[0, 0, 0, 0, 0, 0]", p.toString());
+		p.addScore(3, 7);
+		assertEquals("[0, 0, 0, 7, 0, 0]", p.toString());
+	}
+
+
 	public void testRefreshHand() {
 		Hand oldHand = new Hand();
 		oldHand.addAll(p0.getHand());
@@ -31,4 +40,5 @@ public class PlayerTest {
 		assertEquals(6, p0.getHand().size());
 		assertTrue(oldHand.get(5) != p0.getHand().get(5));
 	}
+
 }
