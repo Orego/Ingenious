@@ -119,8 +119,16 @@ public class Game {
 			Hex neighbor = front.getNeighbor(direction);
 			if (neighbor != null) {
 				if (neighbor != back) {
+
 					if (neighbor.getColor() == color) {
-						players[playerIndex].addScore(color, 1);
+						Hex tempNeighbor=neighbor;
+						while(tempNeighbor!=null &&tempNeighbor.getColor()==color ){
+							players[playerIndex].addScore(color, 1);
+							tempNeighbor=tempNeighbor.getNeighbor(direction);
+							
+							
+							
+						}
 					}
 
 				}
@@ -129,12 +137,19 @@ public class Game {
 
 		color = back.getColor();
 		for (int direction = 0; direction < 6; direction++) {
-			Hex neighbor = front.getNeighbor(direction);
+			Hex neighbor = back.getNeighbor(direction);
 			if (neighbor != null) {
 				if (neighbor != front) {
 
 					if (neighbor.getColor() == color) {
-						players[playerIndex].addScore(color, 1);
+						Hex tempNeighbor=neighbor;
+						while(tempNeighbor!=null &&tempNeighbor.getColor()==color ){
+							players[playerIndex].addScore(color, 1);
+							tempNeighbor=tempNeighbor.getNeighbor(direction);
+							
+							
+							
+						}
 					}
 
 				}
