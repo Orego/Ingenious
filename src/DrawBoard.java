@@ -36,8 +36,10 @@ public class DrawBoard {
 			row = in.nextInt();
 			System.out.println("Give column to place tile:");
 			column = in.nextInt();
-			if(game.placeTile(tile, row, column, rotation)) {
+			if(game.play(game.getCurrentPlayerIndex(), tile, row, column, rotation)) {
 				tile = new Tile((int)(Math.random()*6), (int)(Math.random()*6));
+				System.out.println("Player 0: " + game.getPlayer(0));
+				System.out.println("Player 1: " + game.getPlayer(1));
 			} else {
 				System.out.println("Invalid move: try again");
 			}

@@ -32,6 +32,8 @@ public class Game {
 			if (g.placeTile(tile, row, column, rotation)) {
 				tile = new Tile((int) (Math.random() * 6),
 						(int) (Math.random() * 6));
+				System.out.println("Player who scored");
+				System.out.println(g.players);
 			} else {
 				System.out.println("Invalid move: try again");
 			}
@@ -109,13 +111,16 @@ public class Game {
 		return players[i];
 	}
 
-	public void play(int playerIndex, Tile tile, int row, int column,
+	public boolean play(int playerIndex, Tile tile, int row, int column,
 			int rotation) {
-		placeTile(tile, row, column, rotation);
+		if (!placeTile(tile, row, column, rotation)) {
+			return false;
+		}
 		Hex front = board.getHex(row, column);
 		Hex back = front.getNeighbor(rotation);
 		scoreFrom(playerIndex, front, back);
 		scoreFrom(playerIndex, back, front);
+		return true;
 	}
 
 	/**

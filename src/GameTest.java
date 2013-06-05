@@ -118,7 +118,12 @@ public class GameTest {
 		game.play(1, new Tile(0, 0), 1, 0, 0);
 		game.play(1, new Tile(0, 5), 2, 2, 0);
 		assertEquals(6, game.getPlayer(1).getScore(0));
+	}
+	
+	@Test
+	public void testScore6() {
+		boolean legal= game.play(1, new Tile(0, 1),-1, 1, 0);
+		assertFalse(legal);
 		
-		
-
-}}
+	}
+}
