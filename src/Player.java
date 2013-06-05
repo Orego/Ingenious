@@ -39,4 +39,14 @@ public class Player {
 	public void played() {
 		hasPlayed = true;
 	}
+	
+	public String toString() {
+		String result = "[";
+		result = result + score[0];
+		for (int i = 1; i < score.length; i++) {			
+			result = result + ", " + score[i];
+		}
+		return result + "]";
+	}
+
 }

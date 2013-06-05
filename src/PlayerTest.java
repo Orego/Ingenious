@@ -15,4 +15,12 @@ public class PlayerTest {
 		assertEquals(0, p.getScore(3));
 	}
 
+	@Test
+	public void testToString() {
+		Player p = new Player();
+		assertEquals("[0, 0, 0, 0, 0, 0]", p.toString());
+		p.addScore(3, 7);
+		assertEquals("[0, 0, 0, 7, 0, 0]", p.toString());
+	}
+
 }
