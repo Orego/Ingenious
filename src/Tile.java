@@ -20,9 +20,16 @@ public class Tile {
 	/** The other color on the tile. */
 	private int b;
 	
+	
+	/** The rotation status of this tile (0 means the second tile is to the right of the first tile,
+	 * 1 means the second tile is to the top right of the first tile etc. */
+	
+	private int rotationStatus;
+	
 	public Tile(int a, int b) {
 		this.a = a;
 		this.b = b;
+		rotationStatus=0;
 	}
 	
 	/** Returns one of the colors on this tile. */
@@ -30,6 +37,13 @@ public class Tile {
 		return a;
 	}
 	
+	public int getRotationStatus(){
+		return rotationStatus;
+	}
+	
+	public void setRotationStatus(int x){
+		rotationStatus=x;
+	}
 	
 	
 	/** Returns the other color on this tile. */

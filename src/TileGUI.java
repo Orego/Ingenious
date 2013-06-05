@@ -87,15 +87,15 @@ class NotHelloWorldComponent extends JComponent{
 		//the coordinates by the radius of the desired hexagon
 		// These coordinates should yield a hexagon that has flat edges on its left and right sides, so as to allow
 		// us to place two hexagons next to each other cleanly.
-		int yPoly[] = {300, 225, 75, 0, 75, 225};
+		
         int xPoly[] = {150, 20, 20, 150, 280, 280};
-        
+        int yPoly[] = {300, 225, 75, 0, 75, 225};
         
         
         // coordinates for hex 2
-        int yPoly2[] = {300, 225, 75, 0, 75, 225};
-        int xPoly2[] = {410, 280, 280, 410, 540, 540};
         
+        int xPoly2[] = {410, 280, 280, 410, 540, 540};
+        int yPoly2[] = {300, 225, 75, 0, 75, 225};
 
         hex1 = new Polygon(xPoly, yPoly, 6);
         hex2= new Polygon(xPoly2, yPoly2, 6);
@@ -123,6 +123,7 @@ class NotHelloWorldComponent extends JComponent{
 		
         g.drawPolygon(hex1);
         g2.fill(hex1);
+        
 
 		
 			if(b==0){
