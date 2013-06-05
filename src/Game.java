@@ -5,6 +5,7 @@ import java.lang.Math;
 public class Game {
 	
 	private int successfulMoves;
+	private Player[] players;
 	
 	public static void main(String[] args) {
 		Game g = new Game();
@@ -31,6 +32,11 @@ public class Game {
 	}
 	
 	public Game() {
+		players=new Player[2];
+		players[0]=new Player();
+		players[1]=new Player();
+		
+		
 		board = new Board();
 		successfulMoves = 0;
 	}
@@ -79,6 +85,12 @@ public class Game {
 		board.placeTile(tile, row, column, row2, column2);
 		switchPlayers();
 		return true;
+	}
+
+	public Player getPlayer(int i) {
+		// 
+		
+		return players[i];
 	}
 	
 }

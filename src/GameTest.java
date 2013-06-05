@@ -78,4 +78,10 @@ public class GameTest {
 		// try to play a tile over a corner hex
 		assertFalse(game.placeTile(tile, 5, 0, 0));
 	}
+	@Test
+	public void testScore1(){
+		assertEquals(0,game.getPlayer(0).getScore(0));
+		
+				
+	}
 }
