@@ -13,7 +13,7 @@ public class Hand extends ArrayList<Tile> {
 	
 	public Hand(Bag bag) {
 		for(int i = 0; i < 6; i++) {
-			add(bag.remove(bag.size() - 1));
+			add(bag.draw());
 		}
 	}
 }
