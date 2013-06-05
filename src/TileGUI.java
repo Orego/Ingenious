@@ -81,8 +81,12 @@ class NotHelloWorldComponent extends JComponent{
 		double height=150;
 		
 		
-		//x coordinates for the first hex : 1, .5, -.5, -1, -.5, .5
-		//y coordinates for the first hex : 0, -.866025, -0.866025, 0, .866025, .866025
+		//y coordinates for the first hex : 1, .5, -.5, -1, -.5, .5
+		//x coordinates for the first hex : 0, -.866025, -0.866025, 0, .866025, .866025
+		// The above coordinates are for a hexagon with radius(?) of 1. To get a larger hexagon, multiply 
+		//the coordinates by the radius of the desired hexagon
+		// These coordinates should yield a hexagon that has flat edges on its left and right sides, so as to allow
+		// us to place two hexagons next to each other cleanly.
 		int yPoly[] = {300, 225, 75, 0, 75, 225};
         int xPoly[] = {150, 20, 20, 150, 280, 280};
         
