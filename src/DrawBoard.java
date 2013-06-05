@@ -142,8 +142,11 @@ class BoardComponent extends JComponent {
 				
 				break;
 			case 5:
-				
 				g.setColor(Color.MAGENTA);
+				h = HEX_HEIGHT / 4;
+				Polygon diamond = new Polygon(new int[] {(int)(centerx - h), (int)(centerx), (int)(centerx + h), (int)(centerx)}, new int[] {(int)(centery), (int)(centery - h), (int)(centery), (int)(centery + h)}, 4);
+				g.fillPolygon(diamond);
+				
 				break;
 			default: // vacant
 				
