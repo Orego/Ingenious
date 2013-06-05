@@ -65,18 +65,14 @@ class SizedFrame extends JFrame implements MouseListener, MouseMotionListener{
 		setSize(screenWidth / 2, screenHeight / 2);
 		setLocationByPlatform(true);
 		// can set frame icon and title here, currently no icon
-		setTitle("Rectangle");
+		setTitle("Rotator");
 		
 		addMouseListener( this );
 
 	    addMouseMotionListener( this);
 	    
 	    
-		comp = new NotHelloWorldComponent(rotation);
-		add(comp);
-		
-		repaint();
-		rotation=2;
+
 		comp = new NotHelloWorldComponent(rotation);
 		add(comp);
 		
