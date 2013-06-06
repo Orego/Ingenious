@@ -35,6 +35,7 @@ public class Game {
 						(int) (Math.random() * 6));
 				System.out.println("Player who scored");
 				System.out.println(g.players);
+				g.switchPlayers();
 			} else {
 				System.out.println("Invalid move: try again");
 			}
@@ -114,7 +115,6 @@ public class Game {
 
 		board.placeTile(tile, row, column, row2, column2);
 		
-		switchPlayers();
 
 		return true;
 	}
