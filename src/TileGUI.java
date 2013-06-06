@@ -26,6 +26,10 @@ public class TileGUI extends HexGui implements MouseListener{
 		this.rotation=r;
 	}
 	
+	public int getRotation() {
+		return rotation;
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		
@@ -37,6 +41,7 @@ public class TileGUI extends HexGui implements MouseListener{
 	public TileGUI(PlayerGui[] playerGui, Game game){
 		this.playerGui = playerGui;
 		this.game = game;
+		rotation = 0;
 		addMouseListener( this );
 	}
 	

@@ -54,7 +54,6 @@ class BoardFrame extends JFrame {
 //		setSize((int) (40 + 11 * BoardComponent.HEX_WIDTH),
 //				(int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10));
 		JPanel panel = new JPanel();
-		BoardComponent comp = new BoardComponent(uiState, panel);
 		PlayerGui[] playerGui = new PlayerGui[uiState.game.getNumberOfPlayers()];
 		for(int i = 0; i < uiState.game.getNumberOfPlayers(); i++) {			
 			playerGui[i] = new PlayerGui(uiState.game, panel, i);
@@ -63,10 +62,11 @@ class BoardFrame extends JFrame {
 				panel.add(playerGui[i]);
 			}
 		}
-		comp.setPreferredSize(new Dimension((int) (40 + 11 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
-		panel.add(comp);
 		TileGUI tileGui = new TileGUI(playerGui, uiState.game);
 		tileGui.setPreferredSize(new Dimension((int) (4 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
+		BoardComponent comp = new BoardComponent(uiState, panel, playerGui, tileGui);
+		comp.setPreferredSize(new Dimension((int) (40 + 11 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
+		panel.add(comp);
 		panel.add(tileGui);
 		panel.add(playerGui[1]);
 		System.out.println(comp);
@@ -80,9 +80,13 @@ class BoardFrame extends JFrame {
 class BoardComponent extends HexGui implements MouseListener, MouseMotionListener {
 	private UIState uiState;
 	private JPanel panel;
-	public BoardComponent(UIState uiState, JPanel panel) {
+	private PlayerGui[] playerGui;
+	private TileGUI tileGui;
+	public BoardComponent(UIState uiState, JPanel panel, PlayerGui[] playerGui, TileGUI tileGui) {
 		this.uiState = uiState;
 		this.panel = panel;
+		this.playerGui = playerGui;
+		this.tileGui = tileGui;
 		addMouseListener(this);
 		addMouseMotionListener(this);
 	}
@@ -178,22 +182,22 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 	}
 	
 	public void drawTile(Graphics g) {
-		
-		if (!uiState.validTilePosition) {
+		if (!uiState.validTilePosition || (playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile() == -1)) {
 			return;
 		}
-		uiState.game.getBoard().getAdjacentColumn(uiState.rotation, uiState.col);
-		drawHex(g, 0, uiState.row, uiState.col, true);
-		drawHex(g, 4, uiState.game.getBoard().getAdjacentRow(uiState.rotation, uiState.row), uiState.game.getBoard().getAdjacentColumn(uiState.rotation, uiState.col), true);
+		drawHex(g, uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getHand()
+				.get(playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile())
+				.getA(), uiState.row, uiState.col, true);
+		drawHex(g, uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getHand()
+				.get(playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile()).getB(), 
+				uiState.game.getBoard().getAdjacentRow(tileGui.getRotation(), uiState.row), uiState.game.getBoard().getAdjacentColumn(tileGui.getRotation(), uiState.col), true);
 	}
 
 	
 	public void paintComponent(Graphics g) {
-		if (uiState.currentState == UIState.PLACE_TILE_OR_RESELECT) {
-			drawBoard(g);
-			drawTile(g);
+		drawBoard(g);
+		drawTile(g);
 			// accept mouseclicks and movements
-		}
 	}
 	
 	@Override
@@ -209,7 +213,7 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 		uiState.row = (int) Math.round(4.0/3.0 * (event.getY() - 40.0) / UIState.HEX_HEIGHT);
 		uiState.col = (int) Math.round((event.getX() - 40 - 0.5 * UIState.HEX_WIDTH * (5 - uiState.row)) / UIState.HEX_WIDTH);
 		
-		if (uiState.game.isValidTilePlacement(uiState.row, uiState.col, 2)) {
+		if (uiState.game.isValidTilePlacement(uiState.row, uiState.col, tileGui.getRotation())) {
 			uiState.validTilePosition = true;
 
 		} else {
@@ -224,8 +228,9 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 		int row = (int) Math.round(4.0/3.0 * (event.getY() - 40.0) / UIState.HEX_HEIGHT);
 		int col = (int) Math.round((event.getX() - 40 - 0.5 * UIState.HEX_WIDTH * (5 - row)) / UIState.HEX_WIDTH);
 		
-		if (uiState.game.isValidTilePlacement(row, col, 2)) {
-			uiState.game.placeTile(new Tile(0, 4), row, col, 2);
+		if (uiState.game.isValidTilePlacement(row, col, tileGui.getRotation())) {
+			uiState.game.play(uiState.game.getCurrentPlayerIndex(), uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getHand().get(playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile()), 
+					row, col, tileGui.getRotation());
 		}
 	}
 

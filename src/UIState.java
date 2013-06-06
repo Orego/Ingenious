@@ -3,8 +3,6 @@ import java.awt.Color;
 
 
 public class UIState {
-	public static final int PLACE_TILE_OR_RESELECT = 1;
-	public int currentState = 1; 
 	public Game game = new Game();
 	public int rotation = 2;
 	public int row;
