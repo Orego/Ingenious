@@ -9,7 +9,7 @@ public class DrawBoard {
 	private static final UIState uiState = new UIState();
 	
 	public static void main(String[] args) {
-		
+
 		Scanner in = new Scanner(System.in);
 		int row;
 		int column;
@@ -17,7 +17,6 @@ public class DrawBoard {
 		Tile tile = new Tile((int)(Math.random()*6), (int)(Math.random()*6));
 		
 		final BoardFrame bf = new BoardFrame(uiState);
-		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				BoardFrame frame = bf;
@@ -43,6 +42,7 @@ public class DrawBoard {
 //			}
 		bf.repaint();
 //		}
+
 	}	
 }
 
