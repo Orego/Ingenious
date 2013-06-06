@@ -64,11 +64,12 @@ public class TileGUI extends HexGui implements MouseListener{
 	public void paintComponent(Graphics g) {
 
 		Graphics2D g2 = (Graphics2D) g;
-		
-		if(playerGui[game.getCurrentPlayerIndex()].getSelectedTile() != -1) {			
-			drawHex(g2, playerGui[game.getCurrentPlayerIndex()].getGame().getPlayer(playerGui[game.getCurrentPlayerIndex()].getGame().getCurrentPlayerIndex()).getHand().get(playerGui[game.getCurrentPlayerIndex()].getSelectedTile()).getA(), 1, -1);
-			
-			drawHex(g2, playerGui[game.getCurrentPlayerIndex()].getGame().getPlayer(playerGui[game.getCurrentPlayerIndex()].getGame().getCurrentPlayerIndex()).getHand().get(playerGui[game.getCurrentPlayerIndex()].getSelectedTile()).getB(), COORDINATES[rotation][0], COORDINATES[rotation][1]);
+		if(!game.isOver()) {			
+			if(playerGui[game.getCurrentPlayerIndex()].getSelectedTile() != -1) {			
+				drawHex(g2, playerGui[game.getCurrentPlayerIndex()].getGame().getPlayer(playerGui[game.getCurrentPlayerIndex()].getGame().getCurrentPlayerIndex()).getHand().get(playerGui[game.getCurrentPlayerIndex()].getSelectedTile()).getA(), 1, -1);
+				
+				drawHex(g2, playerGui[game.getCurrentPlayerIndex()].getGame().getPlayer(playerGui[game.getCurrentPlayerIndex()].getGame().getCurrentPlayerIndex()).getHand().get(playerGui[game.getCurrentPlayerIndex()].getSelectedTile()).getB(), COORDINATES[rotation][0], COORDINATES[rotation][1]);
+			}
 		}
 	}
 

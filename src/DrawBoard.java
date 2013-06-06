@@ -27,58 +27,40 @@ public class DrawBoard {
 			}
 		});
 		
-
-//		while (true) {
-//			System.out.println(uiState.game.getBoard() + "\n\n Current Tile is " + tile
-//					+ "\nPlayer " + uiState.game.getCurrentPlayerIndex() + " give rotation of tile:\n" +
-//							"(Color 2 rotates around Color 1. E is 0, NE is 1, NW is 2, etc..)");
+//		while (!game.isOver()) {
+//			System.out.println(game.getBoard()
+//							+ "\n\n Current Tile is "
+//							+ tile
+//							+ "\nPlayer "
+//							+ game.getCurrentPlayerIndex()
+//							+ " give rotation of tile:\n"
+//							+ "(Color 2 rotates around Color 1. E is 0, NE is 1, NW is 2, etc..)");
 //			rotation = in.nextInt();
 //			System.out.println("Give row to place tile:");
 //			row = in.nextInt();
 //			System.out.println("Give column to place tile:");
 //			column = in.nextInt();
-//			if(uiState.game.placeTile(tile, row, column, rotation)) {
-//				tile = new Tile((int)(Math.random()*6), (int)(Math.random()*6));
+//			if (game.play(game.getCurrentPlayerIndex(), tile, row, column,
+//					rotation)) {
+//				tile = new Tile((int) (Math.random() * 6),
+//						(int) (Math.random() * 6));
+//				System.out.println("Player 0: " + game.getPlayer(0));
+//				System.out.println("Player 1: " + game.getPlayer(1));
+//				if (game.getPlayer(game.getCurrentPlayerIndex()).getPlaysLeft() == 0) {
+//					game.switchPlayers();
+//				}
 //			} else {
 //				System.out.println("Invalid move: try again");
 //			}
-		bf.repaint();
-//		}
-		while (!game.isOver()) {
-			System.out
-					.println(game.getBoard()
-							+ "\n\n Current Tile is "
-							+ tile
-							+ "\nPlayer "
-							+ game.getCurrentPlayerIndex()
-							+ " give rotation of tile:\n"
-							+ "(Color 2 rotates around Color 1. E is 0, NE is 1, NW is 2, etc..)");
-			rotation = in.nextInt();
-			System.out.println("Give row to place tile:");
-			row = in.nextInt();
-			System.out.println("Give column to place tile:");
-			column = in.nextInt();
-			if (game.play(game.getCurrentPlayerIndex(), tile, row, column,
-					rotation)) {
-				tile = new Tile((int) (Math.random() * 6),
-						(int) (Math.random() * 6));
-				System.out.println("Player 0: " + game.getPlayer(0));
-				System.out.println("Player 1: " + game.getPlayer(1));
-				if (game.getPlayer(game.getCurrentPlayerIndex()).getPlaysLeft() == 0) {
-					game.switchPlayers();
-				}
-			} else {
-				System.out.println("Invalid move: try again");
-			}
 			bf.repaint();
-		}
-		System.out.println("Game over!");
-		int winner = game.getWinner();
-		if (winner == -1) {
-			System.out.println("There was a tie");
-		} else {
-			System.out.println("The winner is player: " + winner);
-		}
+//		}
+//		System.out.println("Game over!");
+//		int winner = game.getWinner();
+//		if (winner == -1) {
+//			System.out.println("There was a tie");
+//		} else {
+//			System.out.println("The winner is player: " + winner);
+//		}
 	}	
 }
 
@@ -135,6 +117,15 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 				if(board.isValidHex(i, j)){
 					drawHex(g, board, i, j);
 				}
+			}
+		}
+		if(uiState.game.isOver()) {
+			int winner = uiState.game.getWinner();
+			g.setColor(Color.BLACK);
+			if(winner == -1) {
+				g.drawString("There was a tie!", (int) ((40 + 11 * BoardComponent.HEX_WIDTH)/3), (int) (40 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10));
+			} else {
+				g.drawString("The winner is player: " + (winner + 1), (int) ((40 + 11 * BoardComponent.HEX_WIDTH)/3), (int) (40 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10));
 			}
 		}
 	}
@@ -218,7 +209,7 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 	}
 	
 	public void drawTile(Graphics g) {
-		if (!uiState.validTilePosition || (playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile() == -1)) {
+		if ((!uiState.validTilePosition || (playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile() == -1)) && (!uiState.game.isOver())) {
 			return;
 		}
 		drawHex(g, uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getHand()
@@ -232,7 +223,9 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 	
 	public void paintComponent(Graphics g) {
 		drawBoard(g);
-		drawTile(g);
+		if(!uiState.game.isOver()) {
+			drawTile(g);			
+		}
 			// accept mouseclicks and movements
 	}
 	
@@ -261,12 +254,14 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 
 	@Override
 	public void mouseClicked(MouseEvent event) {
-		int row = (int) Math.round(4.0/3.0 * (event.getY() - 40.0) / UIState.HEX_HEIGHT);
-		int col = (int) Math.round((event.getX() - 40 - 0.5 * UIState.HEX_WIDTH * (5 - row)) / UIState.HEX_WIDTH);
-		
-		if (uiState.game.isValidTilePlacement(row, col, tileGui.getRotation())) {
-			uiState.game.play(uiState.game.getCurrentPlayerIndex(), uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getHand().get(playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile()), 
-					row, col, tileGui.getRotation());
+		if(!uiState.game.isOver()) {			
+			int row = (int) Math.round(4.0/3.0 * (event.getY() - 40.0) / UIState.HEX_HEIGHT);
+			int col = (int) Math.round((event.getX() - 40 - 0.5 * UIState.HEX_WIDTH * (5 - row)) / UIState.HEX_WIDTH);
+			
+			if ((playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile() != -1) && uiState.game.isValidTilePlacement(row, col, tileGui.getRotation())) {
+				uiState.game.play(uiState.game.getCurrentPlayerIndex(), uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getHand().get(playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile()), 
+						row, col, tileGui.getRotation());
+			}
 		}
 	}
 
