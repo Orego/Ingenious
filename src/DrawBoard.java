@@ -59,7 +59,7 @@ public class DrawBoard {
 		if (winner == -1) {
 			System.out.println("There was a tie");
 		} else {
-			System.out.println("The winner is: " + winner);
+			System.out.println("The winner is player: " + winner);
 		}
 	}	
 }
