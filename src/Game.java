@@ -13,10 +13,10 @@ public class Game {
 		while (true) {
 			// display the board
 			System.out.println(g.board);
-			System.out.println("Player " + g.currentPlayerIndex);
+			System.out.println("Player " + g.getCurrentPlayerIndex());
 			
 			// display the player's hand
-			Player p = g.getPlayer(g.currentPlayerIndex);
+			Player p = g.getPlayer(g.getCurrentPlayerIndex());
 			System.out.println("Your hand: " + p.getHand());
 			
 			// get the player's chosen tile
@@ -33,7 +33,7 @@ public class Game {
 			int column = in.nextInt();
 			
 			// try to place the tile, and give option to swap hand (if legal) or refresh
-			if (g.placeTile(tile, row, column, rotation)) {
+			if (g.play(g.getCurrentPlayerIndex(), tile, row, column, rotation)) {
 				p.getHand().remove(tileIndex);
 				System.out.println("Player who scored");
 				System.out.println(g.players);
