@@ -63,24 +63,6 @@ public class TileGUI extends HexGui implements MouseListener{
 	}
 
 
-	public static final int MESSAGE_X = 300;
-	public static final int MESSAGE_Y = 100;
-
-	public static void main(String[] args) {
-
-		EventQueue.invokeLater(new Runnable() {
-
-			public void run() {
-
-				SizedFrame frame = new SizedFrame();
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setVisible(true);
-
-			}
-		});
-
-	}
-
 	public void incrementRotation() {
 		rotation = (rotation + 1) % 6;
 	}
@@ -99,47 +81,4 @@ public class TileGUI extends HexGui implements MouseListener{
 
 }
 
-
-class SizedFrame extends JFrame{
-	private int colorOne;
-	private int colorTwo;
-	
-	private TileGUI comp;
-	public SizedFrame() {
-		
-		// get screen dimensions
-
-		Toolkit kit = Toolkit.getDefaultToolkit();
-		Dimension screenSize = kit.getScreenSize();
-		int screenHeight = screenSize.height;
-		int screenWidth = screenSize.width;
-
-		
-//	      addMouseListener( this );
-//
-//	      addMouseMotionListener( this);
-	      // set frame width and height and let platform pick location of screen
-		setSize(screenWidth / 2, screenHeight / 2);
-		setLocationByPlatform(true);
-		// can set frame icon and title here, currently no icon
-		setTitle("Rotator");
-		
-		
-
-
-	    
-	    
-
-		comp = new TileGUI();
-		add(comp);
-		
-	}
-
-
-
-
-
-
-
-}
 
