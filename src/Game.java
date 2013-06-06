@@ -18,7 +18,12 @@ public class Game {
 			// display the player's hand
 			Player p = g.getPlayer(g.getCurrentPlayerIndex());
 			System.out.println("Your hand: " + p.getHand());
-			
+			System.out.print("Your scores: ");
+			for (int i = 0; i < 6; i++) {
+				System.out.print(g.getPlayer(g.getCurrentPlayerIndex()).getScore(i) + " ");
+			}
+			System.out.println();
+
 			// get the player's chosen tile
 			System.out.println("Which tile do you want to play (index 0 to " + (p.getHand().size() - 1) + ")?");
 			int tileIndex = in.nextInt();
@@ -36,7 +41,6 @@ public class Game {
 			if (g.play(g.getCurrentPlayerIndex(), tile, row, column, rotation)) {
 				p.getHand().remove(tileIndex);
 				System.out.println("Player who scored");
-				System.out.println(g.players);
 				if (g.getPlayer(g.getCurrentPlayerIndex()).getPlaysLeft() == 0) {
 					// give the player the option to refresh hand or to swap hand completely
 					if (p.canSwapTiles()) {

@@ -99,9 +99,11 @@ public class Player {
 	/** Return true if the player is allowed to swap all their tiles. */
 	public boolean canSwapTiles() {
 		int min = getScore(0);
+		int minColor = 0;
 		for (int color = 0; color < 6; color++) {
 			if (getScore(color) < min) {
 				min = getScore(color);
+				minColor = color;
 			}
 		}
 		// we have the minimum, now.
@@ -113,7 +115,22 @@ public class Player {
 			}
 		}
 		
-		return (count == 1);
+		if (count != 1){
+			return false;
+		}
+		for (int i =0; i<getHand().size(); i++) {
+			Tile tile = getHand().get(i);
+			if (tile.getA() == minColor){
+				return false;
+				
+			}
+			if (tile.getB() == minColor){
+				return false;
+				
+			}
+		}
+		return true;
+		
 	}
 
 	/** Swap all the player's tiles with new ones from the bag. */

@@ -47,17 +47,24 @@ public class PlayerTest {
 
 	@Test
 	public void testCanSwapTiles() {
-		assertFalse(p0.canSwapTiles());
+		
 		p0.addScore(1, 1);
-		assertFalse(p0.canSwapTiles());
 		p0.addScore(2, 1);
-		assertFalse(p0.canSwapTiles());
 		p0.addScore(3, 1);
-		assertFalse(p0.canSwapTiles());
 		p0.addScore(4, 1);
-		assertFalse(p0.canSwapTiles());
 		p0.addScore(5, 1);
+		p0.getHand().remove(0);
+		p0.getHand().add(new Tile(0,2));
+		assertFalse(p0.canSwapTiles());
+		p0.getHand().clear();
+		p0.getHand().add(new Tile(1,2));
+		p0.getHand().add(new Tile(1,2));
+		p0.getHand().add(new Tile(1,2));
+		p0.getHand().add(new Tile(1,2));
+		p0.getHand().add(new Tile(1,2));
 		assertTrue(p0.canSwapTiles());
+
+		
 	}
 	
 	@Test
