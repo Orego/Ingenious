@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 import javax.swing.*;
 
-public class TileGUI extends JComponent {
+public class TileGUI extends HexGui implements MouseListener{
 
 	private Polygon hex1;
 	private Polygon hex2;
@@ -23,10 +23,40 @@ public class TileGUI extends JComponent {
 	public void setRotation(int r){
 		this.r=r;
 	}
+	
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		
+		incrementRotation();
+		repaint();
+		
+		
+	}
+	public TileGUI(){
+		addMouseListener( this );
+	}
+	
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	public void paintComponent(Graphics g) {
 
 		Graphics2D g2 = (Graphics2D) g;
+		
+		
+		drawHex(g2, 3, 1, 1);
+		drawHex(g2, 5, 1, 2);
+		
 
 		// y coordinates for the first hex : 1, .5, -.5, -1, -.5, .5
 		// x coordinates for the first hex : 0, -.866025, -0.866025, 0, .866025,
@@ -38,58 +68,58 @@ public class TileGUI extends JComponent {
 		// left and right sides, so as to allow
 		// us to place two hexagons next to each other cleanly.
 
-		int xPoly[] = { 150, 107, 107, 150, 193, 193 };
-		int yPoly[] = { 200, 175, 125, 100, 125, 175 };
-
-		// coordinates for hex 2
-
-		// xPoly2[] = {236, 193, 193, 236, 279, 279};
-		// yPoly2[] = {200, 175, 125, 100, 125, 175};
-
-		hex1 = new Polygon(xPoly, yPoly, 6);
-		hex2 = new Polygon(xPoly2, yPoly2, 6);
-		
-		g2.setPaint(g2.getBackground());
-		g2.drawPolygon(hex2);
-		g2.fill(hex2);
-
-		int a=3;
-		int b=5;
-		g2.rotate(r * Math.PI / 3, 150, 150);
-
-		if (a == 0) {
-			g2.setPaint(Color.RED);
-		} else if (a == 1) {
-			g2.setPaint(Color.ORANGE);
-		} else if (a == 2) {
-			g2.setPaint(Color.YELLOW);
-		} else if (a == 3) {
-			g2.setPaint(Color.GREEN);
-		} else if (a == 4) {
-			g2.setPaint(Color.BLUE);
-		} else if (a == 5) {
-			g2.setPaint(Color.MAGENTA);
-		}
-
-		g.drawPolygon(hex1);
-		g2.fill(hex1);
-
-		if (b == 0) {
-			g2.setPaint(Color.RED);
-		} else if (b == 1) {
-			g2.setPaint(Color.ORANGE);
-		} else if (b == 2) {
-			g2.setPaint(Color.YELLOW);
-		} else if (b == 3) {
-			g2.setPaint(Color.GREEN);
-		} else if (b == 4) {
-			g2.setPaint(Color.BLUE);
-		} else if (b == 5) {
-			g2.setPaint(Color.MAGENTA);
-		}
-
-		g.drawPolygon(hex2);
-		g2.fill(hex2);
+//		int xPoly[] = { 150, 107, 107, 150, 193, 193 };
+//		int yPoly[] = { 200, 175, 125, 100, 125, 175 };
+//
+//		// coordinates for hex 2
+//
+//		// xPoly2[] = {236, 193, 193, 236, 279, 279};
+//		// yPoly2[] = {200, 175, 125, 100, 125, 175};
+//
+//		hex1 = new Polygon(xPoly, yPoly, 6);
+//		hex2 = new Polygon(xPoly2, yPoly2, 6);
+//		
+//		g2.setPaint(g2.getBackground());
+//		g2.drawPolygon(hex2);
+//		g2.fill(hex2);
+//
+//		int a=3;
+//		int b=5;
+//		g2.rotate(r * Math.PI / 3, 150, 150);
+//
+//		if (a == 0) {
+//			g2.setPaint(Color.RED);
+//		} else if (a == 1) {
+//			g2.setPaint(Color.ORANGE);
+//		} else if (a == 2) {
+//			g2.setPaint(Color.YELLOW);
+//		} else if (a == 3) {
+//			g2.setPaint(Color.GREEN);
+//		} else if (a == 4) {
+//			g2.setPaint(Color.BLUE);
+//		} else if (a == 5) {
+//			g2.setPaint(Color.MAGENTA);
+//		}
+//
+//		g.drawPolygon(hex1);
+//		g2.fill(hex1);
+//
+//		if (b == 0) {
+//			g2.setPaint(Color.RED);
+//		} else if (b == 1) {
+//			g2.setPaint(Color.ORANGE);
+//		} else if (b == 2) {
+//			g2.setPaint(Color.YELLOW);
+//		} else if (b == 3) {
+//			g2.setPaint(Color.GREEN);
+//		} else if (b == 4) {
+//			g2.setPaint(Color.BLUE);
+//		} else if (b == 5) {
+//			g2.setPaint(Color.MAGENTA);
+//		}
+//
+//		g.drawPolygon(hex2);
+//		g2.fill(hex2);
 	}
 
 
@@ -115,10 +145,22 @@ public class TileGUI extends JComponent {
 		r++;
 	}
 
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
 
 
-class SizedFrame extends JFrame implements MouseListener, MouseMotionListener{
+class SizedFrame extends JFrame{
 	private int colorOne;
 	private int colorTwo;
 	
@@ -142,9 +184,9 @@ class SizedFrame extends JFrame implements MouseListener, MouseMotionListener{
 		// can set frame icon and title here, currently no icon
 		setTitle("Rotator");
 		
-		addMouseListener( this );
+		
 
-	    addMouseMotionListener( this);
+
 	    
 	    
 
@@ -153,56 +195,11 @@ class SizedFrame extends JFrame implements MouseListener, MouseMotionListener{
 		
 	}
 
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 
 
-	@Override
-	public void mouseMoved(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 
 
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		
-		comp.incrementRotation();
-		repaint();
-		
-		
-	}
 
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
 
