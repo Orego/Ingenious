@@ -125,7 +125,7 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 			if(winner == -1) {
 				g.drawString("There was a tie!", (int) ((40 + 11 * BoardComponent.HEX_WIDTH)/3), (int) (40 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10));
 			} else {
-				g.drawString("The winner is player: " + (winner + 1), (int) ((40 + 11 * BoardComponent.HEX_WIDTH)/3), (int) (40 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10));
+				g.drawString("The winner is player: " + (winner), (int) ((40 + 11 * BoardComponent.HEX_WIDTH)/3), (int) (40 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10));
 			}
 		}
 	}
