@@ -54,9 +54,9 @@ class BoardFrame extends JFrame {
 //		setSize((int) (40 + 11 * BoardComponent.HEX_WIDTH),
 //				(int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10));
 		JPanel panel = new JPanel();
-		PlayerGUI[] playerGui = new PlayerGUI[game.getNumberOfPlayers()];
+		PlayerGui[] playerGui = new PlayerGui[game.getNumberOfPlayers()];
 		for(int i = 0; i < game.getNumberOfPlayers(); i++) {			
-			playerGui[i] = new PlayerGUI(game, panel, i);
+			playerGui[i] = new PlayerGui(game, panel, i);
 			playerGui[i].setPreferredSize(new Dimension((int) (145 + BoardComponent.HEX_WIDTH * 2), (int) (210 + BoardComponent.HEX_HEIGHT * 6)));
 			if(i == 0) {				
 				panel.add(playerGui[i]);

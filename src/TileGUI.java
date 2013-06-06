@@ -19,7 +19,7 @@ public class TileGUI extends HexGui implements MouseListener{
 	private int rotation;
 	private int[] xPoly2 = { 236, 193, 193, 236, 279, 279 };
 	private int[] yPoly2 = { 200, 175, 125, 100, 125, 175 };
-	private PlayerGUI[] playerGui;
+	private PlayerGui[] playerGui;
 	private Game game;
 	
 	public void setRotation(int r){
@@ -34,7 +34,7 @@ public class TileGUI extends HexGui implements MouseListener{
 		
 		
 	}
-	public TileGUI(PlayerGUI[] playerGui, Game game){
+	public TileGUI(PlayerGui[] playerGui, Game game){
 		this.playerGui = playerGui;
 		this.game = game;
 		addMouseListener( this );

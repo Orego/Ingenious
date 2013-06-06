@@ -4,14 +4,14 @@ import java.awt.geom.Rectangle2D;
 
 import javax.swing.*;
 
-public class PlayerGUI extends HexGui implements MouseListener, MouseMotionListener{
+public class PlayerGui extends HexGui implements MouseListener, MouseMotionListener{
 	
 	private Game game;
 	private int selectedTile;
 	private JPanel panel;
 	private int playerIndex;
 	
-	public PlayerGUI(Game game, JPanel panel, int playerIndex) {
+	public PlayerGui(Game game, JPanel panel, int playerIndex) {
 		selectedTile = -1;
 		this.game = game;
 		this.panel = panel;
