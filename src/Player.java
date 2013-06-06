@@ -156,4 +156,8 @@ public class Player {
 		playsLeft=1;
 		
 	}
+
+	public int[] getScores() {
+		return score;
+	}
 }

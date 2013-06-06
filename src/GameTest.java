@@ -22,7 +22,7 @@ public class GameTest {
 		assertEquals(0, game.getCurrentPlayerIndex());
 	}
 	
-	public void playTwoValidInitialMoves() {
+	protected void playTwoValidInitialMoves() {
 		Tile tile = new Tile(0, 1);
 		game.placeTile(tile, 5, 9, Hex.UP_RIGHT);
 		game.placeTile(tile, 10, 9, Hex.LEFT);
@@ -159,4 +159,75 @@ public class GameTest {
 		assertFalse(game.play(0, new Tile(0, 0), 0, 0, 0));
 		assertEquals(1, game.getPlayer(game.getCurrentPlayerIndex()).getPlaysLeft());		
 	}
+	
+	@Test
+	public void testGameOver() {
+		for (int r = 0; r < 11; r++) {
+			for (int c = 0; c < 11; c++) {
+				if (game.getBoard().isValidHex(r, c)) {
+					game.getBoard().setColor(r, c, 0);
+				}
+			}
+		}
+		game.getBoard().setColor(8, 3, -1);
+		game.getBoard().setColor(8, 4, -1);
+		game.getBoard().setColor(8, 5, -1);
+		assertFalse(game.isOver());
+		game.getBoard().setColor(8, 4, 4);
+		assertTrue(game.isOver());
+	}
+	@Test
+	public void testVictory() { 
+		for(int i=0; i<6; i++){
+			game.getPlayer(0).addScore(i, 14);
+		}
+		for(int i=0; i<5; i++){
+			game.getPlayer(1).addScore(i, 17);
+		}
+		
+		assertEquals(0, game.getWinner());
+		game.getPlayer(1).addScore(5, 17);
+		assertEquals(1, game.getWinner());
+	}
+	
+	@Test
+	public void testVictory2() {
+		game.getPlayer(0).addScore(0, 4);
+		game.getPlayer(0).addScore(1, 5);
+		game.getPlayer(0).addScore(2, 6);
+		game.getPlayer(0).addScore(3, 8);
+		game.getPlayer(0).addScore(4, 10);
+		game.getPlayer(0).addScore(5, 11);
+		
+		game.getPlayer(1).addScore(3, 4);
+		game.getPlayer(1).addScore(1, 5);
+		game.getPlayer(1).addScore(5, 6);
+		game.getPlayer(1).addScore(0, 8);
+		game.getPlayer(1).addScore(4, 11);
+		game.getPlayer(1).addScore(2, 11);
+		
+		assertEquals(1, game.getWinner());
+		game.getPlayer(0).addScore(3, 1);
+		assertEquals(0, game.getWinner());
+	}
+	
+	@Test
+	public void testVictory3() {
+		game.getPlayer(0).addScore(0, 4);
+		game.getPlayer(0).addScore(1, 5);
+		game.getPlayer(0).addScore(2, 6);
+		game.getPlayer(0).addScore(3, 8);
+		game.getPlayer(0).addScore(4, 10);
+		game.getPlayer(0).addScore(5, 11);
+		
+		game.getPlayer(1).addScore(3, 4);
+		game.getPlayer(1).addScore(1, 5);
+		game.getPlayer(1).addScore(5, 6);
+		game.getPlayer(1).addScore(0, 8);
+		game.getPlayer(1).addScore(4, 10);
+		game.getPlayer(1).addScore(2, 11);
+		
+		assertEquals(-1, game.getWinner());
+	}
+
 }

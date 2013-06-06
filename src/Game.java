@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Game {
 
 	private int successfulMoves;
+	private int numberOfPlayers;
 	private Player[] players;
 	boolean bonusMove = false;
 
@@ -62,6 +63,7 @@ public class Game {
 
 	public Game() {
 		bag = new Bag();
+		numberOfPlayers = 2;
 		players = new Player[2];
 		players[0] = new Player(this);
 		players[1] = new Player(this);
@@ -88,6 +90,11 @@ public class Game {
 	/** Returns the bag. */
 	public Bag getBag() {
 		return bag;
+	}
+	
+	/** Returns the number of players in the game. */
+	public int getNumberOfPlayers() {
+		return numberOfPlayers;
 	}
 
 	/** Returns the zero-based index of the current player. */
@@ -184,6 +191,47 @@ public class Game {
 				}
 			}
 		}
+	}
+
+	/** Returns true if the game is over. */
+	public boolean isOver() {
+		
+		for(int r=0; r<11; r++){
+			for(int c=0; c<11; c++){
+				if(board.isValidHex(r, c)){
+					Hex temp = board.getHex(r, c);
+					if(temp.getColor()==-1){
+						for(int i=0; i<6; i++){
+							if(temp.getNeighbor(i)!=null){
+								if(temp.getNeighbor(i).getColor()==-1){
+									return false;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return true;
+	}
+
+	/** Returns the number of the player currently winning. */
+	public int getWinner() {
+		int[] s0 = new int[6];
+		int[] s1 = new int[6];
+		System.arraycopy(players[0].getScores(), 0, s0, 0, 6);
+		System.arraycopy(players[1].getScores(), 0, s1, 0, 6);
+		java.util.Arrays.sort(s0);
+		java.util.Arrays.sort(s1);
+		for (int i = 0; i < s0.length; i++) {
+			if (s0[i] > s1[i]) {
+				return 0;
+			} else if (s1[i] > s0[i]) {
+				return 1;
+			}
+		}
+		return -1;
 	}
 
 }
