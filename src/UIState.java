@@ -3,7 +3,7 @@ import java.awt.Color;
 
 
 public class UIState {
-	public Game game = new Game();
+	public Game game;
 	public int rotation = 2;
 	public int row;
 	public int col;
