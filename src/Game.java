@@ -79,7 +79,6 @@ public class Game {
 	/** Advance to the next player. */
 	public void switchPlayers() {
 		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
-		successfulMoves++;
 	}
 	
 
@@ -114,7 +113,7 @@ public class Game {
 		}
 
 		board.placeTile(tile, row, column, row2, column2);
-		
+		successfulMoves++;
 
 		return true;
 	}

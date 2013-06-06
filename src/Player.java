@@ -97,8 +97,8 @@ public class Player {
 		return playsLeft;
 	}
 	
-	public void setPlaysLeft(int i){
-		playsLeft=i;
+	public void incrementPlaysLeft(int i){
+		playsLeft+=i;
 	}
 
 
