@@ -27,7 +27,7 @@ public class DrawBoard {
 			}
 		});
 		
-		while (true) {
+		while (!game.isOver()) {
 			System.out.println(game.getBoard() + "\n\n Current Tile is " + tile
 					+ "\nPlayer " + game.getCurrentPlayerIndex() + " give rotation of tile:\n" +
 							"(Color 2 rotates around Color 1. E is 0, NE is 1, NW is 2, etc..)");
@@ -48,7 +48,7 @@ public class DrawBoard {
 			}
 			bf.repaint();
 		}
-
+		System.out.println("Game over!");
 	}	
 }
 
