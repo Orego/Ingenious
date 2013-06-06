@@ -54,12 +54,12 @@ class BoardFrame extends JFrame {
 //		setSize((int) (40 + 11 * BoardComponent.HEX_WIDTH),
 //				(int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10));
 		JPanel panel = new JPanel();
-		PlayerGUI playerGui = new PlayerGUI(game);
+		PlayerGUI playerGui = new PlayerGUI(game, panel);
 		playerGui.setPreferredSize(new Dimension((int) (145 + BoardComponent.HEX_WIDTH * 2), (int) (210 + BoardComponent.HEX_HEIGHT * 6)));
 		panel.add(playerGui);
 		comp.setPreferredSize(new Dimension((int) (40 + 11 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
 		panel.add(comp);
-		TileGUI tileGui = new TileGUI();
+		TileGUI tileGui = new TileGUI(playerGui);
 		tileGui.setPreferredSize(new Dimension((int) (4 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
 		panel.add(tileGui);
 		System.out.println(comp);

@@ -19,11 +19,11 @@ public abstract class HexGui extends JComponent {
 		double centery;
 		centerx = 40 + 0.5 * HEX_WIDTH * (5 - row) + HEX_WIDTH * column;
 		centery = 40 + 0.75*HEX_HEIGHT*row;
-		drawHex(g, color, centerx, centery, row, column, true);
+		drawHex(g, color, centerx, centery, row, column, true, false);
 	}
 
 	/** If drawing a hex at a specific set of center coordinates, give false for the last argument. */
-	protected void drawHex(Graphics g, int color, double centerx, double centery, int row, int column, boolean isOnBoard) {
+	protected void drawHex(Graphics g, int color, double centerx, double centery, int row, int column, boolean isOnBoard, boolean isSelected) {
 		double angle;
 		Polygon hex = new Polygon();
 			for(int k = 0; k < 6; k++) {			
@@ -47,13 +47,13 @@ public abstract class HexGui extends JComponent {
 				} else {
 					g.setColor(Color.BLACK);				
 				}
-				
-				g.fillPolygon(hex);
-				g.drawPolygon(hex);
+			} else if(isSelected){
+				g.setColor(new Color(130, 130, 130));
 			} else {
 				g.setColor(Color.BLACK);
-				g.fillPolygon(hex);
 			}
+			g.fillPolygon(hex);
+			g.drawPolygon(hex);
 			switch (color) {
 			case 0:
 				g.setColor(Color.RED);
