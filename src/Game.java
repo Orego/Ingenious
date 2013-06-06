@@ -5,6 +5,7 @@ import java.lang.Math;
 public class Game {
 
 	private int successfulMoves;
+	private int numberOfPlayers;
 	private Player[] players;
 	boolean bonusMove = false;
 
@@ -46,6 +47,7 @@ public class Game {
 
 	public Game() {
 		bag = new Bag();
+		numberOfPlayers = 2;
 		players = new Player[2];
 		players[0] = new Player(this);
 		players[1] = new Player(this);
@@ -72,6 +74,11 @@ public class Game {
 	/** Returns the bag. */
 	public Bag getBag() {
 		return bag;
+	}
+	
+	/** Returns the number of players in the game. */
+	public int getNumberOfPlayers() {
+		return numberOfPlayers;
 	}
 
 	/** Returns the zero-based index of the current player. */

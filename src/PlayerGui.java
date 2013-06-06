@@ -1,42 +1,97 @@
 import java.awt.*;
+import java.awt.event.*;
+import java.awt.geom.Rectangle2D;
+
 import javax.swing.*;
-import java.awt.geom.*;
-import java.util.*;
 
-public class PlayerGui {
+public class PlayerGui extends HexGui implements MouseListener, MouseMotionListener{
+	
+	private Game game;
+	private int selectedTile;
+	private JPanel panel;
+	private int playerIndex;
+	
+	public PlayerGui(Game game, JPanel panel, int playerIndex) {
+		selectedTile = -1;
+		this.game = game;
+		this.panel = panel;
+		addMouseListener(this);
+		addMouseMotionListener(this);
+		this.playerIndex = playerIndex;
+	}
 
-	/**
-	 * Drawing a window frame. Part of the code is taken from Core Java, Volume
-	 * 1, page 286
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				SimpleFrame frame = new SimpleFrame();
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setVisible(true);
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+		if((x >= 30) && (x <= 30 + 2 * BoardComponent.HEX_WIDTH)) {
+			for(int i = 0; i < 6; i++) {
+				if((y >= (30 + i*(BoardComponent.HEX_HEIGHT + 30))) 
+						&& (y <= (30 + BoardComponent.HEX_HEIGHT + i*(BoardComponent.HEX_HEIGHT + 30)))) {
+					selectedTile = i;
+				}
 			}
-		});
-	}
-}
-
-class SimpleFrame extends JFrame {
-	public SimpleFrame() {
-		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-		add(new PlayerComponent());
+		}
+		panel.repaint();
+		
 	}
 
-	public static final int DEFAULT_WIDTH = 230;
-	public static final int DEFAULT_HEIGHT = 530;
-}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
-class PlayerComponent extends JComponent {
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public Game getGame() {
+		return game;
+	}
+	
+	public int getSelectedTile() {
+		return selectedTile;
+	}
+	
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-
+		int centerx;
+		int centery;
 		// Draw the six tiles of a player's hand
 		for (int i = 0; i < 6; i++) {
-			g2.fill(new Rectangle2D.Double(30, 30 + i * 80, 100, 50));
+			centerx = (int)(30 + HEX_WIDTH / 2);
+			centery = 30 + HEX_HEIGHT / 2 + 80 * i;
+			drawHex(g, game.getPlayer(playerIndex).getHand().get(i).getA(), centerx, centery, 0, 0, false, ((i == selectedTile) && (playerIndex == game.getCurrentPlayerIndex())));
+			centerx += HEX_WIDTH;
+			drawHex(g, game.getPlayer(playerIndex).getHand().get(i).getB(), centerx, centery, 0, 0, false, ((i == selectedTile) && (playerIndex == game.getCurrentPlayerIndex())));
+			centerx -= HEX_WIDTH;
 		}
 
 		// Display the scores of a player's hand
@@ -55,11 +110,12 @@ class PlayerComponent extends JComponent {
 				g2.setPaint(Color.MAGENTA);
 			}
 
-			g2.fill(new Rectangle2D.Double(160, 30 + i * 80, 50, 50));
+			g2.fill(new Rectangle2D.Double(160, 180 + i * 50 , 50, 50));
 			g2.setPaint(Color.BLACK);
-			int score = new Random().nextInt(19);
+			int score = game.getPlayer(playerIndex).getScore(i);
 			String s = score + "";
-			g2.drawString(s, 180, 60 + i * 80);
+			g2.drawString(s, 180, 210 + i * 50);
 		}
 	}
+
 }

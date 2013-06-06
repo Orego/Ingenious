@@ -12,36 +12,46 @@ public abstract class HexGui extends JComponent {
 	public HexGui() {
 		super();
 	}
-
-	protected void drawHex(Graphics g, int color, int i, int j) {
-		double angle;
+	
+	/** Draws a hex of given color at the given board row and column. */
+	protected void drawHex(Graphics g, int color, int row, int column) {
 		double centerx;
 		double centery;
+		centerx = 40 + 0.5 * HEX_WIDTH * (5 - row) + HEX_WIDTH * column;
+		centery = 40 + 0.75*HEX_HEIGHT*row;
+		drawHex(g, color, centerx, centery, row, column, true, false);
+	}
+
+	/** If drawing a hex at a specific set of center coordinates, give false for the last argument. */
+	protected void drawHex(Graphics g, int color, double centerx, double centery, int row, int column, boolean isOnBoard, boolean isSelected) {
+		double angle;
 		Polygon hex = new Polygon();
-		
-			centerx = 40 + 0.5 * HEX_WIDTH * (5 - i) + HEX_WIDTH * j;
-			centery = 40 + 0.75*HEX_HEIGHT*i;
 			for(int k = 0; k < 6; k++) {			
 				angle = 2 * Math.PI/6 * (k);
 				hex.addPoint((int)(centerx + (HEX_HEIGHT)/2 * Math.sin(angle)), 
 						(int)(centery + (HEX_HEIGHT)/2 * Math.cos(angle)));
 			}
-			if (color < 0) {
-				switch ((i + j) % 3) {
-				case 0:
-					g.setColor(Color.LIGHT_GRAY);
-					break;
-				case 1:
-					g.setColor(Color.GRAY);
-					break;
-				case 2:
-					g.setColor(Color.WHITE);
-					break;
+			if(isOnBoard) {
+				if (color < 0) {
+					switch ((row + column) % 3) {
+					case 0:
+						g.setColor(Color.LIGHT_GRAY);
+						break;
+					case 1:
+						g.setColor(Color.GRAY);
+						break;
+					case 2:
+						g.setColor(Color.WHITE);
+						break;
+					}
+				} else {
+					g.setColor(Color.BLACK);				
 				}
+			} else if(isSelected){
+				g.setColor(new Color(130, 130, 130));
 			} else {
-				g.setColor(Color.BLACK);				
+				g.setColor(Color.BLACK);
 			}
-			
 			g.fillPolygon(hex);
 			g.drawPolygon(hex);
 			switch (color) {

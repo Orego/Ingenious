@@ -1,12 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.util.Random;
 import java.util.Scanner;
 
 public class DrawBoard {
-	
-	public static class GameInfo {
-		public Game game = new Game();
-	}
 	
 	public static void main(String[] args) {
 		
@@ -59,14 +57,23 @@ class BoardFrame extends JFrame {
 //		setSize((int) (40 + 11 * BoardComponent.HEX_WIDTH),
 //				(int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10));
 		JPanel panel = new JPanel();
+		PlayerGui[] playerGui = new PlayerGui[game.getNumberOfPlayers()];
+		for(int i = 0; i < game.getNumberOfPlayers(); i++) {			
+			playerGui[i] = new PlayerGui(game, panel, i);
+			playerGui[i].setPreferredSize(new Dimension((int) (145 + BoardComponent.HEX_WIDTH * 2), (int) (210 + BoardComponent.HEX_HEIGHT * 6)));
+			if(i == 0) {				
+				panel.add(playerGui[i]);
+			}
+		}
 		comp.setPreferredSize(new Dimension((int) (40 + 11 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
 		panel.add(comp);
-		TileGUI tileGui = new TileGUI();
-		tileGui.setPreferredSize(new Dimension(200, 200));
+		TileGUI tileGui = new TileGUI(playerGui, game);
 		tileGui.setPreferredSize(new Dimension((int) (4 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
 		panel.add(tileGui);
+		panel.add(playerGui[1]);
 		System.out.println(comp);
 		System.out.println(tileGui);
+		System.out.println(playerGui);
 		add(panel);
 		pack();
 	}
@@ -86,8 +93,7 @@ class BoardComponent extends HexGui {
 		for(int i = 0; i < 11; i++) {
 			for(int j = 0; j < 11; j++) {
 				if(board.isValidHex(i, j)){
-					
-					drawHex(g, board.getHex(i, j).getColor(), i, j);
+				drawHex(g, board.getHex(i, j).getColor(), i, j);
 				}
 			}
 		}
