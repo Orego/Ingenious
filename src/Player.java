@@ -48,6 +48,7 @@ public class Player {
 		if(score[color]<18){
 			score[color] += amount;
 				if(score[color]>=18){
+					score[color]=18;
 					incrementPlaysLeft(1);
 				}
 			}
