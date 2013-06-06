@@ -165,4 +165,9 @@ public class Game {
 		}
 	}
 
+	/** Returns true if the game is over. */
+	public boolean isOver() {
+		return false;
+	}
+
 }

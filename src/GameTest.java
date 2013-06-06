@@ -22,7 +22,7 @@ public class GameTest {
 		assertEquals(0, game.getCurrentPlayerIndex());
 	}
 	
-	public void playTwoValidInitialMoves() {
+	protected void playTwoValidInitialMoves() {
 		Tile tile = new Tile(0, 1);
 		game.placeTile(tile, 5, 9, Hex.UP_RIGHT);
 		game.placeTile(tile, 10, 9, Hex.LEFT);
@@ -156,4 +156,21 @@ public class GameTest {
 		assertFalse(game.play(0, new Tile(0, 0), 0, 0, 0));
 		assertEquals(1, game.getPlayer(game.getCurrentPlayerIndex()).getPlaysLeft());		
 	}
+	
+	@Test
+	public void testGameOver() {
+		for (int r = 0; r < 11; r++) {
+			for (int c = 0; c < 11; c++) {
+				game.getBoard().setColor(r, c, 0);
+			}
+		}
+		game.getBoard().setColor(8, 2, -1);
+		game.getBoard().setColor(8, 3, -1);
+		game.getBoard().setColor(8, 4, -1);
+		assertFalse(game.isOver());
+		game.getBoard().setColor(8, 3, 4);
+		assertTrue(game.isOver());
+
+	}
+
 }
