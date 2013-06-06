@@ -4,13 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class PlayerTest {
-	Game g;
 	Player p0;
 	
 	@Before
 	public void setUp() throws Exception {
-		g = new Game();
-		p0 = g.getPlayer(0);
+		p0 = new Player(new Game());
 	}
 	
 	@Test
@@ -66,15 +64,15 @@ public class PlayerTest {
 	public void testSwapTiles() {
 		Tile originalFirstTile = p0.getHand().get(0);
 		
-		g.placeTile(p0.getHand().get(5), 0, 1, 0);
+		p0.placeTile(5, 0, 1, 0);
 		p0.getHand().remove(5);
 		p0.swapTiles();
 		
 		// the player should have 6 tiles
 		assertEquals(6, p0.getHand().size());		
 		
-		// it's player 1's turn now
-		assertEquals(1, g.getCurrentPlayerIndex());
+		// it's not player 0's turn anymore
+		assertEquals(0, p0.getPlaysLeft());
 		
 		// the player's tiles should not be the same as they started: make sure the first one is different than it was
 		Tile newFirstTile = p0.getHand().get(0);
