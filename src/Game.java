@@ -20,7 +20,7 @@ public class Game {
 			System.out.println("Your hand: " + p.getHand());
 			
 			// get the player's chosen tile
-			System.out.println("Which tile do you want to play (index 0 to 5)?");
+			System.out.println("Which tile do you want to play (index 0 to " + (p.getHand().size() - 1) + ")?");
 			int tileIndex = in.nextInt();
 			Tile tile = p.getHand().get(tileIndex);
 			
@@ -37,17 +37,19 @@ public class Game {
 				p.getHand().remove(tileIndex);
 				System.out.println("Player who scored");
 				System.out.println(g.players);
-				// give the player the option to refresh hand or to swap hand completely
-				if (p.canSwapTiles()) {
-					System.out.println("Do you want to swap your hand (0 = no, 1 = yes)?");
-					// get the answer
-					int answer = in.nextInt();
-					if (answer == 1) {
-						p.swapTiles();
-						continue;
+				if (g.getPlayer(g.getCurrentPlayerIndex()).getPlaysLeft() == 0) {
+					// give the player the option to refresh hand or to swap hand completely
+					if (p.canSwapTiles()) {
+						System.out.println("Do you want to swap your hand (0 = no, 1 = yes)?");
+						// get the answer
+						int answer = in.nextInt();
+						if (answer == 1) {
+							p.swapTiles();
+							continue;
+						}
 					}
+					p.refreshHand();
 				}
-				p.refreshHand();
 			} else {
 				System.out.println("Invalid move: try again");
 			}
@@ -62,6 +64,7 @@ public class Game {
 
 		board = new Board();
 		successfulMoves = 0;
+		players[0].startTurn();
 	}
 
 	/** Zero-based index of the current player. */
@@ -91,6 +94,7 @@ public class Game {
 	/** Advance to the next player. */
 	public void switchPlayers() {
 		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
+		players[currentPlayerIndex].startTurn();
 	}
 	
 	public boolean isValidTilePlacement(int row, int column, int rotation) {
@@ -150,6 +154,7 @@ public class Game {
 		Hex back = front.getNeighbor(rotation);
 		scoreFrom(playerIndex, front, back);
 		scoreFrom(playerIndex, back, front);
+		players[playerIndex].incrementPlaysLeft(-1);
 		return true;
 	}
 

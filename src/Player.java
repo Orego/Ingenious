@@ -46,7 +46,8 @@ public class Player {
 		if(score[color]<18){
 			score[color] += amount;
 				if(score[color]>=18){
-					gameBeingPlayed.switchPlayers();
+					score[color]=18;
+					incrementPlaysLeft(1);
 				}
 			}
 		
@@ -125,7 +126,6 @@ public class Player {
 	}
 	
 	public int getPlaysLeft() {
-		// TODO Auto-generated method stub
 		return playsLeft;
 	}
 	
