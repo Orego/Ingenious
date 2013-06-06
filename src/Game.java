@@ -114,11 +114,8 @@ public class Game {
 
 		board.placeTile(tile, row, column, row2, column2);
 		
-	
-		
 		switchPlayers();
-		
-		
+
 		return true;
 	}
 
@@ -133,7 +130,6 @@ public class Game {
 		if (!placeTile(tile, row, column, rotation)) {
 			return false;
 		}
-		bonusMove=false;
 		Hex front = board.getHex(row, column);
 		Hex back = front.getNeighbor(rotation);
 		scoreFrom(playerIndex, front, back);
