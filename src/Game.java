@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.lang.Math;
 
 /** The main class to run the game. */
 public class Game {
@@ -10,30 +9,37 @@ public class Game {
 	public static void main(String[] args) {
 		Game g = new Game();
 		Scanner in = new Scanner(System.in);
-		int row;
-		int column;
-		int rotation;
-		Tile tile = new Tile((int) (Math.random() * 6),
-				(int) (Math.random() * 6));
 		while (true) {
-			System.out
-					.println(g.board
-							+ "\n\n Current Tile is "
-							+ tile
-							+ "\nPlayer "
-							+ g.currentPlayerIndex
-							+ " give rotation of tile:\n"
-							+ "(Color 2 rotates around Color 1. E is 0, NE is 1, NW is 2, etc..)");
-			rotation = in.nextInt();
+			// display the board
+			System.out.println(g.board);
+			System.out.println("Player " + g.currentPlayerIndex);
+			// display the player's hand
+			Player p = g.getPlayer(g.currentPlayerIndex);
+			System.out.println("Your hand: " + p.getHand());
+			System.out.println("Which tile do you want to play (index 0 to 5)?");
+			int tileIndex = in.nextInt();
+			Tile tile = p.getHand().get(tileIndex);
+			System.out.println("Give the rotation of the tile:");
+			int rotation = in.nextInt();
 			System.out.println("Give row to place tile:");
-			row = in.nextInt();
+			int row = in.nextInt();
 			System.out.println("Give column to place tile:");
-			column = in.nextInt();
+			int column = in.nextInt();
 			if (g.placeTile(tile, row, column, rotation)) {
-				tile = new Tile((int) (Math.random() * 6),
-						(int) (Math.random() * 6));
+				p.getHand().remove(tileIndex);
 				System.out.println("Player who scored");
 				System.out.println(g.players);
+				// give the player the option to refresh hand or to swap hand completely
+				if (p.canSwapTiles()) {
+					System.out.println("Do you want to swap your hand (0 = no, 1 = yes)?");
+					// get the answer
+					int answer = in.nextInt();
+					if (answer == 1) {
+						p.swapTiles();
+						continue;
+					}
+				}
+				p.refreshHand();
 			} else {
 				System.out.println("Invalid move: try again");
 			}
@@ -118,7 +124,6 @@ public class Game {
 				
 		if (isValidTilePlacement(row, column, rotation)) {
 			board.placeTile(tile, row, column, row2, column2);
-			switchPlayers();
 			return true;
 		} else {
 			return false;

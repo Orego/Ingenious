@@ -51,11 +51,17 @@ public class Player {
 		return hasPlayed;
 	}
 	
-	/** Places a tile from the hand and removes that tile from their hand */
+	/** Places a tile from the hand and removes that tile from their hand. */
 	public void placeTile(int tileIndex, int row, int column, int rotation) {
+		// get the tile
 		Tile tile = hand.get(tileIndex);
+		// tell the game to place it
 		gameBeingPlayed.placeTile(tile, row, column, rotation);
+		// remove it from my hand
 		hand.remove(tileIndex);
+		// refill my hand: or if I have no Tile corresponding to the lowest
+		// score color then I get to swap all of my tiles
+		// basically, the player can 
 		refreshHand();
 	}
 	
@@ -80,6 +86,33 @@ public class Player {
 		while(hand.size() < 6) {
 			hand.add(gameBeingPlayed.getBag().draw());
 		}
+		gameBeingPlayed.switchPlayers();
 	}
 
+	public boolean canSwapTiles() {
+		int min = getScore(0);
+		for (int color = 0; color < 6; color++) {
+			if (getScore(color) < min) {
+				min = getScore(color);
+			}
+		}
+		// we have the minimum, now.
+		// count how many colors have that same score
+		int count = 0;
+		for (int color = 0; color < 6; color++) {
+			if (getScore(color) == min) {
+				count++;
+			}
+		}
+		
+		return (count == 1);
+	}
+
+	public void swapTiles() {
+		hand.clear();
+		while(hand.size() < 6) {
+			hand.add(gameBeingPlayed.getBag().draw());
+		}
+		gameBeingPlayed.switchPlayers();
+	}
 }

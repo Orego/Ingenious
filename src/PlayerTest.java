@@ -24,7 +24,6 @@ public class PlayerTest {
 	}
 
 	@Test
-
 	public void testToString() {
 		Player p = new Player(new Game());
 		assertEquals("[0, 0, 0, 0, 0, 0]", p.toString());
@@ -32,7 +31,7 @@ public class PlayerTest {
 		assertEquals("[0, 0, 0, 7, 0, 0]", p.toString());
 	}
 
-
+	@Test
 	public void testRefreshHand() {
 		Hand oldHand = new Hand();
 		oldHand.addAll(p0.getHand());
@@ -41,4 +40,38 @@ public class PlayerTest {
 		assertTrue(oldHand.get(5) != p0.getHand().get(5));
 	}
 
+	@Test
+	public void testCanSwapTiles() {
+		assertFalse(p0.canSwapTiles());
+		p0.addScore(1, 1);
+		assertFalse(p0.canSwapTiles());
+		p0.addScore(2, 1);
+		assertFalse(p0.canSwapTiles());
+		p0.addScore(3, 1);
+		assertFalse(p0.canSwapTiles());
+		p0.addScore(4, 1);
+		assertFalse(p0.canSwapTiles());
+		p0.addScore(5, 1);
+		assertTrue(p0.canSwapTiles());
+	}
+	
+	@Test
+	public void testSwapTiles() {
+		Tile originalFirstTile = p0.getHand().get(0);
+		
+		g.placeTile(p0.getHand().get(5), 0, 1, 0);
+		p0.getHand().remove(5);
+		p0.swapTiles();
+		
+		// the player should have 6 tiles
+		assertEquals(6, p0.getHand().size());		
+		
+		// it's player 1's turn now
+		assertEquals(1, g.getCurrentPlayerIndex());
+		
+		// the player's tiles should not be the same as they started: make sure the first one is different than it was
+		Tile newFirstTile = p0.getHand().get(0);
+		assertFalse(originalFirstTile == newFirstTile);
+	}
+	
 }

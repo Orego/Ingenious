@@ -39,12 +39,15 @@ public class GameTest {
 		assertFalse(game.placeTile(tile, 5, 5, Hex.RIGHT));
 		// play next to the right corner
 		assertTrue(game.placeTile(tile, 5, 9, Hex.UP_RIGHT));
+		game.getPlayer(0).refreshHand();
 		// try to play next to the same corner (as the other player)
 		assertFalse(game.placeTile(tile, 6, 9, Hex.RIGHT));
 		// play next to the bottom right corner
 		assertTrue(game.placeTile(tile, 10, 9, Hex.LEFT));
+		game.getPlayer(1).refreshHand();
 		// play away from corners
 		assertTrue(game.placeTile(tile, 5, 3, Hex.UP_LEFT));
+		game.getPlayer(0).refreshHand();
 		
 		// subsequent placements
 		assertEquals(Board.VACANT, game.getBoard().getHex(2, 4).getColor());
