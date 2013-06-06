@@ -52,6 +52,7 @@ class BoardFrame extends JFrame {
 		setTitle("Ingenious");
 		this.uiState = uiState;
 		BoardComponent comp = new BoardComponent(uiState);
+		comp.setBackground(Color.BLUE);
 		setSize((int) (40 + 11 * UIState.HEX_WIDTH) + 300,
 				(int) (60 + UIState.HEX_HEIGHT + 0.75 * UIState.HEX_HEIGHT * 10));
 		add(comp);
@@ -77,11 +78,17 @@ class BoardComponent extends JComponent implements MouseListener, MouseMotionLis
 	}
 	
 	protected void drawHex(Graphics g, Board board, int i, int j) {
+		if(uiState.game.getBoard().isValidHex(i, j)) {			
+			drawHex(g, board.getHex(i, j).getColor(), i, j, false);
+		}
+	}
+	
+	protected void drawHex(Graphics g, int color, int i, int j, boolean isBeingPlaced) {
 		double angle;
 		double centerx;
 		double centery;
 		Polygon hex = new Polygon();
-		if(board.isValidHex(i, j)) {
+		if(uiState.game.getBoard().isValidHex(i, j)) {
 			centerx = 40 + 0.5 * UIState.HEX_WIDTH * (5 - i) + UIState.HEX_WIDTH * j;
 			centery = 40 + 0.75*UIState.HEX_HEIGHT*i;
 			for(int k = 0; k < 6; k++) {			
@@ -89,25 +96,27 @@ class BoardComponent extends JComponent implements MouseListener, MouseMotionLis
 				hex.addPoint((int)(centerx + (UIState.HEX_HEIGHT)/2 * Math.sin(angle)), 
 						(int)(centery + (UIState.HEX_HEIGHT)/2 * Math.cos(angle)));
 			}
-			if (board.getHex(i, j).getColor() < 0) {
+			if (color < 0) {
 				switch ((i + j) % 3) {
 				case 0:
-					g.setColor(Color.LIGHT_GRAY);
+					g.setColor(uiState.BACKGROUND1);
 					break;
 				case 1:
-					g.setColor(Color.GRAY);
+					g.setColor(uiState.BACKGROUND2);
 					break;
 				case 2:
 					g.setColor(Color.WHITE);
 					break;
 				}
-			} else {
+			} else if(!isBeingPlaced){
 				g.setColor(Color.BLACK);				
+			} else {
+				g.setColor(uiState.MEDIUM_GRAY);
 			}
 			
 			g.fillPolygon(hex);
 			g.drawPolygon(hex);
-			switch (board.getHex(i, j).getColor()) {
+			switch (color) {
 			case 0:
 				g.setColor(Color.RED);
 				g.fillOval( (int)(centerx-UIState.HEX_HEIGHT/4), (int)(centery-UIState.HEX_HEIGHT/4), 2*UIState.HEX_HEIGHT/4, 2*UIState.HEX_HEIGHT/4);
@@ -151,32 +160,9 @@ class BoardComponent extends JComponent implements MouseListener, MouseMotionLis
 		if (!uiState.validTilePosition) {
 			return;
 		}
-		
-		Polygon[] hexes = { new Polygon(), new Polygon() };
-
-		// if rotation, change angle to 60deg * rotation
-		
-		double x = uiState.centerx;
-		double y = uiState.centery;
-		
-		for (int i = 0; i < 2; i++) {
-			x = x + i * UIState.HEX_WIDTH * Math.cos(Math.PI / 3 * 2);
-			y = y - i * UIState.HEX_WIDTH * Math.sin(Math.PI / 3 * 2);
-			
-			for(int j = 0; j < 6; j++) {			
-				double angle = 2 * Math.PI/6 * j;
-				hexes[i].addPoint((int)(x + UIState.HEX_HEIGHT/2.0 * Math.sin(angle)), 
-						(int)(y + UIState.HEX_HEIGHT/2.0 * Math.cos(angle)));
-			}
-			if(i < 1) {
-				g.setColor(Color.RED);
-			} else{				
-				g.setColor(Color.CYAN);
-			}
-			g.fillPolygon(hexes[i]);
-			g.setColor(Color.BLACK);
-			g.drawPolygon(hexes[i]);
-		}
+		uiState.game.getBoard().getAdjacentColumn(uiState.rotation, uiState.col);
+		drawHex(g, 0, uiState.row, uiState.col, true);
+		drawHex(g, 4, uiState.game.getBoard().getAdjacentRow(uiState.rotation, uiState.row), uiState.game.getBoard().getAdjacentColumn(uiState.rotation, uiState.col), true);
 	}
 
 	
@@ -198,13 +184,12 @@ class BoardComponent extends JComponent implements MouseListener, MouseMotionLis
 	public void mouseMoved(MouseEvent event) {
 		// find which hexagon the mouse is in (which one's center it is closest to)
 		
-		int row = (int) Math.round(4.0/3.0 * (event.getY() - 40.0) / UIState.HEX_HEIGHT);
-		int col = (int) Math.round((event.getX() - 40 - 0.5 * UIState.HEX_WIDTH * (5 - row)) / UIState.HEX_WIDTH);
+		uiState.row = (int) Math.round(4.0/3.0 * (event.getY() - 40.0) / UIState.HEX_HEIGHT);
+		uiState.col = (int) Math.round((event.getX() - 40 - 0.5 * UIState.HEX_WIDTH * (5 - uiState.row)) / UIState.HEX_WIDTH);
 		
-		if (uiState.game.isValidTilePlacement(row, col, 2)) {
+		if (uiState.game.isValidTilePlacement(uiState.row, uiState.col, 2)) {
 			uiState.validTilePosition = true;
-			uiState.centerx = 40 + 0.5 * UIState.HEX_WIDTH * (5 - row) + UIState.HEX_WIDTH * col;
-			uiState.centery = 40 + 0.75 * UIState.HEX_HEIGHT * row;
+
 		} else {
 			uiState.validTilePosition = false;
 		}
