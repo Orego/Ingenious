@@ -174,6 +174,18 @@ public class Game {
 
 	/** Returns true if the game is over. */
 	public boolean isOver() {
+		for(int i=0; i<2; i++){
+			boolean instantVictory=true;
+			for(int j=0; j<6; j++){
+				if(getPlayer(i).getScore(j)!=18){
+					instantVictory=false;
+				}
+				
+			}
+			if(instantVictory){
+				return true;
+			}
+		}
 		
 		for(int r=0; r<11; r++){
 			for(int c=0; c<11; c++){

@@ -227,4 +227,12 @@ public class GameTest {
 		assertEquals(-1, game.getWinner());
 	}
 
+	@Test
+	public void testInstantVictory() {
+		for (int color = 0; color < 6; color++) {
+			game.getPlayer(0).addScore(color, 18);
+		}
+		assertTrue(game.isOver());
+		assertEquals(0, game.getWinner());
+	}
 }
