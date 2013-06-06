@@ -133,6 +133,7 @@ public class Game {
 		Hex back = front.getNeighbor(rotation);
 		scoreFrom(playerIndex, front, back);
 		scoreFrom(playerIndex, back, front);
+		players[playerIndex].incrementPlaysLeft(-1);
 		return true;
 	}
 
