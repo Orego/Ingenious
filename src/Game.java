@@ -5,6 +5,7 @@ public class Game {
 
 	private int successfulMoves;
 	private Player[] players;
+	boolean bonusMove = false;
 
 	public static void main(String[] args) {
 		Game g = new Game();
@@ -83,7 +84,6 @@ public class Game {
 	/** Advance to the next player. */
 	public void switchPlayers() {
 		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
-		successfulMoves++;
 	}
 	
 	public boolean isValidTilePlacement(int row, int column, int rotation) {
@@ -111,7 +111,6 @@ public class Game {
 			}
 		}
 		return true;
-
 	}
 
 	/**
@@ -124,6 +123,7 @@ public class Game {
 				
 		if (isValidTilePlacement(row, column, rotation)) {
 			board.placeTile(tile, row, column, row2, column2);
+			successfulMoves++;
 			return true;
 		} else {
 			return false;
@@ -131,8 +131,6 @@ public class Game {
 	}
 
 	public Player getPlayer(int i) {
-		//
-
 		return players[i];
 	}
 

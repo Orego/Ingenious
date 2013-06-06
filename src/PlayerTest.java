@@ -39,6 +39,14 @@ public class PlayerTest {
 		assertEquals(6, p0.getHand().size());
 		assertTrue(oldHand.get(5) != p0.getHand().get(5));
 	}
+	
+	@Test
+	public void testPlaysLeft() {
+		assertEquals(0, p0.getPlaysLeft());
+		p0.startTurn();
+		assertEquals(1, p0.getPlaysLeft());
+		
+	}
 
 	@Test
 	public void testCanSwapTiles() {

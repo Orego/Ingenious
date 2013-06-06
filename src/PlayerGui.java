@@ -50,7 +50,7 @@ class PlayerComponent extends JComponent {
 			} else if (i == 3) {
 				g2.setPaint(Color.GREEN);
 			} else if (i == 4) {
-				g2.setPaint(Color.BLUE);
+				g2.setPaint(Color.CYAN);
 			} else {
 				g2.setPaint(Color.MAGENTA);
 			}
