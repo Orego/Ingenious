@@ -15,8 +15,6 @@ public class Player {
 		gameBeingPlayed = game;
 	}
 	
-	
-
 	public static void main(String[] args) {
 		Game g = new Game();
 		Player p = g.getPlayer(0);
@@ -78,7 +76,7 @@ public class Player {
 		hasPlayed = true;
 	}
 	
-
+	@Override
 	public String toString() {
 		String result = "[";
 		result = result + score[0];
@@ -97,6 +95,7 @@ public class Player {
 		gameBeingPlayed.switchPlayers();
 	}
 
+	/** Return true if the player is allowed to swap all their tiles. */
 	public boolean canSwapTiles() {
 		int min = getScore(0);
 		for (int color = 0; color < 6; color++) {
@@ -116,6 +115,7 @@ public class Player {
 		return (count == 1);
 	}
 
+	/** Swap all the player's tiles with new ones from the bag. */
 	public void swapTiles() {
 		hand.clear();
 		while(hand.size() < 6) {
@@ -123,7 +123,7 @@ public class Player {
 		}
 		gameBeingPlayed.switchPlayers();
 	}
-
+	
 	public int getPlaysLeft() {
 		// TODO Auto-generated method stub
 		return playsLeft;

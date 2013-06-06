@@ -14,18 +14,25 @@ public class Game {
 			// display the board
 			System.out.println(g.board);
 			System.out.println("Player " + g.currentPlayerIndex);
+			
 			// display the player's hand
 			Player p = g.getPlayer(g.currentPlayerIndex);
 			System.out.println("Your hand: " + p.getHand());
+			
+			// get the player's chosen tile
 			System.out.println("Which tile do you want to play (index 0 to 5)?");
 			int tileIndex = in.nextInt();
 			Tile tile = p.getHand().get(tileIndex);
+			
+			// get placement info
 			System.out.println("Give the rotation of the tile:");
 			int rotation = in.nextInt();
 			System.out.println("Give row to place tile:");
 			int row = in.nextInt();
 			System.out.println("Give column to place tile:");
 			int column = in.nextInt();
+			
+			// try to place the tile, and give option to swap hand (if legal) or refresh
 			if (g.placeTile(tile, row, column, rotation)) {
 				p.getHand().remove(tileIndex);
 				System.out.println("Player who scored");

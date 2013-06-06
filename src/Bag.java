@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import java.lang.Math;
 
 public class Bag extends ArrayList<Tile> {
