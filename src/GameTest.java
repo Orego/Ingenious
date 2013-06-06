@@ -173,5 +173,18 @@ public class GameTest {
 		game.getBoard().setColor(8, 4, 4);
 		assertTrue(game.isOver());
 	}
+	@Test
+	public void testVictory() { 
+		for(int i=0; i<6; i++){
+			game.getPlayer(0).addScore(i, 14);
+		}
+		for(int i=0; i<5; i++){
+			game.getPlayer(1).addScore(i, 17);
+		}
+		
+		assertEquals(0, game.getWinner());
+		game.getPlayer(1).addScore(5, 17);
+		assertEquals(1, game.getWinner());
+	}
 
 }

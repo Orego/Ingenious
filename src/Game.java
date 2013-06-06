@@ -195,4 +195,17 @@ public class Game {
 		return true;
 	}
 
+	/** Returns the number of the player currently winning. */
+	public int getWinner() {
+		int s0 = players[0].getLowestScore();
+		int s1 = players[1].getLowestScore();
+		if (s0 > s1) {
+			return 0;
+		} else if (s1 > s0) {
+			return 1;
+		} else {
+			return -1; // tie
+		}
+	}
+
 }

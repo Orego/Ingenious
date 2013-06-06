@@ -108,4 +108,16 @@ public class Player {
 		
 	}
 
+
+
+	public int getLowestScore() {
+		int result = 19;
+		for (int s : score) {
+			if (s < result) {
+				result = s;
+			}
+		}
+		return result;
+	}
+
 }
