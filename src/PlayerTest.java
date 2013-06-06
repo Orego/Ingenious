@@ -4,13 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class PlayerTest {
-	Game g;
 	Player p0;
 	
 	@Before
 	public void setUp() throws Exception {
-		g = new Game();
-		p0 = g.getPlayer(0);
+		p0 = new Player(new Game());
 	}
 	
 	@Test
