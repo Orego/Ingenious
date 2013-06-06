@@ -73,7 +73,7 @@ public class Board {
 	}
 	
 	public void setColor(int r, int c, int color) {
-		
+		board[r][c].setColor(color);
 	}
 	
 	/** Get a hex at coordinate (r, c) from the board. */

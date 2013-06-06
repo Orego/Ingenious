@@ -161,16 +161,17 @@ public class GameTest {
 	public void testGameOver() {
 		for (int r = 0; r < 11; r++) {
 			for (int c = 0; c < 11; c++) {
-				game.getBoard().setColor(r, c, 0);
+				if (game.getBoard().isValidHex(r, c)) {
+					game.getBoard().setColor(r, c, 0);
+				}
 			}
 		}
-		game.getBoard().setColor(8, 2, -1);
 		game.getBoard().setColor(8, 3, -1);
 		game.getBoard().setColor(8, 4, -1);
+		game.getBoard().setColor(8, 5, -1);
 		assertFalse(game.isOver());
-		game.getBoard().setColor(8, 3, 4);
+		game.getBoard().setColor(8, 4, 4);
 		assertTrue(game.isOver());
-
 	}
 
 }

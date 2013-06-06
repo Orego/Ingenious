@@ -167,7 +167,25 @@ public class Game {
 
 	/** Returns true if the game is over. */
 	public boolean isOver() {
-		return false;
+		
+		for(int r=0; r<11; r++){
+			for(int c=0; c<11; c++){
+				if(board.isValidHex(r, c)){
+					Hex temp = board.getHex(r, c);
+					if(temp.getColor()==-1){
+						for(int i=0; i<6; i++){
+							if(temp.getNeighbor(i)!=null){
+								if(temp.getNeighbor(i).getColor()==-1){
+									return false;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return true;
 	}
 
 }
