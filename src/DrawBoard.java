@@ -53,9 +53,19 @@ class BoardFrame extends JFrame {
 	public BoardFrame(Game game) {
 		setTitle("Ingenious");
 		BoardComponent comp = new BoardComponent(game);
-		setSize((int) (40 + 11 * BoardComponent.HEX_WIDTH),
-				(int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10));
-		add(comp);
+//		setSize((int) (40 + 11 * BoardComponent.HEX_WIDTH),
+//				(int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10));
+		JPanel panel = new JPanel();
+		comp.setPreferredSize(new Dimension((int) (40 + 11 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
+		panel.add(comp);
+		TileGUI tileGui = new TileGUI();
+		tileGui.setPreferredSize(new Dimension(200, 200));
+		tileGui.setPreferredSize(new Dimension((int) (40 + 11 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
+		panel.add(tileGui);
+		System.out.println(comp);
+		System.out.println(tileGui);
+		add(panel);
+		pack();
 	}
 }
 

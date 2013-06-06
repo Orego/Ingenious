@@ -12,126 +12,13 @@ import java.util.Scanner;
 
 import javax.swing.*;
 
-public class TileGUI {
+public class TileGUI extends JComponent {
 
-	public static void main(String[] args) {
-
-		EventQueue.invokeLater(new Runnable() {
-
-			public void run() {
-
-				SizedFrame frame = new SizedFrame();
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setVisible(true);
-
-			}
-		});
-
-	}
-
-}
-
-
-class SizedFrame extends JFrame implements MouseListener, MouseMotionListener{
-	private int colorOne;
-	private int colorTwo;
-	
-	private int rotation=0;
-	private NotHelloWorldComponent comp;
-	public SizedFrame() {
-		
-		// get screen dimensions
-
-		Toolkit kit = Toolkit.getDefaultToolkit();
-		Dimension screenSize = kit.getScreenSize();
-		int screenHeight = screenSize.height;
-		int screenWidth = screenSize.width;
-
-		
-//	      addMouseListener( this );
-//
-//	      addMouseMotionListener( this);
-	      // set frame width and height and let platform pick location of screen
-		setSize(screenWidth / 2, screenHeight / 2);
-		setLocationByPlatform(true);
-		// can set frame icon and title here, currently no icon
-		setTitle("Rotator");
-		
-		addMouseListener( this );
-
-	    addMouseMotionListener( this);
-	    
-	    
-
-		comp = new NotHelloWorldComponent(rotation);
-		add(comp);
-		
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseMoved(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		rotation++;
-		
-		comp.setRotation(rotation);
-		repaint();
-		
-		
-	}
-
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-}
-
-class NotHelloWorldComponent extends JComponent {
 	private Polygon hex1;
 	private Polygon hex2;
 	private int r;
 	private int[] xPoly2 = { 236, 193, 193, 236, 279, 279 };
 	private int[] yPoly2 = { 200, 175, 125, 100, 125, 175 };
-
-	public NotHelloWorldComponent(int r){
-		this.r=r;
-	}
 	
 	public void setRotation(int r){
 		this.r=r;
@@ -208,4 +95,114 @@ class NotHelloWorldComponent extends JComponent {
 
 	public static final int MESSAGE_X = 300;
 	public static final int MESSAGE_Y = 100;
+
+	public static void main(String[] args) {
+
+		EventQueue.invokeLater(new Runnable() {
+
+			public void run() {
+
+				SizedFrame frame = new SizedFrame();
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.setVisible(true);
+
+			}
+		});
+
+	}
+
+	public void incrementRotation() {
+		r++;
+	}
+
 }
+
+
+class SizedFrame extends JFrame implements MouseListener, MouseMotionListener{
+	private int colorOne;
+	private int colorTwo;
+	
+	private TileGUI comp;
+	public SizedFrame() {
+		
+		// get screen dimensions
+
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Dimension screenSize = kit.getScreenSize();
+		int screenHeight = screenSize.height;
+		int screenWidth = screenSize.width;
+
+		
+//	      addMouseListener( this );
+//
+//	      addMouseMotionListener( this);
+	      // set frame width and height and let platform pick location of screen
+		setSize(screenWidth / 2, screenHeight / 2);
+		setLocationByPlatform(true);
+		// can set frame icon and title here, currently no icon
+		setTitle("Rotator");
+		
+		addMouseListener( this );
+
+	    addMouseMotionListener( this);
+	    
+	    
+
+		comp = new TileGUI();
+		add(comp);
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		
+		comp.incrementRotation();
+		repaint();
+		
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
+
