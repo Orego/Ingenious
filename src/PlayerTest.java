@@ -32,13 +32,21 @@ public class PlayerTest {
 		assertEquals("[0, 0, 0, 7, 0, 0]", p.toString());
 	}
 
-
+	@Test
 	public void testRefreshHand() {
 		Hand oldHand = new Hand();
 		oldHand.addAll(p0.getHand());
 		p0.placeTile(5, 0, 1, 0);
 		assertEquals(6, p0.getHand().size());
 		assertTrue(oldHand.get(5) != p0.getHand().get(5));
+	}
+	
+	@Test
+	public void testPlaysLeft() {
+		assertEquals(0, p0.getPlaysLeft());
+		p0.startTurn();
+		assertEquals(1, p0.getPlaysLeft());
+		
 	}
 
 }
