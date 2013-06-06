@@ -54,14 +54,20 @@ class BoardFrame extends JFrame {
 //		setSize((int) (40 + 11 * BoardComponent.HEX_WIDTH),
 //				(int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10));
 		JPanel panel = new JPanel();
-		PlayerGUI playerGui = new PlayerGUI(game, panel);
-		playerGui.setPreferredSize(new Dimension((int) (145 + BoardComponent.HEX_WIDTH * 2), (int) (210 + BoardComponent.HEX_HEIGHT * 6)));
-		panel.add(playerGui);
+		PlayerGUI[] playerGui = new PlayerGUI[game.getNumberOfPlayers()];
+		for(int i = 0; i < game.getNumberOfPlayers(); i++) {			
+			playerGui[i] = new PlayerGUI(game, panel, i);
+			playerGui[i].setPreferredSize(new Dimension((int) (145 + BoardComponent.HEX_WIDTH * 2), (int) (210 + BoardComponent.HEX_HEIGHT * 6)));
+			if(i == 0) {				
+				panel.add(playerGui[i]);
+			}
+		}
 		comp.setPreferredSize(new Dimension((int) (40 + 11 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
 		panel.add(comp);
-		TileGUI tileGui = new TileGUI(playerGui);
+		TileGUI tileGui = new TileGUI(playerGui, game);
 		tileGui.setPreferredSize(new Dimension((int) (4 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
 		panel.add(tileGui);
+		panel.add(playerGui[1]);
 		System.out.println(comp);
 		System.out.println(tileGui);
 		System.out.println(playerGui);
