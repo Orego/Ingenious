@@ -5,7 +5,9 @@ public class Player {
 	private Hand hand;
 	private boolean hasPlayed;
 	private Game gameBeingPlayed;
+	private int playsLeft;
 	
+
 	public Player(Game game) {
 		score = new int[6];
 		hand = new Hand(game.getBag());
@@ -43,7 +45,14 @@ public class Player {
 
 	/** Adds the amount to the score of color. */
 	public void addScore(int color, int amount) {
-		score[color] += amount;
+		if(score[color]<18){
+			score[color] += amount;
+				if(score[color]>=18){
+					score[color]=18;
+					incrementPlaysLeft(1);
+				}
+			}
+		
 	}
 	
 	/** Returns true if this player has played their first turn. */
@@ -80,6 +89,23 @@ public class Player {
 		while(hand.size() < 6) {
 			hand.add(gameBeingPlayed.getBag().draw());
 		}
+	}
+
+
+
+	public int getPlaysLeft() {
+		return playsLeft;
+	}
+	
+	public void incrementPlaysLeft(int i){
+		playsLeft+=i;
+	}
+
+
+
+	public void startTurn() {
+		playsLeft=1;
+		
 	}
 
 }

@@ -7,6 +7,7 @@ public class Game {
 	private int successfulMoves;
 	private int numberOfPlayers;
 	private Player[] players;
+	boolean bonusMove = false;
 
 	public static void main(String[] args) {
 		Game g = new Game();
@@ -35,6 +36,9 @@ public class Game {
 						(int) (Math.random() * 6));
 				System.out.println("Player who scored");
 				System.out.println(g.players);
+				if (g.getPlayer(g.getCurrentPlayerIndex()).getPlaysLeft() == 0) {
+					g.switchPlayers();
+				}
 			} else {
 				System.out.println("Invalid move: try again");
 			}
@@ -50,6 +54,7 @@ public class Game {
 
 		board = new Board();
 		successfulMoves = 0;
+		players[0].startTurn();
 	}
 
 	/** Zero-based index of the current player. */
@@ -84,14 +89,16 @@ public class Game {
 	/** Advance to the next player. */
 	public void switchPlayers() {
 		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
-		successfulMoves++;
+		players[currentPlayerIndex].startTurn();
 	}
+	
 
 	/**
 	 * Tells board where to place the tile based on the player's given
 	 * coordinates.
 	 */
 	public boolean placeTile(Tile tile, int row, int column, int rotation) {
+		
 		int row2 = board.getAdjacentRow(rotation, row);
 		int column2 = board.getAdjacentColumn(rotation, column);
 		if (!board.isValidHex(row, column)
@@ -117,7 +124,8 @@ public class Game {
 		}
 
 		board.placeTile(tile, row, column, row2, column2);
-		switchPlayers();
+		successfulMoves++;
+
 		return true;
 	}
 
@@ -136,6 +144,7 @@ public class Game {
 		Hex back = front.getNeighbor(rotation);
 		scoreFrom(playerIndex, front, back);
 		scoreFrom(playerIndex, back, front);
+		players[playerIndex].incrementPlaysLeft(-1);
 		return true;
 	}
 

@@ -38,6 +38,9 @@ public class DrawBoard {
 				tile = new Tile((int)(Math.random()*6), (int)(Math.random()*6));
 				System.out.println("Player 0: " + game.getPlayer(0));
 				System.out.println("Player 1: " + game.getPlayer(1));
+				if (game.getPlayer(game.getCurrentPlayerIndex()).getPlaysLeft() == 0) {
+					game.switchPlayers();
+				}
 			} else {
 				System.out.println("Invalid move: try again");
 			}
