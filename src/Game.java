@@ -80,12 +80,14 @@ public class Game {
 		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
 		successfulMoves++;
 	}
+	
 
 	/**
 	 * Tells board where to place the tile based on the player's given
 	 * coordinates.
 	 */
 	public boolean placeTile(Tile tile, int row, int column, int rotation) {
+		
 		int row2 = board.getAdjacentRow(rotation, row);
 		int column2 = board.getAdjacentColumn(rotation, column);
 		if (!board.isValidHex(row, column)
@@ -111,9 +113,11 @@ public class Game {
 		}
 
 		board.placeTile(tile, row, column, row2, column2);
-		if(!bonusMove){
+		
+	
+		
 		switchPlayers();
-		}
+		
 		
 		return true;
 	}
@@ -129,6 +133,7 @@ public class Game {
 		if (!placeTile(tile, row, column, rotation)) {
 			return false;
 		}
+		bonusMove=false;
 		Hex front = board.getHex(row, column);
 		Hex back = front.getNeighbor(rotation);
 		scoreFrom(playerIndex, front, back);

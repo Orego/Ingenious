@@ -43,7 +43,13 @@ public class Player {
 
 	/** Adds the amount to the score of color. */
 	public void addScore(int color, int amount) {
+		if(score[color]<18){
 		score[color] += amount;
+			if(score[color]>=18){
+				gameBeingPlayed.switchPlayers();
+			}
+		}
+		
 	}
 	
 	/** Returns true if this player has played their first turn. */
