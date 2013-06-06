@@ -26,8 +26,8 @@ class SimpleFrame extends JFrame {
 		add(new PlayerComponent());
 	}
 
-	public static final int DEFAULT_WIDTH = 230;
-	public static final int DEFAULT_HEIGHT = 530;
+	public static final int DEFAULT_WIDTH = (int)(115 + Math.sqrt(3)*25);
+	public static final int DEFAULT_HEIGHT = 510;
 }
 
 class PlayerComponent extends JComponent {
