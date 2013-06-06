@@ -88,17 +88,13 @@ public class Game {
 
 	/** Advance to the next player. */
 	public void switchPlayers() {
+		successfulMoves++;
 		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
 		players[currentPlayerIndex].startTurn();
 	}
 	
 
-	/**
-	 * Tells board where to place the tile based on the player's given
-	 * coordinates.
-	 */
-	public boolean placeTile(Tile tile, int row, int column, int rotation) {
-		
+	public boolean isValidTilePlacement(int row, int column, int rotation) {
 		int row2 = board.getAdjacentRow(rotation, row);
 		int column2 = board.getAdjacentColumn(rotation, column);
 		if (!board.isValidHex(row, column)
@@ -122,11 +118,25 @@ public class Game {
 				return false;
 			}
 		}
-
-		board.placeTile(tile, row, column, row2, column2);
-		successfulMoves++;
-
 		return true;
+
+	}
+
+	/**
+	 * Tells board where to place the tile based on the player's given
+	 * coordinates.
+	 */
+	public boolean placeTile(Tile tile, int row, int column, int rotation) {
+		int row2 = board.getAdjacentRow(rotation, row);
+		int column2 = board.getAdjacentColumn(rotation, column);
+				
+		if (isValidTilePlacement(row, column, rotation)) {
+			board.placeTile(tile, row, column, row2, column2);
+			switchPlayers();
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public Player getPlayer(int i) {
