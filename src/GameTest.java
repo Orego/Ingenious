@@ -186,5 +186,45 @@ public class GameTest {
 		game.getPlayer(1).addScore(5, 17);
 		assertEquals(1, game.getWinner());
 	}
+	
+	@Test
+	public void testVictory2() {
+		game.getPlayer(0).addScore(0, 4);
+		game.getPlayer(0).addScore(1, 5);
+		game.getPlayer(0).addScore(2, 6);
+		game.getPlayer(0).addScore(3, 8);
+		game.getPlayer(0).addScore(4, 10);
+		game.getPlayer(0).addScore(5, 11);
+		
+		game.getPlayer(1).addScore(3, 4);
+		game.getPlayer(1).addScore(1, 5);
+		game.getPlayer(1).addScore(5, 6);
+		game.getPlayer(1).addScore(0, 8);
+		game.getPlayer(1).addScore(4, 11);
+		game.getPlayer(1).addScore(2, 11);
+		
+		assertEquals(1, game.getWinner());
+		game.getPlayer(0).addScore(3, 1);
+		assertEquals(0, game.getWinner());
+	}
+	
+	@Test
+	public void testVictory3() {
+		game.getPlayer(0).addScore(0, 4);
+		game.getPlayer(0).addScore(1, 5);
+		game.getPlayer(0).addScore(2, 6);
+		game.getPlayer(0).addScore(3, 8);
+		game.getPlayer(0).addScore(4, 10);
+		game.getPlayer(0).addScore(5, 11);
+		
+		game.getPlayer(1).addScore(3, 4);
+		game.getPlayer(1).addScore(1, 5);
+		game.getPlayer(1).addScore(5, 6);
+		game.getPlayer(1).addScore(0, 8);
+		game.getPlayer(1).addScore(4, 10);
+		game.getPlayer(1).addScore(2, 11);
+		
+		assertEquals(-1, game.getWinner());
+	}
 
 }

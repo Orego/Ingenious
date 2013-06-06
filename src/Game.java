@@ -197,15 +197,20 @@ public class Game {
 
 	/** Returns the number of the player currently winning. */
 	public int getWinner() {
-		int s0 = players[0].getLowestScore();
-		int s1 = players[1].getLowestScore();
-		if (s0 > s1) {
-			return 0;
-		} else if (s1 > s0) {
-			return 1;
-		} else {
-			return -1; // tie
+		int[] s0 = new int[6];
+		int[] s1 = new int[6];
+		System.arraycopy(players[0].getScores(), 0, s0, 0, 6);
+		System.arraycopy(players[1].getScores(), 0, s1, 0, 6);
+		java.util.Arrays.sort(s0);
+		java.util.Arrays.sort(s1);
+		for (int i = 0; i < s0.length; i++) {
+			if (s0[i] > s1[i]) {
+				return 0;
+			} else if (s1[i] > s0[i]) {
+				return 1;
+			}
 		}
+		return -1;
 	}
 
 }
