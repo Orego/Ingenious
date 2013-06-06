@@ -35,7 +35,9 @@ public class Game {
 						(int) (Math.random() * 6));
 				System.out.println("Player who scored");
 				System.out.println(g.players);
-				g.switchPlayers();
+				if (g.getPlayer(g.getCurrentPlayerIndex()).getPlaysLeft() == 0) {
+					g.switchPlayers();
+				}
 			} else {
 				System.out.println("Invalid move: try again");
 			}
@@ -50,6 +52,7 @@ public class Game {
 
 		board = new Board();
 		successfulMoves = 0;
+		players[0].startTurn();
 	}
 
 	/** Zero-based index of the current player. */
@@ -79,6 +82,7 @@ public class Game {
 	/** Advance to the next player. */
 	public void switchPlayers() {
 		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
+		players[currentPlayerIndex].startTurn();
 	}
 	
 
