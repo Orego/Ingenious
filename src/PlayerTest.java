@@ -46,8 +46,12 @@ public class PlayerTest {
 		assertEquals(0, p0.getPlaysLeft());
 		p0.startTurn();
 		assertEquals(1, p0.getPlaysLeft());
-		
-		
+	}
+
+	@Test
+	public void testBonus1() {
+		p0.addScore(3, 18);
+		assertEquals(1, p0.getPlaysLeft());
 	}
 
 }

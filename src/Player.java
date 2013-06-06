@@ -48,7 +48,7 @@ public class Player {
 		if(score[color]<18){
 			score[color] += amount;
 				if(score[color]>=18){
-					gameBeingPlayed.switchPlayers();
+					incrementPlaysLeft(1);
 				}
 			}
 		

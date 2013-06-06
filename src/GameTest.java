@@ -147,10 +147,13 @@ public class GameTest {
 	public void testSuccessfulPlay() {
 		game.getPlayer(game.getCurrentPlayerIndex()).startTurn();
 		game.play(0, new Tile(0, 0), 0, 1, 0);
-
-		
-		
 		assertEquals(0, game.getPlayer(game.getCurrentPlayerIndex()).getPlaysLeft());
-		
+	}
+	
+	@Test
+	public void testIllegalMove() {
+		game.getPlayer(game.getCurrentPlayerIndex()).startTurn();
+		assertFalse(game.play(0, new Tile(0, 0), 0, 0, 0));
+		assertEquals(1, game.getPlayer(game.getCurrentPlayerIndex()).getPlaysLeft());		
 	}
 }
