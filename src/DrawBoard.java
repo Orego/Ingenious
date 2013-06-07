@@ -61,14 +61,14 @@ public class DrawBoard {
 }
 
 class BoardFrame extends JFrame {
-	UIState uiState;
+	final UIState uiState;
 	private JButton swapButton;
-	public BoardFrame(UIState uiState) {
+	public BoardFrame(final UIState uiState) {
 		setTitle("Ingenious");
 		this.uiState = uiState;
 //		setSize((int) (40 + 11 * BoardComponent.HEX_WIDTH),
 //				(int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10));
-		JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		PlayerGui[] playerGui = new PlayerGui[uiState.game.getNumberOfPlayers()];
 		for(int i = 0; i < uiState.game.getNumberOfPlayers(); i++) {			
 			playerGui[i] = new PlayerGui(uiState.game, panel, i);
@@ -95,12 +95,26 @@ class BoardFrame extends JFrame {
 		swapButton = new JButton("Swap");
 		JButton refreshButton = new JButton("Refresh");
 		panel.add(swapButton);
-		ButtonActions swapAction = new ButtonActions(uiState, 1, panel);
-		swapButton.addActionListener(swapAction);
+		swapButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).swapTiles();
+				panel.getComponent(5).setEnabled(false);
+				panel.getComponent(4).setEnabled(false);
+				panel.repaint();
+			}
+		});
 		swapButton.setEnabled(false);
 		panel.add(refreshButton);
-		ButtonActions refreshAction = new ButtonActions(uiState,0, panel);
-		refreshButton.addActionListener(refreshAction);
+		refreshButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).refreshHand();
+				panel.getComponent(5).setEnabled(false);
+				panel.getComponent(4).setEnabled(false);
+				panel.repaint();
+			}
+		});
 		refreshButton.setEnabled(false);
 		pack();
 	}
