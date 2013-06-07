@@ -65,7 +65,8 @@ public class TileGUI extends HexGui implements MouseListener{
 
 		Graphics2D g2 = (Graphics2D) g;
 		if(!game.isOver()) {			
-			if(playerGui[game.getCurrentPlayerIndex()].getSelectedTile() != -1) {			
+			int selectedTileIndex = playerGui[game.getCurrentPlayerIndex()].getSelectedTile();
+			if(selectedTileIndex != -1 && selectedTileIndex < game.getPlayer(game.getCurrentPlayerIndex()).getHand().size()) {			
 				drawHex(g2, playerGui[game.getCurrentPlayerIndex()].getGame().getPlayer(playerGui[game.getCurrentPlayerIndex()].getGame().getCurrentPlayerIndex()).getHand().get(playerGui[game.getCurrentPlayerIndex()].getSelectedTile()).getA(), 1, -1);
 				
 				drawHex(g2, playerGui[game.getCurrentPlayerIndex()].getGame().getPlayer(playerGui[game.getCurrentPlayerIndex()].getGame().getCurrentPlayerIndex()).getHand().get(playerGui[game.getCurrentPlayerIndex()].getSelectedTile()).getB(), COORDINATES[rotation][0], COORDINATES[rotation][1]);

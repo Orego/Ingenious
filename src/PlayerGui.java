@@ -39,8 +39,10 @@ public class PlayerGui extends HexGui implements MouseListener, MouseMotionListe
 		if((x >= 30) && (x <= 30 + 2 * BoardComponent.HEX_WIDTH)) {
 			for(int i = 0; i < 6; i++) {
 				if((y >= (30 + i*(BoardComponent.HEX_HEIGHT + 30))) 
-						&& (y <= (30 + BoardComponent.HEX_HEIGHT + i*(BoardComponent.HEX_HEIGHT + 30)))) {
-					selectedTile = i;
+				&& (y <= (30 + BoardComponent.HEX_HEIGHT + i*(BoardComponent.HEX_HEIGHT + 30)))) {
+					if (i < game.getPlayer(playerIndex).getHand().size()) {
+						selectedTile = i;
+					}
 				}
 			}
 		}
@@ -85,7 +87,7 @@ public class PlayerGui extends HexGui implements MouseListener, MouseMotionListe
 		int centerx;
 		int centery;
 		// Draw the six tiles of a player's hand
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < game.getPlayer(playerIndex).getHand().size(); i++) {
 			centerx = (int)(30 + HEX_WIDTH / 2);
 			centery = 30 + HEX_HEIGHT / 2 + 80 * i;
 			drawHex(g, game.getPlayer(playerIndex).getHand().get(i).getA(), centerx, centery, 0, 0, false, ((i == selectedTile) && (playerIndex == game.getCurrentPlayerIndex())));
@@ -116,6 +118,10 @@ public class PlayerGui extends HexGui implements MouseListener, MouseMotionListe
 			String s = score + "";
 			g2.drawString(s, 180, 210 + i * 50);
 		}
+	}
+
+	public void setSelectedTile(int i) {
+		selectedTile = i;
 	}
 
 }

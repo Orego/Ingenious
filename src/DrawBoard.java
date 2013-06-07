@@ -273,8 +273,15 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 			int col = (int) Math.round((event.getX() - 40 - 0.5 * UIState.HEX_WIDTH * (5 - row)) / UIState.HEX_WIDTH);
 			
 			if ((playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile() != -1) && uiState.game.isValidTilePlacement(row, col, tileGui.getRotation())) {
-				uiState.game.play(uiState.game.getCurrentPlayerIndex(), uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getHand().get(playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile()), 
-						row, col, tileGui.getRotation());
+				if (uiState.game.play(uiState.game.getCurrentPlayerIndex(), uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getHand().get(playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile()), 
+						row, col, tileGui.getRotation())) {
+					uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getHand().remove(playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile());
+					playerGui[uiState.game.getCurrentPlayerIndex()].setSelectedTile(-1);
+				}
+				if (uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getPlaysLeft() == 0) {
+					uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).refreshHand();
+					playerGui[uiState.game.getCurrentPlayerIndex()].setSelectedTile(0);
+				}
 			}
 		}
 	}
