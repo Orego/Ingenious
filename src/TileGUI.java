@@ -4,28 +4,31 @@ import java.awt.event.MouseListener;
 
 public class TileGUI extends HexGui implements MouseListener {
 
-	private int rotation;
+	/** Coordinates of second hex in rotated tile, indexed by rotation. */
+	public static final int[][] COORDINATES = { { 1, 0 }, { 0, -1 }, { 0, -2 },
+			{ 1, -2 }, { 2, -1 }, { 2, 0 } };
 
-	private Game game;
+	private BoardFrame gui;
 
-	/**
-	 * Returns the rotation of this tile (in 60-degree increments
-	 * counterclockwise from right).
-	 */
-	public int getRotation() {
-		return rotation;
+	public TileGUI(BoardFrame gui) {
+		this.gui = gui;
+		addMouseListener(this);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		incrementRotation();
+		gui.incrementSelectedTileRotation();
 		repaint();
 	}
 
-	public TileGUI( Game game) {
-		this.game = game;
-		rotation = 0;
-		addMouseListener(this);
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// Does nothing
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// Does nothing
 	}
 
 	@Override
@@ -38,34 +41,16 @@ public class TileGUI extends HexGui implements MouseListener {
 		// Does nothing
 	}
 
-	/** Coordinates of second hex in rotated tile, indexed by rotation. */
-	public static final int[][] COORDINATES = { { 1, 0 }, { 0, -1 }, { 0, -2 },
-			{ 1, -2 }, { 2, -1 }, { 2, 0 } };
-
+	@Override
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		Tile tile = game.getSelectedTile();
+		Tile tile = gui.getSelectedTile();
+		int rotation = gui.getSelectedTileRotation();
 		if (tile != null) {
 			drawHex(g2, tile.getA(), 1, -1);
 			drawHex(g2, tile.getB(), COORDINATES[rotation][0],
 					COORDINATES[rotation][1]);
 		}
-	}
-
-	public void incrementRotation() {
-		rotation = (rotation + 1) % 6;
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

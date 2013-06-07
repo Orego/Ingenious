@@ -77,7 +77,7 @@ class BoardFrame extends JFrame {
 				panel.add(playerGui[i]);
 			}
 		}
-		TileGUI tileGui = new TileGUI(uiState.game);
+		TileGUI tileGui = new TileGUI(this);
 		tileGui.setPreferredSize(new Dimension((int) (4 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
 		BoardComponent comp = new BoardComponent(uiState, panel, playerGui, tileGui);
 		comp.setPreferredSize(new Dimension((int) (40 + 11 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
@@ -107,6 +107,16 @@ class BoardFrame extends JFrame {
 	public JButton getSwapButton(){
 		return swapButton;
 	}
+	public void incrementSelectedTileRotation() {
+		uiState.game.incrementSelectedTileRotation();
+	}
+	public Tile getSelectedTile() {
+		return uiState.game.getSelectedTile();
+	}
+	public int getSelectedTileRotation() {
+		return uiState.game.getSelectedTileRotation();
+	}
+	
 }
 
 class BoardComponent extends HexGui implements MouseListener, MouseMotionListener {
@@ -236,7 +246,7 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 				.getA(), uiState.row, uiState.col, true);
 		drawHex(g, uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getHand()
 				.get(playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile()).getB(), 
-				uiState.game.getBoard().getAdjacentRow(tileGui.getRotation(), uiState.row), uiState.game.getBoard().getAdjacentColumn(tileGui.getRotation(), uiState.col), true);
+				uiState.game.getBoard().getAdjacentRow(uiState.game.getSelectedTileRotation(), uiState.row), uiState.game.getBoard().getAdjacentColumn(uiState.game.getSelectedTileRotation(), uiState.col), true);
 	}
 
 	
@@ -261,7 +271,7 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 		uiState.row = (int) Math.round(4.0/3.0 * (event.getY() - 40.0) / UIState.HEX_HEIGHT);
 		uiState.col = (int) Math.round((event.getX() - 40 - 0.5 * UIState.HEX_WIDTH * (5 - uiState.row)) / UIState.HEX_WIDTH);
 		
-		if (uiState.game.isValidTilePlacement(uiState.row, uiState.col, tileGui.getRotation())) {
+		if (uiState.game.isValidTilePlacement(uiState.row, uiState.col, uiState.game.getSelectedTileRotation())) {
 			uiState.validTilePosition = true;
 
 		} else {
@@ -279,9 +289,9 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 			int row = (int) Math.round(4.0/3.0 * (event.getY() - 40.0) / UIState.HEX_HEIGHT);
 			int col = (int) Math.round((event.getX() - 40 - 0.5 * UIState.HEX_WIDTH * (5 - row)) / UIState.HEX_WIDTH);
 			
-			if ((playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile() != -1) && uiState.game.isValidTilePlacement(row, col, tileGui.getRotation())) {
+			if ((playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile() != -1) && uiState.game.isValidTilePlacement(row, col, uiState.game.getSelectedTileRotation())) {
 				if (uiState.game.play(uiState.game.getCurrentPlayerIndex(), uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getHand().get(playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile()), 
-						row, col, tileGui.getRotation())) {
+						row, col, uiState.game.getSelectedTileRotation())) {
 					uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getHand().remove(playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile());
 					playerGui[uiState.game.getCurrentPlayerIndex()].setSelectedTile(-1);
 				}

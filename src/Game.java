@@ -15,21 +15,23 @@ public class Game {
 			// display the board
 			System.out.println(g.board);
 			System.out.println("Player " + g.getCurrentPlayerIndex());
-			
+
 			// display the player's hand
 			Player p = g.getPlayer(g.getCurrentPlayerIndex());
 			System.out.println("Your hand: " + p.getHand());
 			System.out.print("Your scores: ");
 			for (int i = 0; i < 6; i++) {
-				System.out.print(g.getPlayer(g.getCurrentPlayerIndex()).getScore(i) + " ");
+				System.out.print(g.getPlayer(g.getCurrentPlayerIndex())
+						.getScore(i) + " ");
 			}
 			System.out.println();
 
 			// get the player's chosen tile
-			System.out.println("Which tile do you want to play (index 0 to " + (p.getHand().size() - 1) + ")?");
+			System.out.println("Which tile do you want to play (index 0 to "
+					+ (p.getHand().size() - 1) + ")?");
 			int tileIndex = in.nextInt();
 			Tile tile = p.getHand().get(tileIndex);
-			
+
 			// get placement info
 			System.out.println("Give the rotation of the tile:");
 			int rotation = in.nextInt();
@@ -37,15 +39,18 @@ public class Game {
 			int row = in.nextInt();
 			System.out.println("Give column to place tile:");
 			int column = in.nextInt();
-			
-			// try to place the tile, and give option to swap hand (if legal) or refresh
+
+			// try to place the tile, and give option to swap hand (if legal) or
+			// refresh
 			if (g.play(g.getCurrentPlayerIndex(), tile, row, column, rotation)) {
 				p.getHand().remove(tileIndex);
 				System.out.println("Player who scored");
 				if (g.getPlayer(g.getCurrentPlayerIndex()).getPlaysLeft() == 0) {
-					// give the player the option to refresh hand or to swap hand completely
+					// give the player the option to refresh hand or to swap
+					// hand completely
 					if (p.canSwapTiles()) {
-						System.out.println("Do you want to swap your hand (0 = no, 1 = yes)?");
+						System.out
+								.println("Do you want to swap your hand (0 = no, 1 = yes)?");
 						// get the answer
 						int answer = in.nextInt();
 						if (answer == 1) {
@@ -83,15 +88,15 @@ public class Game {
 	public Board getBoard() {
 		return board;
 	}
-	
+
 	/** The game's bag of tiles. */
 	private Bag bag;
-	
+
 	/** Returns the bag. */
 	public Bag getBag() {
 		return bag;
 	}
-	
+
 	/** Returns the number of players in the game. */
 	public int getNumberOfPlayers() {
 		return numberOfPlayers;
@@ -109,7 +114,7 @@ public class Game {
 		players[currentPlayerIndex].startTurn();
 		setSelectedTile(players[currentPlayerIndex].getHand().get(0));
 	}
-	
+
 	public boolean isValidTilePlacement(int row, int column, int rotation) {
 		int row2 = board.getAdjacentRow(rotation, row);
 		int column2 = board.getAdjacentColumn(rotation, column);
@@ -127,8 +132,10 @@ public class Game {
 					.adjacentCornerHex();
 			Hex adjacentCornerHex2 = board.getHex(row2, column2)
 					.adjacentCornerHex();
-			if ((adjacentCornerHex1 == null || adjacentCornerHex1.hasAnyNeighbors())
-			 && (adjacentCornerHex2 == null || adjacentCornerHex2.hasAnyNeighbors())) {
+			if ((adjacentCornerHex1 == null || adjacentCornerHex1
+					.hasAnyNeighbors())
+					&& (adjacentCornerHex2 == null || adjacentCornerHex2
+							.hasAnyNeighbors())) {
 				return false;
 			}
 		}
@@ -142,7 +149,7 @@ public class Game {
 	public boolean placeTile(Tile tile, int row, int column, int rotation) {
 		int row2 = board.getAdjacentRow(rotation, row);
 		int column2 = board.getAdjacentColumn(rotation, column);
-				
+
 		if (isValidTilePlacement(row, column, rotation)) {
 			board.placeTile(tile, row, column, row2, column2);
 			return true;
@@ -192,30 +199,44 @@ public class Game {
 		}
 	}
 
+	private int selectedTileRotation;
+
+	public void incrementSelectedTileRotation() {
+		selectedTileRotation = (selectedTileRotation + 1) % 6;
+	}
+
+	/**
+	 * Returns the rotation of the currently selected tile (in 60-degree
+	 * increments counterclockwise from right).
+	 */
+	public int getSelectedTileRotation() {
+		return selectedTileRotation;
+	}
+
 	/** Returns true if the game is over. */
 	public boolean isOver() {
-		for(int i=0; i<2; i++){
-			boolean instantVictory=true;
-			for(int j=0; j<6; j++){
-				if(getPlayer(i).getScore(j)!=18){
-					instantVictory=false;
+		for (int i = 0; i < 2; i++) {
+			boolean instantVictory = true;
+			for (int j = 0; j < 6; j++) {
+				if (getPlayer(i).getScore(j) != 18) {
+					instantVictory = false;
 				}
-				
+
 			}
-			if(instantVictory){
+			if (instantVictory) {
 				setSelectedTile(null);
 				return true;
 			}
 		}
-		
-		for(int r=0; r<11; r++){
-			for(int c=0; c<11; c++){
-				if(board.isValidHex(r, c)){
+
+		for (int r = 0; r < 11; r++) {
+			for (int c = 0; c < 11; c++) {
+				if (board.isValidHex(r, c)) {
 					Hex temp = board.getHex(r, c);
-					if(temp.getColor()==-1){
-						for(int i=0; i<6; i++){
-							if(temp.getNeighbor(i)!=null){
-								if(temp.getNeighbor(i).getColor()==-1){
+					if (temp.getColor() == -1) {
+						for (int i = 0; i < 6; i++) {
+							if (temp.getNeighbor(i) != null) {
+								if (temp.getNeighbor(i).getColor() == -1) {
 									return false;
 								}
 							}
@@ -247,7 +268,7 @@ public class Game {
 	}
 
 	private Tile selectedTile;
-	
+
 	/**
 	 * Returns the currently selected tile, or null if there is none.
 	 */
