@@ -1,4 +1,5 @@
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
@@ -61,6 +62,7 @@ public class DrawBoard {
 
 class BoardFrame extends JFrame {
 	UIState uiState;
+	private JButton swapButton;
 	public BoardFrame(UIState uiState) {
 		setTitle("Ingenious");
 		this.uiState = uiState;
@@ -90,7 +92,7 @@ class BoardFrame extends JFrame {
 		
 		// These two buttons should be disabled until we are able to have a choice between
 		// swapping and refreshing.
-		JButton swapButton = new JButton("swap button");
+		swapButton = new JButton("swap button");
 		JButton refreshButton = new JButton("refresh button");
 		panel.add(swapButton);
 		ButtonActions swapAction = new ButtonActions(uiState,1);
@@ -101,6 +103,9 @@ class BoardFrame extends JFrame {
 		refreshButton.addActionListener(refreshAction);
 		refreshButton.setEnabled(false);
 		pack();
+	}
+	public JButton getSwapButton(){
+		return swapButton;
 	}
 }
 
@@ -279,7 +284,12 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 					playerGui[uiState.game.getCurrentPlayerIndex()].setSelectedTile(-1);
 				}
 				if (uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getPlaysLeft() == 0) {
-					uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).refreshHand();
+					if(!uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).canSwapTiles()){
+						uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).refreshHand();
+					}else{
+						panel.getComponent(5).setEnabled(true);
+						panel.getComponent(4).setEnabled(true);
+					}
 					playerGui[uiState.game.getCurrentPlayerIndex()].setSelectedTile(0);
 				}
 			}
@@ -314,13 +324,22 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 class ButtonActions implements ActionListener {
 	private UIState uiState;
 	private Game game;
+	private boolean refresh;
 	public ButtonActions(UIState uiState, int i){
 		this.uiState = uiState;
 		game=uiState.game;
+		if(i==0){
+			refresh=true;
+		}
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent event) {
+		if(refresh){
+			game.getPlayer(game.getCurrentPlayerIndex()).refreshHand();
+		}else{
+			game.getPlayer(game.getCurrentPlayerIndex()).swapTiles();
+		}
 		
 		
 	}
