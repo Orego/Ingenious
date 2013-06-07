@@ -1,51 +1,26 @@
-import java.util.Scanner;
-
 /** A tile with two colors. */
 public class Tile {
 
-	public static void main(String[] args) {
-		Scanner in = new Scanner(System.in);
-		System.out.print("Enter a number for the first color: ");
-		int a = in.nextInt();
-		System.out.print("Enter a number for the second color: ");
-		int b = in.nextInt();
-		Tile t = new Tile(a, b);
-		System.out.println("The first number was: " + t.getA());
-		System.out.println("The second number was: " + t.getB());
-	}
-	
 	/** One of the two colors on the tile. */
-	private int a;
-	
+	private final int a;
+
 	/** The other color on the tile. */
-	private int b;
-	
-	
-	/** The rotation status of this tile (0 means the second tile is to the right of the first tile,
-	 * 1 means the second tile is to the top right of the first tile etc. */
-	
-	private int rotationStatus;
-	
+	private final int b;
+
+	/**
+	 * @param a Color of the first hex.
+	 * @param b Color of the second hex.
+	 */
 	public Tile(int a, int b) {
 		this.a = a;
 		this.b = b;
-		rotationStatus=0;
 	}
-	
+
 	/** Returns one of the colors on this tile. */
 	public int getA() {
 		return a;
 	}
-	
-	public int getRotationStatus(){
-		return rotationStatus;
-	}
-	
-	public void setRotationStatus(int x){
-		rotationStatus=x;
-	}
-	
-	
+
 	/** Returns the other color on this tile. */
 	public int getB() {
 		return b;
@@ -55,4 +30,5 @@ public class Tile {
 	public String toString() {
 		return "<" + a + ", " + b + ">";
 	}
+
 }
