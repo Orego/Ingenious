@@ -261,6 +261,7 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 				}
 				if (uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getPlaysLeft() == 0) {
 					uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).refreshHand();
+					playerGui[uiState.game.getCurrentPlayerIndex()].setSelectedTile(0);
 				}
 			}
 		}
