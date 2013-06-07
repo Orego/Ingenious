@@ -77,7 +77,7 @@ class BoardFrame extends JFrame {
 				panel.add(playerGui[i]);
 			}
 		}
-		TileGUI tileGui = new TileGUI(this);
+		TileGui tileGui = new TileGui(this);
 		tileGui.setPreferredSize(new Dimension((int) (4 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
 		BoardComponent comp = new BoardComponent(uiState, panel, playerGui, tileGui);
 		comp.setPreferredSize(new Dimension((int) (40 + 11 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
@@ -123,8 +123,8 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 	private UIState uiState;
 	private JPanel panel;
 	private PlayerGui[] playerGui;
-	private TileGUI tileGui;
-	public BoardComponent(UIState uiState, JPanel panel, PlayerGui[] playerGui, TileGUI tileGui) {
+	private TileGui tileGui;
+	public BoardComponent(UIState uiState, JPanel panel, PlayerGui[] playerGui, TileGui tileGui) {
 		this.uiState = uiState;
 		this.panel = panel;
 		this.playerGui = playerGui;

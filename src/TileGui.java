@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class TileGUI extends HexGui implements MouseListener {
+public class TileGui extends HexGui implements MouseListener {
 
 	/** Coordinates of second hex in rotated tile, indexed by rotation. */
 	public static final int[][] COORDINATES = { { 1, 0 }, { 0, -1 }, { 0, -2 },
@@ -10,7 +10,7 @@ public class TileGUI extends HexGui implements MouseListener {
 
 	private BoardFrame gui;
 
-	public TileGUI(BoardFrame gui) {
+	public TileGui(BoardFrame gui) {
 		this.gui = gui;
 		addMouseListener(this);
 	}
