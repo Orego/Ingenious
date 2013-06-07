@@ -92,14 +92,14 @@ class BoardFrame extends JFrame {
 		
 		// These two buttons should be disabled until we are able to have a choice between
 		// swapping and refreshing.
-		swapButton = new JButton("swap button");
-		JButton refreshButton = new JButton("refresh button");
+		swapButton = new JButton("Swap");
+		JButton refreshButton = new JButton("Refresh");
 		panel.add(swapButton);
-		ButtonActions swapAction = new ButtonActions(uiState,1);
+		ButtonActions swapAction = new ButtonActions(uiState, 1, panel);
 		swapButton.addActionListener(swapAction);
 		swapButton.setEnabled(false);
 		panel.add(refreshButton);
-		ButtonActions refreshAction = new ButtonActions(uiState,0);
+		ButtonActions refreshAction = new ButtonActions(uiState,0, panel);
 		refreshButton.addActionListener(refreshAction);
 		refreshButton.setEnabled(false);
 		pack();
@@ -273,7 +273,9 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 
 	@Override
 	public void mouseClicked(MouseEvent event) {
+		if(uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getPlaysLeft()!=0){
 		if(!uiState.game.isOver()) {			
+			panel.getComponent(3).setEnabled(true);
 			int row = (int) Math.round(4.0/3.0 * (event.getY() - 40.0) / UIState.HEX_HEIGHT);
 			int col = (int) Math.round((event.getX() - 40 - 0.5 * UIState.HEX_WIDTH * (5 - row)) / UIState.HEX_WIDTH);
 			
@@ -287,6 +289,7 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 					if(!uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).canSwapTiles()){
 						uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).refreshHand();
 					}else{
+						
 						panel.getComponent(5).setEnabled(true);
 						panel.getComponent(4).setEnabled(true);
 					}
@@ -295,6 +298,7 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 			}
 		}
 	}
+		}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
@@ -325,8 +329,10 @@ class ButtonActions implements ActionListener {
 	private UIState uiState;
 	private Game game;
 	private boolean refresh;
-	public ButtonActions(UIState uiState, int i){
+	private JPanel panel;
+	public ButtonActions(UIState uiState, int i, JPanel panel){
 		this.uiState = uiState;
+		this.panel=panel;
 		game=uiState.game;
 		if(i==0){
 			refresh=true;
@@ -340,7 +346,9 @@ class ButtonActions implements ActionListener {
 		}else{
 			game.getPlayer(game.getCurrentPlayerIndex()).swapTiles();
 		}
-		
+		panel.getComponent(5).setEnabled(false);
+		panel.getComponent(4).setEnabled(false);
+		panel.repaint();
 		
 	}
 
