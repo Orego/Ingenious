@@ -79,7 +79,7 @@ class BoardFrame extends JFrame {
 		}
 		TileGui tileGui = new TileGui(this);
 		tileGui.setPreferredSize(new Dimension((int) (4 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
-		BoardComponent comp = new BoardComponent(uiState, panel, playerGui, tileGui);
+		BoardComponent comp = new BoardComponent(this, playerGui, tileGui);
 		comp.setPreferredSize(new Dimension((int) (40 + 11 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
 		panel.add(comp);
 		panel.add(tileGui);
@@ -129,6 +129,32 @@ class BoardFrame extends JFrame {
 	}
 	public int getSelectedTileRotation() {
 		return uiState.game.getSelectedTileRotation();
+	}
+	public Board getBoard() {
+		return uiState.game.getBoard();
+	}
+	public boolean isGameOver() {
+		return uiState.game.isOver();
+	}
+	public int getWinner() {
+		return uiState.game.getWinner();
+	}
+	public boolean isValidHex(int row, int column) {
+		return uiState.game.getBoard().isValidHex(row, column);
+	}
+	public boolean isValidTilePlacement(int row, int col,
+			int selectedTileRotation) {
+		return uiState.game.isValidTilePlacement(row, col, selectedTileRotation);
+	}
+	public Player getCurrentPlayer() {
+		return uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex());
+	}
+	public int getCurrentPlayerIndex() {
+		return uiState.game.getCurrentPlayerIndex();
+	}
+	public boolean play(int currentPlayerIndex, Tile selectedTile, int row,
+			int col, int selectedTileRotation) {
+		return uiState.game.play(currentPlayerIndex, selectedTile, row, col, selectedTileRotation);
 	}
 	
 }

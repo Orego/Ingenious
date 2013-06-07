@@ -162,6 +162,7 @@ public class Game {
 		return players[i];
 	}
 
+	// TODO Do we really need to pass in rotation? Can we use selectedTileRotation?
 	public boolean play(int playerIndex, Tile tile, int row, int column,
 			int rotation) {
 		if (!placeTile(tile, row, column, rotation)) {
