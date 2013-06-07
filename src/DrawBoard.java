@@ -77,7 +77,7 @@ class BoardFrame extends JFrame {
 				panel.add(playerGui[i]);
 			}
 		}
-		TileGUI tileGui = new TileGUI(playerGui, uiState.game);
+		TileGUI tileGui = new TileGUI(uiState.game);
 		tileGui.setPreferredSize(new Dimension((int) (4 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
 		BoardComponent comp = new BoardComponent(uiState, panel, playerGui, tileGui);
 		comp.setPreferredSize(new Dimension((int) (40 + 11 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));

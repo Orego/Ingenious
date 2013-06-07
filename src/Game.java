@@ -107,6 +107,7 @@ public class Game {
 		successfulMoves++;
 		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
 		players[currentPlayerIndex].startTurn();
+		setSelectedTile(players[currentPlayerIndex].getHand().get(0));
 	}
 	
 	public boolean isValidTilePlacement(int row, int column, int rotation) {
@@ -202,6 +203,7 @@ public class Game {
 				
 			}
 			if(instantVictory){
+				setSelectedTile(null);
 				return true;
 			}
 		}
@@ -222,7 +224,7 @@ public class Game {
 				}
 			}
 		}
-		
+		setSelectedTile(null);
 		return true;
 	}
 
@@ -242,6 +244,22 @@ public class Game {
 			}
 		}
 		return -1;
+	}
+
+	private Tile selectedTile;
+	
+	/**
+	 * Returns the currently selected tile, or null if there is none.
+	 */
+	public Tile getSelectedTile() {
+		return selectedTile;
+	}
+
+	/**
+	 * Sets the selected tile.
+	 */
+	public void setSelectedTile(Tile t) {
+		selectedTile = t;
 	}
 
 }

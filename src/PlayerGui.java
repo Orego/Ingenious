@@ -36,12 +36,14 @@ public class PlayerGui extends HexGui implements MouseListener, MouseMotionListe
 	public void mouseClicked(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
+		game.setSelectedTile(null);
 		if((x >= 30) && (x <= 30 + 2 * BoardComponent.HEX_WIDTH)) {
 			for(int i = 0; i < 6; i++) {
 				if((y >= (30 + i*(BoardComponent.HEX_HEIGHT + 30))) 
 				&& (y <= (30 + BoardComponent.HEX_HEIGHT + i*(BoardComponent.HEX_HEIGHT + 30)))) {
 					if (i < game.getPlayer(playerIndex).getHand().size()) {
 						selectedTile = i;
+						game.setSelectedTile(game.getPlayer(playerIndex).getHand().get(i));
 					}
 				}
 			}
