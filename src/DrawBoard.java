@@ -170,12 +170,12 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 		double centery;
 		Polygon hex = new Polygon();
 		if(uiState.game.getBoard().isValidHex(i, j)) {
-			centerx = 40 + 0.5 * UIState.HEX_WIDTH * (5 - i) + UIState.HEX_WIDTH * j;
-			centery = 40 + 0.75*UIState.HEX_HEIGHT*i;
+			centerx = 40 + 0.5 * HEX_WIDTH * (5 - i) + HEX_WIDTH * j;
+			centery = 40 + 0.75*HEX_HEIGHT*i;
 			for(int k = 0; k < 6; k++) {			
 				angle = 2 * Math.PI/6 * (k);
-				hex.addPoint((int)(centerx + (UIState.HEX_HEIGHT)/2 * Math.sin(angle)), 
-						(int)(centery + (UIState.HEX_HEIGHT)/2 * Math.cos(angle)));
+				hex.addPoint((int)(centerx + (HEX_HEIGHT)/2 * Math.sin(angle)), 
+						(int)(centery + (HEX_HEIGHT)/2 * Math.cos(angle)));
 			}
 			if (color < 0) {
 				switch ((i + j) % 3) {
@@ -200,33 +200,33 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 			switch (color) {
 			case 0:
 				g.setColor(Color.RED);
-				g.fillOval( (int)(centerx-UIState.HEX_HEIGHT/4), (int)(centery-UIState.HEX_HEIGHT/4), 2*UIState.HEX_HEIGHT/4, 2*UIState.HEX_HEIGHT/4);
+				g.fillOval( (int)(centerx-HEX_HEIGHT/4), (int)(centery-HEX_HEIGHT/4), 2*HEX_HEIGHT/4, 2*HEX_HEIGHT/4);
 				break;
 			case 1:
 				g.setColor(Color.ORANGE);
-				g.fillRect( (int)(centerx-UIState.HEX_HEIGHT/4), (int)(centery-UIState.HEX_HEIGHT/4), 2*UIState.HEX_HEIGHT/4, 2*UIState.HEX_HEIGHT/4);
+				g.fillRect( (int)(centerx-HEX_HEIGHT/4), (int)(centery-HEX_HEIGHT/4), 2*HEX_HEIGHT/4, 2*HEX_HEIGHT/4);
 				break;
 			case 2:
 				g.setColor(Color.YELLOW);
-				g.fillRect( (int)(centerx-UIState.HEX_HEIGHT/4), (int)(centery-UIState.HEX_HEIGHT/8), 2*UIState.HEX_HEIGHT/4, 2*UIState.HEX_HEIGHT/8);
-				g.fillRect( (int)(centerx-UIState.HEX_HEIGHT/8), (int)(centery-UIState.HEX_HEIGHT/4), 2*UIState.HEX_HEIGHT/8, 2*UIState.HEX_HEIGHT/4);
+				g.fillRect( (int)(centerx-HEX_HEIGHT/4), (int)(centery-HEX_HEIGHT/8), 2*HEX_HEIGHT/4, 2*HEX_HEIGHT/8);
+				g.fillRect( (int)(centerx-HEX_HEIGHT/8), (int)(centery-HEX_HEIGHT/4), 2*HEX_HEIGHT/8, 2*HEX_HEIGHT/4);
 				break;
 			case 3:
 				g.setColor(Color.GREEN);
-				double d = UIState.HEX_HEIGHT / 4;
+				double d = HEX_HEIGHT / 4;
 				double h = (int)(d * Math.sqrt(3) / 2);
 				Polygon triangle = new Polygon(new int[] {(int)(centerx - d), (int)(centerx), (int)(centerx + d)}, new int[] {(int)(centery + h), (int)(centery - h), (int)(centery + h)}, 3);
 				g.fillPolygon(triangle);
 				break;
 			case 4:
 				g.setColor(Color.CYAN);
-			    h = UIState.HEX_HEIGHT/4;
+			    h = HEX_HEIGHT/4;
 				g.fillRect( (int)(centerx-h), (int)(centery-h), (int)(2*h), (int)(2*h/3));
 				g.fillRect( (int)(centerx-h), (int)(centery+h/3), (int)(2*h), (int)(2*h/3));
 				break;
 			case 5:
 				g.setColor(Color.MAGENTA);
-				h = UIState.HEX_HEIGHT / 4;
+				h = HEX_HEIGHT / 4;
 				Polygon diamond = new Polygon(new int[] {(int)(centerx - h), (int)(centerx), (int)(centerx + h), (int)(centerx)}, new int[] {(int)(centery), (int)(centery - h), (int)(centery), (int)(centery + h)}, 4);
 				g.fillPolygon(diamond);
 				break;
@@ -268,8 +268,8 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 	public void mouseMoved(MouseEvent event) {
 		// find which hexagon the mouse is in (which one's center it is closest to)
 		
-		uiState.row = (int) Math.round(4.0/3.0 * (event.getY() - 40.0) / UIState.HEX_HEIGHT);
-		uiState.col = (int) Math.round((event.getX() - 40 - 0.5 * UIState.HEX_WIDTH * (5 - uiState.row)) / UIState.HEX_WIDTH);
+		uiState.row = (int) Math.round(4.0/3.0 * (event.getY() - 40.0) / HEX_HEIGHT);
+		uiState.col = (int) Math.round((event.getX() - 40 - 0.5 * HEX_WIDTH * (5 - uiState.row)) / HEX_WIDTH);
 		
 		if (uiState.game.isValidTilePlacement(uiState.row, uiState.col, uiState.game.getSelectedTileRotation())) {
 			uiState.validTilePosition = true;
@@ -286,8 +286,8 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 		if(uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getPlaysLeft()!=0){
 		if(!uiState.game.isOver()) {			
 			panel.getComponent(3).setEnabled(true);
-			int row = (int) Math.round(4.0/3.0 * (event.getY() - 40.0) / UIState.HEX_HEIGHT);
-			int col = (int) Math.round((event.getX() - 40 - 0.5 * UIState.HEX_WIDTH * (5 - row)) / UIState.HEX_WIDTH);
+			int row = (int) Math.round(4.0/3.0 * (event.getY() - 40.0) / HEX_HEIGHT);
+			int col = (int) Math.round((event.getX() - 40 - 0.5 * HEX_WIDTH * (5 - row)) / HEX_WIDTH);
 			
 			if ((playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile() != -1) && uiState.game.isValidTilePlacement(row, col, uiState.game.getSelectedTileRotation())) {
 				if (uiState.game.play(uiState.game.getCurrentPlayerIndex(), uiState.game.getPlayer(uiState.game.getCurrentPlayerIndex()).getHand().get(playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile()), 
