@@ -14,7 +14,7 @@ public class DrawBoard {
 		Game game = new Game();
 		uiState.game = game;
 		
-		final BoardFrame bf = new BoardFrame(uiState);
+		final BoardFrame bf = new BoardFrame(game);
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				BoardFrame frame = bf;
