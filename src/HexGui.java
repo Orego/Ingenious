@@ -18,16 +18,23 @@ public abstract class HexGui extends JComponent {
 
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	 * Draws a hex.
-	 * @param g Graphics context.
-	 * @param color Color of the hex foreground (symbol).
-	 * @param centerx X coordinate.
-	 * @param centery Y Coordinate.
-	 * @param shading Color of hex background.
-	 */
-	protected void drawHex(Graphics g, int color, double centerx,
-			double centery, Color shading) {
+	/** Draws a hex of the given color at the given board row and column. */
+	protected void drawHex(Graphics g, int color, int row, int column) {
+		Color shading = BLACK;
+		if (color < 0) {
+			shading = CHECKERBOARD_SHADING[(row + column) % 3];
+		}
+		drawHex(g, color, row, column, shading);
+	}
+
+	/** Draws a hex of the given color and shading at the given board row and column. */
+	protected void drawHex(Graphics g, int color, int row, int column, Color shading) {
+		double centerx = 40 + 0.5 * HEX_WIDTH * (5 - row) + HEX_WIDTH * column;
+		double centery = 40 + 0.75 * HEX_HEIGHT * row;
+		drawHex(g, color, centerx, centery, shading);
+	}
+	
+	public void drawHex(Graphics g, int color, double centerx, double centery, Color shading) {
 		Polygon hex = new Polygon();
 		for (int k = 0; k < 6; k++) {
 			double angle = 2 * Math.PI / 6 * (k);
@@ -88,21 +95,5 @@ public abstract class HexGui extends JComponent {
 			break;
 		default: // vacant
 		}
-	}
-
-	/** Draws a hex of the given color at the given board row and column. */
-	protected void drawHex(Graphics g, int color, int row, int column) {
-		Color shading = BLACK;
-		if (color < 0) {
-			shading = CHECKERBOARD_SHADING[(row + column) % 3];
-		}
-		drawHex(g, color, row, column, shading);
-	}
-
-	/** Draws a hex of the given color and shading at the given board row and column. */
-	protected void drawHex(Graphics g, int color, int row, int column, Color shading) {
-		double centerx = 40 + 0.5 * HEX_WIDTH * (5 - row) + HEX_WIDTH * column;
-		double centery = 40 + 0.75 * HEX_HEIGHT * row;
-		drawHex(g, color, centerx, centery, shading);
 	}
 }

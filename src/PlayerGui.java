@@ -86,16 +86,14 @@ public class PlayerGui extends HexGui implements MouseListener, MouseMotionListe
 	
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		int centerx;
-		int centery;
 		// Draw the six tiles of a player's hand
 		for (int i = 0; i < game.getPlayer(playerIndex).getHand().size(); i++) {
-			centerx = (int)(30 + HEX_WIDTH / 2);
-			centery = 30 + HEX_HEIGHT / 2 + 80 * i;
+			double centerx = (30 + HEX_WIDTH / 2);
+			double centery = 30 + HEX_HEIGHT / 2 + 80 * i;
 			Color shading = Color.BLACK;
-			if ((i == selectedTile) && (playerIndex == game.getCurrentPlayerIndex())) {
-				shading = new Color(130, 130, 130);
-			}
+//			if ((i == selectedTile) && (playerIndex == game.getCurrentPlayerIndex())) {
+//				shading = new Color(130, 130, 130);
+//			}
 			drawHex(g, game.getPlayer(playerIndex).getHand().get(i).getA(), centerx, centery, shading);
 			centerx += HEX_WIDTH;
 			drawHex(g, game.getPlayer(playerIndex).getHand().get(i).getB(), centerx, centery, shading);

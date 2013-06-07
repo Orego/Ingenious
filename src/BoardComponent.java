@@ -42,7 +42,7 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 	
 	protected void drawHex(Graphics g, Board board, int i, int j) {
 		if(frame.isValidHex(i, j)) {			
-			drawHex(g, board.getHex(i, j).getColor(), i, j, Color.BLACK);
+			drawHex(g, board.getHex(i, j).getColor(), i, j);
 		}
 	}
 	
@@ -100,7 +100,7 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 	public void mouseClicked(MouseEvent event) {
 		if(frame.getCurrentPlayer().getPlaysLeft()!=0){
 		if(!frame.isGameOver()) {			
-			frame.getComponent(3).setEnabled(true);
+			((JPanel)(frame.getContentPane().getComponent(0))).getComponent(3).setEnabled(true);
 			int row = (int) Math.round(4.0/3.0 * (event.getY() - 40.0) / HEX_HEIGHT);
 			int col = (int) Math.round((event.getX() - 40 - 0.5 * HEX_WIDTH * (5 - row)) / HEX_WIDTH);
 			
