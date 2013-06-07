@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 class BoardFrame extends JFrame {
 	private Game game;
 	private JButton swapButton;
+	private JButton refreshButton;
 	public static void main(String[] args) {
 
 		Game game = new Game();
@@ -28,8 +29,6 @@ class BoardFrame extends JFrame {
 	public BoardFrame(final Game game) {
 		setTitle("Ingenious");
 		this.game = game;
-//		setSize((int) (40 + 11 * BoardComponent.HEX_WIDTH),
-//				(int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10));
 		final JPanel panel = new JPanel();
 		PlayerGui[] playerGui = new PlayerGui[game.getNumberOfPlayers()];
 		for(int i = 0; i < game.getNumberOfPlayers(); i++) {			
@@ -41,7 +40,7 @@ class BoardFrame extends JFrame {
 		}
 		TileGui tileGui = new TileGui(this);
 		tileGui.setPreferredSize(new Dimension((int) (4 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
-		BoardComponent comp = new BoardComponent(this, playerGui, tileGui);
+		BoardComponent comp = new BoardComponent(this);
 		comp.setPreferredSize(new Dimension((int) (40 + 11 * BoardComponent.HEX_WIDTH), (int) (60 + BoardComponent.HEX_HEIGHT + 0.75 * BoardComponent.HEX_HEIGHT * 10)));
 		panel.add(comp);
 		panel.add(tileGui);
@@ -55,14 +54,13 @@ class BoardFrame extends JFrame {
 		// These two buttons should be disabled until we are able to have a choice between
 		// swapping and refreshing.
 		swapButton = new JButton("Swap");
-		JButton refreshButton = new JButton("Refresh");
+		refreshButton = new JButton("Refresh");
 		panel.add(swapButton);
 		swapButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				game.getPlayer(game.getCurrentPlayerIndex()).swapTiles();
-				panel.getComponent(5).setEnabled(false);
-				panel.getComponent(4).setEnabled(false);
+				setButtonEnabledness(false);
 				panel.repaint();
 			}
 		});
@@ -114,9 +112,17 @@ class BoardFrame extends JFrame {
 	public int getCurrentPlayerIndex() {
 		return game.getCurrentPlayerIndex();
 	}
-	public boolean play(int currentPlayerIndex, Tile selectedTile, int row,
-			int col, int selectedTileRotation) {
-		return game.play(currentPlayerIndex, selectedTile, row, col, selectedTileRotation);
+	public boolean play(Tile selectedTile, int row, int col) {
+		return game.play(getCurrentPlayerIndex(), selectedTile, row, col, getSelectedTileRotation());
+	}
+
+	public void setSelectedTile(Tile tile) {
+		game.setSelectedTile(tile);
+	}
+
+	public void setButtonEnabledness(boolean status) {
+		swapButton.setEnabled(status);
+		refreshButton.setEnabled(status);
 	}
 	
 }

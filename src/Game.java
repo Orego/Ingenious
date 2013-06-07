@@ -173,6 +173,7 @@ public class Game {
 		scoreFrom(playerIndex, front, back);
 		scoreFrom(playerIndex, back, front);
 		players[playerIndex].incrementPlaysLeft(-1);
+		players[playerIndex].getHand().remove(tile);
 		return true;
 	}
 

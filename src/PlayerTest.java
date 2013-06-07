@@ -85,7 +85,6 @@ public class PlayerTest {
 		Tile originalFirstTile = p0.getHand().get(0);
 		
 		game.play(0, p0.getHand().get(5), 0, 1, 0);
-		p0.getHand().remove(5);
 		p0.swapTiles();
 		
 		// the player should have 6 tiles
