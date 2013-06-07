@@ -104,6 +104,7 @@ public class Game {
 
 	/** Advance to the next player. */
 	public void switchPlayers() {
+		successfulMoves++;
 		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
 		players[currentPlayerIndex].startTurn();
 	}
@@ -125,10 +126,8 @@ public class Game {
 					.adjacentCornerHex();
 			Hex adjacentCornerHex2 = board.getHex(row2, column2)
 					.adjacentCornerHex();
-			if ((adjacentCornerHex1 == null || adjacentCornerHex1
-					.hasAnyNeighbors())
-					&& (adjacentCornerHex2 == null || adjacentCornerHex2
-							.hasAnyNeighbors())) {
+			if ((adjacentCornerHex1 == null || adjacentCornerHex1.hasAnyNeighbors())
+			 && (adjacentCornerHex2 == null || adjacentCornerHex2.hasAnyNeighbors())) {
 				return false;
 			}
 		}
@@ -145,7 +144,6 @@ public class Game {
 				
 		if (isValidTilePlacement(row, column, rotation)) {
 			board.placeTile(tile, row, column, row2, column2);
-			successfulMoves++;
 			return true;
 		} else {
 			return false;
@@ -195,6 +193,18 @@ public class Game {
 
 	/** Returns true if the game is over. */
 	public boolean isOver() {
+		for(int i=0; i<2; i++){
+			boolean instantVictory=true;
+			for(int j=0; j<6; j++){
+				if(getPlayer(i).getScore(j)!=18){
+					instantVictory=false;
+				}
+				
+			}
+			if(instantVictory){
+				return true;
+			}
+		}
 		
 		for(int r=0; r<11; r++){
 			for(int c=0; c<11; c++){

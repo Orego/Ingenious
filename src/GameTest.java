@@ -25,7 +25,9 @@ public class GameTest {
 	protected void playTwoValidInitialMoves() {
 		Tile tile = new Tile(0, 1);
 		game.placeTile(tile, 5, 9, Hex.UP_RIGHT);
+		game.switchPlayers();
 		game.placeTile(tile, 10, 9, Hex.LEFT);
+		game.switchPlayers();
 	}
 	
 	@Test
@@ -76,6 +78,7 @@ public class GameTest {
 		Tile tile = new Tile(0, 1);
 		// move once
 		assertTrue(game.placeTile(tile, 5, 5, 0));
+		game.switchPlayers();
 		// try to play an overlapping tile
 		assertFalse(game.placeTile(tile, 6, 6, 2));
 		// try to play a tile over a corner hex
@@ -96,6 +99,7 @@ public class GameTest {
 	
 	@Test
 	public void testScore3() {
+		playTwoValidInitialMoves();
 		// Find score from both hexes of tile
 		game.play(1, new Tile(0, 1), 0, 1, 0);
 		game.play(0, new Tile(3, 3), 5, 1, 1);
@@ -105,6 +109,7 @@ public class GameTest {
 
 	@Test
 	public void testScore4() {
+		playTwoValidInitialMoves();
 		// Don't find score through other hex in tile
 		game.play(1, new Tile(0, 1), 0, 1, 0);
 		game.play(0, new Tile(3, 3), 5, 1, 1);
@@ -115,6 +120,7 @@ public class GameTest {
 	}
 	@Test
 	public void testScore5() {
+		playTwoValidInitialMoves();
 		// Don't find score through other hex in tile
 		game.play(1, new Tile(0, 1), 0, 1, 0);
 		game.play(0, new Tile(3, 3), 5, 1, 1);
@@ -230,4 +236,12 @@ public class GameTest {
 		assertEquals(-1, game.getWinner());
 	}
 
+	@Test
+	public void testInstantVictory() {
+		for (int color = 0; color < 6; color++) {
+			game.getPlayer(0).addScore(color, 18);
+		}
+		assertTrue(game.isOver());
+		assertEquals(0, game.getWinner());
+	}
 }

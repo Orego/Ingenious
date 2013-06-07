@@ -26,6 +26,10 @@ public class TileGUI extends HexGui implements MouseListener{
 		this.rotation=r;
 	}
 	
+	public int getRotation() {
+		return rotation;
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		
@@ -37,6 +41,7 @@ public class TileGUI extends HexGui implements MouseListener{
 	public TileGUI(PlayerGui[] playerGui, Game game){
 		this.playerGui = playerGui;
 		this.game = game;
+		rotation = 0;
 		addMouseListener( this );
 	}
 	
@@ -59,11 +64,12 @@ public class TileGUI extends HexGui implements MouseListener{
 	public void paintComponent(Graphics g) {
 
 		Graphics2D g2 = (Graphics2D) g;
-		
-		if(playerGui[game.getCurrentPlayerIndex()].getSelectedTile() != -1) {			
-			drawHex(g2, playerGui[game.getCurrentPlayerIndex()].getGame().getPlayer(playerGui[game.getCurrentPlayerIndex()].getGame().getCurrentPlayerIndex()).getHand().get(playerGui[game.getCurrentPlayerIndex()].getSelectedTile()).getA(), 1, -1);
-			
-			drawHex(g2, playerGui[game.getCurrentPlayerIndex()].getGame().getPlayer(playerGui[game.getCurrentPlayerIndex()].getGame().getCurrentPlayerIndex()).getHand().get(playerGui[game.getCurrentPlayerIndex()].getSelectedTile()).getB(), COORDINATES[rotation][0], COORDINATES[rotation][1]);
+		if(!game.isOver()) {			
+			if(playerGui[game.getCurrentPlayerIndex()].getSelectedTile() != -1) {			
+				drawHex(g2, playerGui[game.getCurrentPlayerIndex()].getGame().getPlayer(playerGui[game.getCurrentPlayerIndex()].getGame().getCurrentPlayerIndex()).getHand().get(playerGui[game.getCurrentPlayerIndex()].getSelectedTile()).getA(), 1, -1);
+				
+				drawHex(g2, playerGui[game.getCurrentPlayerIndex()].getGame().getPlayer(playerGui[game.getCurrentPlayerIndex()].getGame().getCurrentPlayerIndex()).getHand().get(playerGui[game.getCurrentPlayerIndex()].getSelectedTile()).getB(), COORDINATES[rotation][0], COORDINATES[rotation][1]);
+			}
 		}
 	}
 
