@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 class BoardFrame extends JFrame {
 	private Game game;
 	private JButton swapButton;
+
 	public BoardFrame(final Game game) {
 		setTitle("Ingenious");
 		this.game = game;

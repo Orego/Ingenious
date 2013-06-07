@@ -7,12 +7,9 @@ import java.util.Scanner;
 import java.awt.event.*;
 public class DrawBoard {
 	
-	private static final UIState uiState = new UIState();
-	
 	public static void main(String[] args) {
 
 		Game game = new Game();
-		uiState.game = game;
 		
 		final BoardFrame bf = new BoardFrame(game);
 		EventQueue.invokeLater(new Runnable() {
