@@ -86,6 +86,20 @@ class BoardFrame extends JFrame {
 		System.out.println(tileGui);
 		System.out.println(playerGui);
 		add(panel);
+		
+		
+		// These two buttons should be disabled until we are able to have a choice between
+		// swapping and refreshing.
+		JButton swapButton = new JButton("swap button");
+		JButton refreshButton = new JButton("refresh button");
+		panel.add(swapButton);
+		ButtonActions swapAction = new ButtonActions(uiState,1);
+		swapButton.addActionListener(swapAction);
+		swapButton.setEnabled(false);
+		panel.add(refreshButton);
+		ButtonActions refreshAction = new ButtonActions(uiState,0);
+		refreshButton.addActionListener(refreshAction);
+		refreshButton.setEnabled(false);
 		pack();
 	}
 }
@@ -102,6 +116,10 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 		this.tileGui = tileGui;
 		addMouseListener(this);
 		addMouseMotionListener(this);
+	}
+	
+	public UIState getUiState(){
+		return uiState;
 	}
 	
 	public void drawBoard(Graphics g) {
@@ -203,6 +221,7 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 		}
 	}
 	
+	
 	public void drawTile(Graphics g) {
 		if ((!uiState.validTilePosition || (playerGui[uiState.game.getCurrentPlayerIndex()].getSelectedTile() == -1)) && (!uiState.game.isOver())) {
 			return;
@@ -283,4 +302,20 @@ class BoardComponent extends HexGui implements MouseListener, MouseMotionListene
 		// TODO Auto-generated method stub
 		
 	}
+}
+
+class ButtonActions implements ActionListener {
+	private UIState uiState;
+	private Game game;
+	public ButtonActions(UIState uiState, int i){
+		this.uiState = uiState;
+		game=uiState.game;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		
+		
+	}
+
 }
