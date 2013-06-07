@@ -7,7 +7,8 @@ import static java.awt.Color.*;
 /** Component capable of drawing hexes. */
 public abstract class HexGui extends JComponent {
 
-	private static final long serialVersionUID = 1L;
+	/** Shades for checkerboard background. */
+	public static final Color[] CHECKERBOARD_SHADING = {LIGHT_GRAY, GRAY, WHITE};
 
 	/** Height of a hex (in pixels). */
 	public static final int HEX_HEIGHT = 50;
@@ -15,20 +16,8 @@ public abstract class HexGui extends JComponent {
 	/** Width of a hex (in pixels). */
 	public static final double HEX_WIDTH = HEX_HEIGHT * Math.sqrt(3) / 2;
 
-	/** Shades for checkerboard background. */
-	public static final Color[] CHECKERBOARD_SHADING = {LIGHT_GRAY, GRAY, WHITE};
+	private static final long serialVersionUID = 1L;
 	
-	/** Draws a hex of given color at the given board row and column. */
-	protected void drawHex(Graphics g, int color, int row, int column) {
-		double centerx = 40 + 0.5 * HEX_WIDTH * (5 - row) + HEX_WIDTH * column;
-		double centery = 40 + 0.75 * HEX_HEIGHT * row;
-		Color shading = BLACK;
-		if (color < 0) {
-			shading = CHECKERBOARD_SHADING[(row + column) % 3];
-		}
-		drawHex(g, color, centerx, centery, shading);
-	}
-
 	/**
 	 * Draws a hex.
 	 * @param g Graphics context.
@@ -99,6 +88,17 @@ public abstract class HexGui extends JComponent {
 			break;
 		default: // vacant
 		}
+	}
+
+	/** Draws a hex of given color at the given board row and column. */
+	protected void drawHex(Graphics g, int color, int row, int column) {
+		double centerx = 40 + 0.5 * HEX_WIDTH * (5 - row) + HEX_WIDTH * column;
+		double centery = 40 + 0.75 * HEX_HEIGHT * row;
+		Color shading = BLACK;
+		if (color < 0) {
+			shading = CHECKERBOARD_SHADING[(row + column) % 3];
+		}
+		drawHex(g, color, centerx, centery, shading);
 	}
 
 }
