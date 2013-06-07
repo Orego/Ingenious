@@ -4,6 +4,8 @@ import java.awt.event.MouseListener;
 
 public class TileGui extends HexGui implements MouseListener {
 
+	private static final long serialVersionUID = 1L;
+
 	/** Coordinates of second hex in rotated tile, indexed by rotation. */
 	public static final int[][] COORDINATES = { { 1, 0 }, { 0, -1 }, { 0, -2 },
 			{ 1, -2 }, { 2, -1 }, { 2, 0 } };
