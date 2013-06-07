@@ -1,4 +1,5 @@
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,6 +10,20 @@ import javax.swing.JPanel;
 class BoardFrame extends JFrame {
 	private Game game;
 	private JButton swapButton;
+	public static void main(String[] args) {
+
+		Game game = new Game();
+		
+		final BoardFrame bf = new BoardFrame(game);
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				BoardFrame frame = bf;
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.setVisible(true);
+			}
+		});		
+			bf.repaint();
+	}	
 
 	public BoardFrame(final Game game) {
 		setTitle("Ingenious");
