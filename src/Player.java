@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Player {
@@ -131,9 +132,14 @@ public class Player {
 	/** Swap all the player's tiles with new ones from the bag. */
 	public void swapTiles() {
 		hand.clear();
+		ArrayList<Tile> aside = new ArrayList<Tile>();
+		aside.addAll(hand);
+		Bag bag = gameBeingPlayed.getBag();
 		while (hand.size() < 6) {
-			hand.add(gameBeingPlayed.getBag().draw());
+			hand.add(bag.draw());
 		}
+		bag.addAll(aside);
+		bag.shuffle();
 		gameBeingPlayed.switchPlayers();
 	}
 	

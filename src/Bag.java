@@ -1,42 +1,32 @@
 import java.util.ArrayList;
-import java.lang.Math;
 
+/** The bag of tiles. */
 public class Bag extends ArrayList<Tile> {
 
-	public static void main(String[] args) {
-	}
+	private static final long serialVersionUID = 1L;
 
 	public Bag() {
 		for (int x = 0; x < 6; x++) {
-			for (int y = 0; y < 5; y++) {
+			for (int i = 0; i < 5; i++) {
 				add(new Tile(x, x));
 			}
 		}
-
 		for (int x = 0; x < 6; x++) {
 			for (int y = x + 1; y < 6; y++) {
-				for (int z = 0; z < 6; z++) {
+				for (int i = 0; i < 6; i++) {
 					add(new Tile(x, y));
-
 				}
 			}
-
 		}
 		shuffle();
 	}
 
 	public Tile draw() {
-		shuffle();
 		return remove(size() - 1);
 	}
 
 	public void shuffle() {
-		int currentSize = size();
-		ArrayList<Tile> temp = new ArrayList(currentSize);
-		for (int x = 0; x < currentSize; x++) {
-			int tempSize = size();
-			temp.add(remove((int) (Math.random() * tempSize)));
-		}
-		addAll(temp);
+		java.util.Collections.shuffle(this);
 	}
+
 }
