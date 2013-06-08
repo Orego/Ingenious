@@ -47,29 +47,29 @@ public abstract class HexGui extends JComponent {
 		switch (color) {
 		case 0:
 			g.setColor(Color.RED);
-			g.fillOval((int) (centerx - HEX_HEIGHT / 4),
-					(int) (centery - HEX_HEIGHT / 4), 2 * HEX_HEIGHT / 4,
-					2 * HEX_HEIGHT / 4);
+			g.fillOval((int) (centerx - HEX_HEIGHT / 4.0),
+					(int) (centery - HEX_HEIGHT / 4.0), (int) (2 * HEX_HEIGHT / 4.0),
+					(int) (2 * HEX_HEIGHT / 4.0));
 			break;
 		case 1:
 			g.setColor(Color.ORANGE);
-			g.fillRect((int) (centerx - HEX_HEIGHT / 4),
-					(int) (centery - HEX_HEIGHT / 4), 2 * HEX_HEIGHT / 4,
-					2 * HEX_HEIGHT / 4);
+			g.fillRect((int) (centerx - HEX_HEIGHT / 4.0),
+					(int) (centery - HEX_HEIGHT / 4.0), (int) (2 * HEX_HEIGHT / 4.0),
+					(int) (2 * HEX_HEIGHT / 4.0));
 			break;
 		case 2:
 			g.setColor(Color.YELLOW);
-			g.fillRect((int) (centerx - HEX_HEIGHT / 4),
-					(int) (centery - HEX_HEIGHT / 8), 2 * HEX_HEIGHT / 4,
-					2 * HEX_HEIGHT / 8);
-			g.fillRect((int) (centerx - HEX_HEIGHT / 8),
-					(int) (centery - HEX_HEIGHT / 4), 2 * HEX_HEIGHT / 8,
-					2 * HEX_HEIGHT / 4);
+			g.fillRect((int) (centerx - HEX_HEIGHT / 4.0),
+					(int) (centery - HEX_HEIGHT / 8.0), (int) (2 * HEX_HEIGHT / 4.0),
+					(int) (2 * HEX_HEIGHT / 8.0));
+			g.fillRect((int) (centerx - HEX_HEIGHT / 8.0),
+					(int) (centery - HEX_HEIGHT / 4.0), (int) (2 * HEX_HEIGHT / 8.0),
+					(int) (2 * HEX_HEIGHT / 4.0));
 			break;
 		case 3:
 			g.setColor(Color.GREEN);
-			double d = HEX_HEIGHT / 4;
-			double h = (int) (d * Math.sqrt(3) / 2);
+			double d = HEX_HEIGHT / 4.0;
+			double h = (int) (d * Math.sqrt(3) / 2.0);
 			Polygon triangle = new Polygon(new int[] { (int) (centerx - d),
 					(int) (centerx), (int) (centerx + d) }, new int[] {
 					(int) (centery + h), (int) (centery - h),
@@ -78,7 +78,7 @@ public abstract class HexGui extends JComponent {
 			break;
 		case 4:
 			g.setColor(Color.CYAN);
-			h = HEX_HEIGHT / 4;
+			h = HEX_HEIGHT / 4.0;
 			g.fillRect((int) (centerx - h), (int) (centery - h), (int) (2 * h),
 					(int) (2 * h / 3));
 			g.fillRect((int) (centerx - h), (int) (centery + h / 3),
@@ -86,7 +86,7 @@ public abstract class HexGui extends JComponent {
 			break;
 		case 5:
 			g.setColor(Color.MAGENTA);
-			h = HEX_HEIGHT / 4;
+			h = HEX_HEIGHT / 4.0;
 			Polygon diamond = new Polygon(new int[] { (int) (centerx - h),
 					(int) (centerx), (int) (centerx + h), (int) (centerx) },
 					new int[] { (int) (centery), (int) (centery - h),
